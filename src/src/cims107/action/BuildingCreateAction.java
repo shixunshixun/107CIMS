@@ -1,24 +1,23 @@
 package cims107.action;
 
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ActionContext;
-
-import cims107.service.BuildingService;
-
 import java.util.List;
 
 import cims107.model.Building;
+import cims107.service.BuildingService;
 
-public class BuildingQueryAction extends ActionSupport{
+import com.opensymphony.xwork2.ActionSupport;
+
+public class BuildingCreateAction extends ActionSupport{
 	
 	public String buildingname;  
 	public String departmentname;  
 	public String simplename;
 	public String compus;
+	public int floor;
     
     private BuildingService buildingService;  
       
-    public BuildingQueryAction()  
+    public BuildingCreateAction()  
     {  
         System.out.println("initialize BuildingQueryAction......");  
     }
@@ -45,13 +44,16 @@ public class BuildingQueryAction extends ActionSupport{
     	ActionContext.getContext().getSession().put("compus", compus);*/
     	
     	
+    	Building building = new Building();
+    	building.setBuildingName(buildingname);
+    	building.setBuldingDepartment(departmentname);
+    	building.setBuildingSimpleName(simplename);
+    	building.setBuildingCompus(compus);
+    	building.setBuildingFloorNum(floor);
     	
-    	List<Building> buildinglst;
+    	buildingService.add(building);
     	
-    	buildinglst = buildingService.find(buildingname, departmentname, simplename, compus);
-    	ActionContext.getContext().getSession().put("buildinglst", buildinglst);
-    	
-    	return SUCCESS;
+    	return "ADDSUCCESS";
     }  
      
     /*

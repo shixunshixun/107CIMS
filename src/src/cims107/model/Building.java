@@ -2,11 +2,11 @@ package cims107.model;
 
 public class Building {
 	private int buildingId;
-	private String buildingname;  
-	private String departmentname;  
-	private String simplename;
-	private String compus;
-	private int floor;
+	private String buildingName;  
+	private String buldingDepartment;  
+	private String buildingSimpleName;
+	private String buildingCompus;
+	private int buildingFloorNum;
 	
 	public int getBuildingId() {
 		return buildingId;
@@ -14,34 +14,36 @@ public class Building {
 	public void setBuildingId(int buildingId) {
 		this.buildingId = buildingId;
 	}
-	public String getBuildingname() {
-		return buildingname;
+	public String getBuildingName() {
+		return buildingName;
 	}
-	public void setBuildingname(String buildingname) {
-		this.buildingname = buildingname;
+	public void setBuildingName(String buildingName) {
+		this.buildingName = buildingName;
 	}
-	public String getDepartmentname() {
-		return departmentname;
+	public String getBuldingDepartment() {
+		return buldingDepartment;
 	}
-	public void setDepartmentname(String departmentname) {
-		this.departmentname = departmentname;
+	public void setBuldingDepartment(String buldingDepartment) {
+		this.buldingDepartment = buldingDepartment;
 	}
-	public String getSimplename() {
-		return simplename;
+	public String getBuildingSimpleName() {
+		return buildingSimpleName;
 	}
-	public void setSimplename(String simplename) {
-		this.simplename = simplename;
+	public void setBuildingSimpleName(String buildingSimpleName) {
+		this.buildingSimpleName = buildingSimpleName;
 	}
-	public String getCompus() {
-		return compus;
+	public String getBuildingCompus() {
+		return buildingCompus;
 	}
-	public void setCompus(String compus) {
-		this.compus = compus;
+	public void setBuildingCompus(String buildingCompus) {
+		this.buildingCompus = buildingCompus;
 	}
-	public int getFloor() {
-		return floor;
+	public int getBuildingFloorNum() {
+		return buildingFloorNum;
 	}
-	public void setFloor(int floor) {
-		this.floor = floor;
+	public void setBuildingFloorNum(int buildingFloorNum) {
+		this.buildingFloorNum = buildingFloorNum;
 	}
+
+	
 }

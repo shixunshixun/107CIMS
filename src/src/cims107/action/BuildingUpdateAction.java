@@ -1,26 +1,24 @@
 package cims107.action;
 
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ActionContext;
-
+import cims107.model.Building;
 import cims107.service.BuildingService;
 
-import java.util.List;
+import com.opensymphony.xwork2.ActionSupport;
 
-import cims107.model.Building;
-
-public class BuildingQueryAction extends ActionSupport{
+public class BuildingUpdateAction extends ActionSupport{
 	
+	public int buildingid;
 	public String buildingname;  
 	public String departmentname;  
 	public String simplename;
 	public String compus;
+	public int floor;
     
     private BuildingService buildingService;  
       
-    public BuildingQueryAction()  
+    public BuildingUpdateAction()  
     {  
-        System.out.println("initialize BuildingQueryAction......");  
+        System.out.println("initialize BuildingUpdateAction......");  
     }
     
     public void setBuildingService(BuildingService buildingService)  
@@ -45,27 +43,15 @@ public class BuildingQueryAction extends ActionSupport{
     	ActionContext.getContext().getSession().put("compus", compus);*/
     	
     	
+    	Building building = new Building();
+    	building.setBuildingName(buildingname);
+    	building.setBuldingDepartment(departmentname);
+    	building.setBuildingSimpleName(simplename);
+    	building.setBuildingCompus(compus);
+    	building.setBuildingFloorNum(floor);
     	
-    	List<Building> buildinglst;
+    	buildingService.update(buildingid, building);
     	
-    	buildinglst = buildingService.find(buildingname, departmentname, simplename, compus);
-    	ActionContext.getContext().getSession().put("buildinglst", buildinglst);
-    	
-    	return SUCCESS;
-    }  
-     
-    /*
-    public void validate()  
-    {  
-        if ((null == username) || (0==username.length()))  
-        {  
-            super.addActionError(super.getText("warning.empty",new String[] {getText("username")}));  
-        }  
-          
-        if ((null == password) || (0 == password.length()))  
-        {  
-            super.addActionError(super.getText("warning.empty",new String[] {getText("password")}));  
-              
-        }  
-    }  */
+    	return "UPDATESUCCESS";
+    }
 }

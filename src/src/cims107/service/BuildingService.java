@@ -20,4 +20,16 @@ public class BuildingService {
     public List<Building> find(String buildingname, String departmentname, String simplename, String compus) {
     	return buildingDao.find(buildingname, departmentname, simplename, compus);
     }
+    
+    public void add(Building building) {
+    	buildingDao.add(building);
+    }
+    
+    public void update(int buildingid, Building building) {
+    	buildingDao.update(buildingid, building);
+    }
+    
+    public void delete(List<Integer> buildingidlst) {
+    	buildingDao.delete(buildingidlst);
+    }
 }
