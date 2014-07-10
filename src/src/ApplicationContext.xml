@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+           http://www.springframework.org/schema/tx 
+  		   http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- Hibernate configuration -->
+	<import resource="classpath:database.xml"/>
+	
+	<!-- struts beans -->  
+    <bean id="LoginAction" class="cims107.action.LoginAction" scope="prototype">  
+        <property name="userService" ref="userService" />  
+    </bean>  
+      
+    <bean id="userDao" class="cims107.dao.UserDao">  
+        <property name="sessionFactory" ref="sessionFactory"></property>  
+    </bean>  
+      
+    <bean id="userService" class="cims107.service.UserService">  
+        <property name="userDao" ref="userDao"></property>  
+    </bean>  
+    
+    
+    <bean id="BuildingQueryAction" class="cims107.action.BuildingQueryAction" scope="prototype">  
+        <property name="buildingService" ref="buildingService" />  
+    </bean>  
+      
+    <bean id="buildingDao" class="cims107.dao.BuildingDao">  
+        <property name="sessionFactory" ref="sessionFactory"></property>  
+    </bean>  
+      
+    <bean id="buldingService" class="cims107.service.BuildingService">  
+        <property name="buildingDao" ref="buildingDao"></property>  
+    </bean>  
+</beans>

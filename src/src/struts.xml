@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE struts PUBLIC   
+     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+     "http://struts.apache.org/dtds/struts-2.0.dtd">   
+<struts>   
+    <constant name="struts.custom.i18n.resources" value="message"></constant>  
+    <constant name="struts.objectFactory" value="spring"></constant>  
+    <constant name="struts.devMode" value="true" />  
+      
+    <package name="struts2" extends="struts-default">  
+        <action name="login" class="LoginAction">  
+            <result name="success">loginresult.jsp</result>  
+            <result name="error">Login.jsp</result>  
+        </action>  
+        
+        <action name="buildingsearch" class="BuildingQueryAction">  
+            <result name="success">searchresult.jsp</result>  
+        </action>  
+    </package>  
+      
+</struts>  
