@@ -68,7 +68,7 @@ seatClsId int(8) not null,
 seatRow int(8) not null,
 seatCol int(8) not null,
 seatProperty boolean default '1',
-foreigh key (seatClsId) references cims_cls(clsId);
+foreign key (seatClsId) references cims_cls(clsId)
 ) DEFAULT CHARSET=gbk;
 
 CREATE TABLE cims_department(
