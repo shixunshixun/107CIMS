@@ -26,18 +26,5 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
       
     <bean id="userService" class="cims107.service.UserService">  
         <property name="userDao" ref="userDao"></property>  
-    </bean>  
-    
-    
-    <bean id="BuildingQueryAction" class="cims107.action.BuildingQueryAction" scope="prototype">  
-        <property name="buildingService" ref="buildingService" />  
-    </bean>  
-      
-    <bean id="buildingDao" class="cims107.dao.BuildingDao">  
-        <property name="sessionFactory" ref="sessionFactory"></property>  
-    </bean>  
-      
-    <bean id="buldingService" class="cims107.service.BuildingService">  
-        <property name="buildingDao" ref="buildingDao"></property>  
-    </bean>  
+    </bean>    
 </beans>
