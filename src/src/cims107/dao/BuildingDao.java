@@ -48,15 +48,16 @@ public class BuildingDao {
 	}
 	
 	//检查教学楼名称是否重名
-	public void add(Building building) {
+	public boolean add(Building building) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.save(building);
 		tx.commit();
 		session.close();
+		return true;
 	}
 	
-	public void update(int buildingid, Building building) {
+	public boolean update(int buildingid, Building building) {
 		
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
@@ -71,9 +72,11 @@ public class BuildingDao {
 		session.update(b); 
 		tx.commit();
 		session.close();
+		
+		return true;
 	}
 	
-	public void delete(List<Integer> buildingidlst) {
+	public boolean delete(List<Integer> buildingidlst) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		/*
@@ -90,6 +93,8 @@ public class BuildingDao {
 		
 		tx.commit();
 		session.close();
+		
+		return true;
 	}
 
 	public SessionFactory getSessionFactory() {

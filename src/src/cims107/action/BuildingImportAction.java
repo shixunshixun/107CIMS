@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Iterator;  
 import java.util.List;  
   
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;  
 import org.apache.poi.ss.usermodel.Cell;  
 import org.apache.poi.ss.usermodel.Row;  
@@ -30,15 +29,18 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class BuildingImportAction extends ActionSupport{
 
-	public String buildingname;  
+	/* 估计暂时用不到
+	 * public String buildingname;  
 	public String departmentname;  
 	public String simplename;
 	public String compus;
-	public int floor;
+	public int floor;*/
 	
 	private File excelFile;
     private String excelFileFileName;
-    private ExcelWorkSheet<Building> excelWorkSheet;
+    
+    //暂且删掉这个变量，因为似乎没有多大作用
+    //private ExcelWorkSheet<Building> excelWorkSheet;
     
     private BuildingService buildingService;  
       
@@ -68,13 +70,13 @@ public class BuildingImportAction extends ActionSupport{
         this.excelFileFileName = excelFileFileName;  
     }  
   
-    public ExcelWorkSheet<Building> getExcelWorkSheet() {  
+    /*public ExcelWorkSheet<Building> getExcelWorkSheet() {  
         return excelWorkSheet;  
     }  
   
     public void setExcelWorkSheet(ExcelWorkSheet<Building> excelWorkSheet) {  
         this.excelWorkSheet = excelWorkSheet;  
-    }  
+    }  */
   
       
     //判断文件类型  
@@ -93,8 +95,9 @@ public class BuildingImportAction extends ActionSupport{
     	try {
 	    	Workbook book = createWorkBook(new FileInputStream(excelFile));  
 	        //book.getNumberOfSheets();  判断Excel文件有多少个sheet  
-	        Sheet sheet =  book.getSheetAt(0);    
-	        excelWorkSheet = new ExcelWorkSheet<Building>();  
+	        Sheet sheet =  book.getSheetAt(0);  
+	        List<Building> buildinglst = new ArrayList<Building>();
+	        //excelWorkSheet = new ExcelWorkSheet<Building>();  
 	        //保存工作单名称  
 	        Row firstRow = sheet.getRow(0);  
 	        Iterator<Cell> iterator = firstRow.iterator();  
@@ -104,7 +107,7 @@ public class BuildingImportAction extends ActionSupport{
 	        while (iterator.hasNext()) {  
 	            cellNames.add(iterator.next().getStringCellValue());  
 	        }  
-	        excelWorkSheet.setColumns(cellNames);  
+	        //excelWorkSheet.setColumns(cellNames);  
 	        for (int i = 1; i <= sheet.getLastRowNum(); i++) {  
 	            Row ros = sheet.getRow(i);  
 	            Building building = new Building();  
@@ -113,7 +116,14 @@ public class BuildingImportAction extends ActionSupport{
 	            building.setBuildingSimpleName(ros.getCell(2).getStringCellValue());  
 	            building.setBuildingCompus(ros.getCell(3).getStringCellValue());  
 	            building.setBuildingFloorNum((int)ros.getCell(4).getNumericCellValue());
-	            excelWorkSheet.getData().add(building);  
+	            buildinglst.add(building);
+	            //excelWorkSheet.getData().add(building);  
+	        }
+	        
+	        //插入数据库
+	        for (int i = 0; i < buildinglst.size(); i++) {
+	        	Building b = buildinglst.get(i);
+	        	buildingService.add(b);
 	        }
         
     	}catch (FileNotFoundException e) {

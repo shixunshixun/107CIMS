@@ -32,25 +32,26 @@ public class BuildingService {
     	return buildingDao.find(buildingname, departmentname, simplename, compus);
     }
     
-    public List<Building> find(List<Integer> buildinglst) {
+    //根据一个id链表查找building链表
+    public List<Building> find(List<Integer> buildingIdlst) {
     	List<Building> lst = new ArrayList<Building>();
     	
-    	for (int i = 0; i < buildinglst.size(); i ++) {
-    		lst.add(buildingDao.find(buildinglst.get(i)));
+    	for (int i = 0; i < buildingIdlst.size(); i ++) {
+    		lst.add(buildingDao.find(buildingIdlst.get(i)));
     	}
     	
     	return lst;
     }
     
-    public void add(Building building) {
-    	buildingDao.add(building);
+    public boolean add(Building building) {
+    	return buildingDao.add(building);
     }
     
-    public void update(int buildingid, Building building) {
-    	buildingDao.update(buildingid, building);
+    public boolean update(int buildingid, Building building) {
+    	return buildingDao.update(buildingid, building);
     }
     
-    public void delete(List<Integer> buildingidlst) {
-    	buildingDao.delete(buildingidlst);
+    public boolean delete(List<Integer> buildingidlst) {
+    	return buildingDao.delete(buildingidlst);
     }
 }

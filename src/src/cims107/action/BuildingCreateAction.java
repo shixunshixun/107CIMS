@@ -1,10 +1,9 @@
 package cims107.action;
 
-import java.util.List;
-
 import cims107.model.Building;
 import cims107.service.BuildingService;
 
+import java.util.List;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class BuildingCreateAction extends ActionSupport{
@@ -51,9 +50,13 @@ public class BuildingCreateAction extends ActionSupport{
     	building.setBuildingCompus(compus);
     	building.setBuildingFloorNum(floor);
     	
-    	buildingService.add(building);
-    	
-    	return "ADDSUCCESS";
+    	if(buildingService.add(building)){
+    	   	return SUCCESS;
+    	}
+    	else{
+    		super.addActionError("update failed");
+    		return ERROR;    		
+    	}
     }  
      
     /*

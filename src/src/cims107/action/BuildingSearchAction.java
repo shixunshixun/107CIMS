@@ -45,13 +45,18 @@ public class BuildingSearchAction extends ActionSupport{
     	ActionContext.getContext().getSession().put("compus", compus);*/
     	
     	
-    	
     	List<Building> buildinglst;
     	
     	buildinglst = buildingService.find(buildingname, departmentname, simplename, compus);
-    	ActionContext.getContext().getSession().put("buildinglst", buildinglst);
     	
-    	return SUCCESS;
+    	if(buildinglst != null) {
+    		ActionContext.getContext().getSession().put("buildinglst", buildinglst);
+    	   	return SUCCESS;
+    	}
+    	else {
+    		super.addActionError("no building found");
+    		return ERROR;
+    	}
     }  
      
     /*

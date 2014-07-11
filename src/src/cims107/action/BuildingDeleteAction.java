@@ -5,7 +5,6 @@ import cims107.service.BuildingService;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.opensymphony.xwork2.ActionSupport;
 
 public class BuildingDeleteAction extends ActionSupport{
@@ -53,9 +52,13 @@ public class BuildingDeleteAction extends ActionSupport{
     	for(int i=0; i<buildingid.length;i++){
     		buildingidlst.add(new Integer (buildingid[i]));
     	}
-    	buildingService.delete(buildingidlst);
     	
-    	
-    	return "DELETESUCCESS";
+    	if(buildingService.delete(buildingidlst)){
+    		return SUCCESS;
+    	}
+    	else {
+    		super.addActionError("delete failed");
+    		return ERROR;
+    	}
     }
 }

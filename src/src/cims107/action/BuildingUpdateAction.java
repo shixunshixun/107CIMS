@@ -50,8 +50,14 @@ public class BuildingUpdateAction extends ActionSupport{
     	building.setBuildingCompus(compus);
     	building.setBuildingFloorNum(floor);
     	
-    	buildingService.update(buildingid, building);
+    	if(buildingService.update(buildingid, building)) {
+    		return SUCCESS;
+    	}
+    	else {
+    		super.addActionError("update failed");
+    		return ERROR;
+    	}
     	
-    	return "UPDATESUCCESS";
+    	
     }
 }
