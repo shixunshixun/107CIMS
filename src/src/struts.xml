@@ -16,6 +16,28 @@
         <action name="buildingsearch" class="BuildingQueryAction">  
             <result name="success">searchresult.jsp</result>  
         </action>  
+        
+        <action name="excel" class="com.liqun.action.excel.ExcelAction">
+            <result name="excel" type="stream">
+            <param name="contentType">application/vnd.ms-excel</param>
+            <param name="inputName">excelStream</param>
+            <param name="contentDisposition">filename="export.xls"</param>
+            <param name="bufferSize">1024</param>
+            </result>
+        </action>
+        
+        <action name="uploadFile" class="BuildingInAction" method="uploadFile">
+      		<result name="success" type="redirect">userList.action</result>
+		</action>
     </package>  
+    
+    <package name="excelOutPut" extends="struts-default">  
+        <action name="userInfo" class="userAction">  
+            <result>/excel/InputExcel.jsp</result>  
+        </action>  
+        <action name="outPut" class="outAction">  
+            <result>/excel/InputExcel.jsp</result>  
+        </action>  
+     </package>
       
 </struts>  
