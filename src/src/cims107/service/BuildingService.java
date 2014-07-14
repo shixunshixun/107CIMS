@@ -33,6 +33,14 @@ public class BuildingService {
     	return lst;
     }
     
+    public Building find(String buildingname, String compus) {
+    	return buildingDao.find(buildingname, compus);
+    }
+    
+    public Building find(int buildingid) {
+    	return buildingDao.find(buildingid);
+    }
+    
     public boolean add(Building building) {
     	return buildingDao.add(building);
     }
