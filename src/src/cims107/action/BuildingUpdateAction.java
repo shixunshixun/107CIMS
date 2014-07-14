@@ -45,7 +45,7 @@ public class BuildingUpdateAction extends ActionSupport{
     	
     	Building building = new Building();
     	building.setBuildingName(buildingname);
-    	building.setBuldingDepartment(departmentname);
+    	building.setBuildingDepartment(departmentname);
     	building.setBuildingSimpleName(simplename);
     	building.setBuildingCompus(compus);
     	building.setBuildingFloorNum(floor);

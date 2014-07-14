@@ -16,8 +16,8 @@ public class BuildingDao {
 
 	public List<Building> find(String buildingname, String departmentname, String simplename, String compus) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Building AS b WHERE b.buildingname = :buildingname AND b.departmentname = :departmentname AND"
-				+ "b.simplename = :simplename AND b.compus = :compus";
+		String hql = "FROM Building AS b WHERE b.buildingName = :buildingname AND b.buildingDepartment = :departmentname AND"
+				+ " b.buildingSimpleName = :simplename AND b.buildingCompus = :compus";
 		Query q = session.createQuery(hql);
 		
 		q.setString("buildingname", buildingname);
@@ -64,7 +64,7 @@ public class BuildingDao {
 		Building b = (Building) session.get(Building.class, buildingid);
 		
 		b.setBuildingName(building.getBuildingName());
-    	b.setBuldingDepartment(building.getBuldingDepartment());
+    	b.setBuildingDepartment(building.getBuildingDepartment());
     	b.setBuildingSimpleName(building.getBuildingSimpleName());
     	b.setBuildingCompus(building.getBuildingCompus());
     	b.setBuildingFloorNum(building.getBuildingFloorNum());

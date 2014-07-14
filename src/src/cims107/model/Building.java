@@ -3,11 +3,10 @@ package cims107.model;
 public class Building {
 	private int buildingId;
 	private String buildingName;  
-	private String buldingDepartment;  
+	private String buildingDepartment;  
 	private String buildingSimpleName;
 	private String buildingCompus;
 	private int buildingFloorNum;
-	
 	public int getBuildingId() {
 		return buildingId;
 	}
@@ -20,11 +19,11 @@ public class Building {
 	public void setBuildingName(String buildingName) {
 		this.buildingName = buildingName;
 	}
-	public String getBuldingDepartment() {
-		return buldingDepartment;
+	public String getBuildingDepartment() {
+		return buildingDepartment;
 	}
-	public void setBuldingDepartment(String buldingDepartment) {
-		this.buldingDepartment = buldingDepartment;
+	public void setBuildingDepartment(String buildingDepartment) {
+		this.buildingDepartment = buildingDepartment;
 	}
 	public String getBuildingSimpleName() {
 		return buildingSimpleName;
@@ -43,7 +42,5 @@ public class Building {
 	}
 	public void setBuildingFloorNum(int buildingFloorNum) {
 		this.buildingFloorNum = buildingFloorNum;
-	}
-
-	
+	}	
 }

@@ -15,6 +15,8 @@ public class BuildingSearchAction extends ActionSupport{
 	public String departmentname;  
 	public String simplename;
 	public String compus;
+	
+	List<Building> buildinglst;
     
     private BuildingService buildingService;  
       
@@ -45,11 +47,10 @@ public class BuildingSearchAction extends ActionSupport{
     	ActionContext.getContext().getSession().put("compus", compus);*/
     	
     	
-    	List<Building> buildinglst;
-    	
     	buildinglst = buildingService.find(buildingname, departmentname, simplename, compus);
-    	
+    	    	  	
     	if(buildinglst != null) {
+    		System.out.print(buildinglst.get(0).getBuildingCompus());
     		ActionContext.getContext().getSession().put("buildinglst", buildinglst);
     	   	return SUCCESS;
     	}
@@ -57,7 +58,15 @@ public class BuildingSearchAction extends ActionSupport{
     		super.addActionError("no building found");
     		return ERROR;
     	}
-    }  
+    }
+
+	public List<Building> getBuildinglst() {
+		return buildinglst;
+	}
+
+	public void setBuildinglst(List<Building> buildinglst) {
+		this.buildinglst = buildinglst;
+	}  
      
     /*
     public void validate()  

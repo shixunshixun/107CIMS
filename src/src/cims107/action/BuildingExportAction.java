@@ -75,7 +75,7 @@ public class BuildingExportAction extends ActionSupport{
     			row.createCell(0).setCellValue(searchResult.get(i).getBuildingName());
     			row.createCell(1).setCellValue(searchResult.get(i).getBuildingSimpleName());
     			row.createCell(2).setCellValue(searchResult.get(i).getBuildingCompus());
-    			row.createCell(3).setCellValue(searchResult.get(i).getBuldingDepartment());
+    			row.createCell(3).setCellValue(searchResult.get(i).getBuildingDepartment());
     			row.createCell(4).setCellValue(searchResult.get(i).getBuildingFloorNum());
         	}
 			

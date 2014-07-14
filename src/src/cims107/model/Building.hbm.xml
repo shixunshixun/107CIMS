@@ -15,8 +15,8 @@
             <column name="buildingName" length="40" />
         </property>
         
-        <property name="buldingDepartment" type="java.lang.String">
-            <column name="buldingDepartment" length="40" />
+        <property name="buildingDepartment" type="java.lang.String">
+            <column name="buildingDepartment" length="40" />
         </property>
         
         <property name="buildingSimpleName" type="java.lang.String">

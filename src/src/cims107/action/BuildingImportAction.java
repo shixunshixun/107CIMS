@@ -112,7 +112,7 @@ public class BuildingImportAction extends ActionSupport{
 	            Row ros = sheet.getRow(i);  
 	            Building building = new Building();  
 	            building.setBuildingName(ros.getCell(0).getStringCellValue());  
-	            building.setBuldingDepartment(ros.getCell(1).getStringCellValue());  
+	            building.setBuildingDepartment(ros.getCell(1).getStringCellValue());  
 	            building.setBuildingSimpleName(ros.getCell(2).getStringCellValue());  
 	            building.setBuildingCompus(ros.getCell(3).getStringCellValue());  
 	            building.setBuildingFloorNum((int)ros.getCell(4).getNumericCellValue());

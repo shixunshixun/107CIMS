@@ -18,7 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="BuildingCreate">
 </head>
 <body>
-	<s:form name="buildingCreateForm" action="BuildindCreateAction">
+	<s:form name="buildingCreateForm" action="BuildingCreateAction">
 		<s:textfield name="buildingname" label="buildingname"></s:textfield>
 		<s:textfield name="departmentname" label="departmentname"></s:textfield>
 		<s:textfield name="simplename" label="simplename"></s:textfield>

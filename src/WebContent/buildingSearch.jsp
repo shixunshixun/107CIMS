@@ -18,12 +18,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="BuildingSearch">
 
 	<script type="text/javascript">
-		function delete()
+		function deleteBuilding()
 		{
 			buildingForm.action = "BuildingDeleteAction";
 			buildingForm.submit();
 		}
-		function export()
+		function exportExcel()
 		{
 			buildingForm.action = "BuildingExportAction";
 			buildingForm.submit();
@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 
 <body>
-	<s:form name="buildingForm" action="BuildindSearchAction">
+	<s:form name="buildingForm" action="BuildingSearchAction">
 		<s:textfield name="buildingname" label="buildingname"></s:textfield>
 		<s:textfield name="departmentname" label="departmentname"></s:textfield>
 		<s:textfield name="simplename" label="simplename"></s:textfield>
@@ -61,21 +61,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<s:submit label="query"></s:submit>
 	
 		<s:checkbox name="CheckAll" id="CheckAll" onclick="checkAll()"/>全选<br/>
-		<s:iterator value="buildinglist" status="building">			
-			<s:checkbox id="buildingid" name="buildingid"></s:checkbox>
-			<s:property value="building.buildingname"></s:property>
-			<s:property value="building.simplename"></s:property>
-			<s:property value="building.departmentname"></s:property>
-			<s:property value="building.compus"></s:property>
-			<s:property value="building.floor"></s:property>
-			<s:submit lable="update" onclick="window.location.href='buildingUpdate.jsp'"></s:submit>
+		<s:iterator value="buildinglst">			
+			<s:checkbox id="buildingid" name="buildingId"></s:checkbox>
+			<s:property value="buildingName"></s:property>
+			<s:property value="buildingSimpleName"></s:property>
+			<s:property value="buildingDepartment"></s:property>
+			<s:property value="buildingCompus"></s:property>
+			<s:property value="buildingFloorNum"></s:property>
+			<s:submit label="update" onclick="window.location.href='buildingUpdate.jsp'"></s:submit>
 			<br/>		
 		</s:iterator>
 
-		<s:submit lable="create" onclick="window.location.href='buildingCreate.jsp'"></s:submit>
-		<s:submit lable="import" onclick="window.location.href='buildingimport.jsp'"></s:submit>
-		<s:submit label="delete" onclick=delete()></s:submit>
-		<s:submit label="export" onclick=export()></s:submit>
+		<s:submit label="create" onclick="window.location.href='buildingCreate.jsp'"></s:submit>
+		<s:submit label="import" onclick="window.location.href='buildingimport.jsp'"></s:submit>
+		<s:submit label="delete" onclick="deleteBuilding()"></s:submit>
+		<s:submit label="export" onclick="exportExcel()"></s:submit>
 	</s:form>
 	<s:actionerror/>
 </body>
