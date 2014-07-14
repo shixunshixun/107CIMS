@@ -33,6 +33,20 @@ public class BuildingDao {
 			return list;
 	}
 	
+	public Building find(String buildingname, String compus) {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Building AS b WHERE b.buildingname = :buildingname AND b.compus = :compus";
+		Query q = session.createQuery(hql);
+		
+		q.setString("buildingname", buildingname);
+		q.setString("compus", compus);
+		
+		List<Building> list = q.list();
+		session.close();
+		//ªÒ»°buildingId
+		return list.get(0);
+	}
+	
 	public Building find(int buildingid) {
 		Session session = sessionFactory.openSession();
 		
