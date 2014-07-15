@@ -35,26 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 	</script>
 
-	<script type="text/javascript">
-		function checkAll()
-		{
-			var listc = document.getElementsByName("buildingid");
-			if(document.getElementById("CheckAll").checked==true)
-			{
-				for(var i=0;i<listc.length;i++)
-				{
-					listc[i].checked=true;
-				}
-			}
-			else
-			{
-				for(var i=0;i<listc.length;i++)
-				{
-					listc[i].checked=false;
-				}
-			}
-		}
-	</script>
+
 </head>
 
 <body>
@@ -73,21 +54,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<div class="span6" id="manage">
     		<s:form name="buildingForm" action="BuildingSearchAction">
       		<div>
-        		<input type="text" value="教学楼名称" name="" style="height:30px" onclick="this.value='';focus()">
-        		<input type="text" value="教学楼简称" name="" style="height:30px" onclick="this.value='';focus()">
-        		<select name="select" id="select">
-          			<option value="east">东校区</option>
-          			<option value="south">南校区</option>
-          			<option value="north">北校区</option>
+        		<input type="text" value="教学楼名称" name="buildingname" style="height:30px" onclick="this.value='';focus()">
+        		<input type="text" value="教学楼简称" name="simplename" style="height:30px" onclick="this.value='';focus()">
+        		<select name="compus" id="compus">
+          			<option>东校区</option>
+          			<option>南校区</option>
+          			<option>北校区</option>
         		</select>
-        		<select id="school">
-          			<option value="first">教务处</option>
-          			<option value="second">单位二</option>
-          			<option value="third">单位三</option>
+        		<select name="departmentname" id="departmentname">
+          			<option>教务处</option>
+          			<option>教务处</option>
+          			<option>教务处</option>
         		</select>
         		<button style="height:30px" type="submit" class="btn btn-primary">查询</button>
       		</div>
-      		<div>
         		<table class="table">
           		<thead>
             		<tr>
@@ -97,25 +77,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               		<th>所属校区</th>
               		<th>所属单位</th>
               		<th>总楼层数</th>
-              		<th><s:checkbox name="CheckAll" id="CheckAll" onclick="checkAll()"/>全选</th>
             		</tr>
           		</thead>
           		
           		<s:iterator value="buildinglst" status="building">
           			<tbody>
           				<tr>			
-							<td><s:checkbox id="buildingid" name="buildingId"></s:checkbox></td>
-							<td><s:property value="buildingName"></s:property></td>
-							<td><s:property value="buildingSimpleName"></s:property></td>
-							<td><s:property value="buildingDepartment"></s:property></td>
-							<td><s:property value="buildingCompus"></s:property></td>
-							<td><s:property value="buildingFloorNum"></s:property></td>
+							<td><s:checkbox id="buildingid" name="buildingId" value="false" theme="simple"></s:checkbox>
+							<td><s:property value="buildingName"></s:property>
+							<td><s:property value="buildingSimpleName"></s:property>
+							<td><s:property value="buildingDepartment"></s:property>
+							<td><s:property value="buildingCompus"></s:property>
+							<td><s:property value="buildingFloorNum"></s:property>
 							<td><a href="#update" data-toggle="modal" class="btn btn-primary">修改</a>
 						</tr>
 					</tbody>		
 				</s:iterator>
         		</table>
-        	</div>
       		<div class="pagination">
         		<ul>
           			<li class="active"><a href="#">1</a></li>
@@ -130,6 +108,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		<li><a href="#">后一页</a></li>
       		</ul>
         	<a href="#new" data-toggle="modal" class="btn btn-primary">新增</a>
+        	<button>删除</button>
+        	<button>导入</button>
+        	<button>导出</button>
         	</s:form>
 			<s:actionerror/>
 
@@ -140,17 +121,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			<h4>新增教学楼</h4>
       			</div>
       			<div class="modal-body">
-        			<input type="text" value="教学楼名称" name="" style="height:30px" onclick="this.value='';focus()">
-        			<input type="text" value="教学楼简称" name="" style="height:30px" onclick="this.value='';focus()">
-        			<select name="select" id="select">
-          				<option value="east">东校区</option>
-          				<option value="南校区">南校区</option>
-          				<option value="north">北校区</option>
+        			<input type="text" value="教学楼名称" name="buildingname" style="height:30px" onclick="this.value='';focus()">
+        			<input type="text" value="教学楼简称" name="simplename" style="height:30px" onclick="this.value='';focus()">
+        			<select name="compus" id="compus">
+          				<option>东校区</option>
+          				<option>南校区</option>
+          				<option>北校区</option>
         			</select>
-        			<select id="school">
-          				<option value="教务处">教务处</option>
-          				<option value="second">单位二</option>
-          				<option value="third">单位三</option>
+        			<select name="departmentname" id="departmentname">
+          				<option>教务处</option>
+          				<option>教务处</option>
+          				<option>教务处</option>
         			</select>
       			</div>
       			<div class="modal-footer">
@@ -161,9 +142,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		</div>
 
 
-        	<button>删除</button>
-        	<button>导入</button>
-        	<button>导出</button>
+        	
         	
     	</div>
   	</div>
