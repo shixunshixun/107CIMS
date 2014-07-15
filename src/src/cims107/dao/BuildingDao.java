@@ -35,7 +35,7 @@ public class BuildingDao {
 	
 	public Building find(String buildingname, String compus) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Building AS b WHERE b.buildingname = :buildingname AND b.compus = :compus";
+		String hql = "FROM Building AS b WHERE b.buildingName = :buildingname AND b.buildingCompus = :compus";
 		Query q = session.createQuery(hql);
 		
 		q.setString("buildingname", buildingname);
