@@ -39,4 +39,16 @@ public class PartitionService {
 		return partitionDao.update(pid, pyear, pterm, beginweek, endweek, pdepartmentname);
 	}
 	
+	public void enabeUpdate(List<Integer> partitionlst) {
+		partitionDao.enabeUpdate(partitionlst);
+	}
+	
+	public void disableUpdate(List<Integer> partitionlst) {
+		partitionDao.disableUpdate(partitionlst);
+	}
+	
+	public Boolean delete(List<Integer> partitionlst) {
+		return partitionDao.delete(partitionlst);
+	}
+	
 }

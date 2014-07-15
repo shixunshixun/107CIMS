@@ -99,4 +99,48 @@ public class PartitionDao {
 		
 		return true;
 	}
+	
+	public void enabeUpdate(List<Integer> partitionlst) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		for (int i = 0; i < partitionlst.size(); i ++) {
+			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
+			p.setpIsUsed(true);
+			session.update(p);
+		}
+		
+		tx.commit();
+		session.close();
+	}
+	
+	public void disableUpdate(List<Integer> partitionlst) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		for (int i = 0; i < partitionlst.size(); i ++) {
+			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
+			p.setpIsUsed(false);
+			session.update(p);
+		}
+		
+		tx.commit();
+		session.close();
+	}
+	
+	public Boolean delete(List<Integer> partitionlst) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		
+		for (int i = 0; i < partitionlst.size(); i ++) {
+			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
+			session.delete(p);
+		}
+		
+		
+		tx.commit();
+		session.close();
+		
+		return true;
+	}
 }

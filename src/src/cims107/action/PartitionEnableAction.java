@@ -3,15 +3,15 @@ package cims107.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 import cims107.service.PartitionService;
 
-public class PartitionDeleteAction extends ActionSupport{
+import com.opensymphony.xwork2.ActionSupport;
+
+public class PartitionEnableAction extends ActionSupport{
 	private PartitionService partitionService;
 	public String[] partitionid;
 	
-	public PartitionDeleteAction()  
+	public PartitionEnableAction()  
     {  
         System.out.println("initialize BuildingSearchAction......");  
     }
@@ -28,20 +28,16 @@ public class PartitionDeleteAction extends ActionSupport{
 	public void setPartitionid(String[] partitionid) {
 		this.partitionid = partitionid;
 	}
-
+	
 	public String execute() {
-    	List<Integer> partitionidlst = new ArrayList<Integer>();
+		List<Integer> partitionidlst = new ArrayList<Integer>();
     	
     	for(int i=0; i<partitionid.length;i++){
     		partitionidlst.add(new Integer (partitionid[i]));
     	}
     	
-    	if(partitionService.delete(partitionidlst)){
-    		return SUCCESS;
-    	}
-    	else {
-    		super.addActionError("delete failed");
-    		return ERROR;
-    	}
-    }
+    	partitionService.enabeUpdate(partitionidlst);
+		
+		return SUCCESS;
+	}
 }
