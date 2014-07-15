@@ -43,6 +43,26 @@
             <column name="pEndWeek" length="8" />
         </property>
         
+        <property name="pBeginDate" type="date">
+            <column name="pBeginDate"/>
+        </property>
+        
+        <property name="pEndDate" type="date">
+            <column name="pEndDate"/>
+        </property>
+        
+        <property name="pBeginLession" type="java.lang.Integer">
+            <column name="pBeginLession" length="8" />
+        </property>
+        
+        <property name="pEndLession" type="java.lang.Integer">
+            <column name="pEndLession" length="8" />
+        </property>
+        
+        <property name="pWhichDay" type="java.lang.String">
+            <column name="pWhichDay" length="40" />
+        </property>
+        
         <property name="pIsUsed" type="java.lang.Boolean">
             <column name="pIsUsed" length="1" />
         </property>

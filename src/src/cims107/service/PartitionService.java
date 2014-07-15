@@ -23,12 +23,20 @@ public class PartitionService {
 	public List<Partition> find(String pyear, String buildingname, String pterm, String serialnumber, 
 			String departmentname, String type, int maxavailableseat, int minavailableseat, 
 			int maxclassnum, int minclassnum, int maxexamnum, int minexamnum, 
-			String beginweek, String endweek, Boolean pisused) {
+			int beginweek, int endweek, Boolean pisused) {
 		
 		return partitionDao.find(pyear, buildingname, pterm, serialnumber, 
     			departmentname, type, maxavailableseat, minavailableseat, 
     			maxclassnum, minclassnum, maxexamnum, minexamnum, 
     			beginweek, endweek, pisused);
+	}
+	
+	public void add(Partition partition) {
+		partitionDao.add(partition);
+	}
+	
+	public Boolean update(int pid, String pyear, String pterm, int beginweek, int endweek, String pdepartmentname) {
+		return partitionDao.update(pid, pyear, pterm, beginweek, endweek, pdepartmentname);
 	}
 	
 }

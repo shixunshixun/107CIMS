@@ -26,7 +26,15 @@ public class BuildingUpdateAction extends ActionSupport{
         this.buildingService = buildingService;  
     }  
       
-    public String execute()  
+    public int getBuildingid() {
+		return buildingid;
+	}
+
+	public void setBuildingid(int buildingid) {
+		this.buildingid = buildingid;
+	}
+
+	public String execute()  
     {  
         /*if (true == this.userService.isLogin(username, password))  
         {  

@@ -24,8 +24,8 @@ public class PartitionSearchAction extends ActionSupport{
 	public int minclassnum;
 	public int maxexamnum;
 	public int minexamnum;
-	public String beginweek;
-	public String endweek;
+	public int beginweek;
+	public int endweek;
 	public Boolean pisused;
 	
 

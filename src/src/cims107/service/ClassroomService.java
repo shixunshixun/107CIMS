@@ -38,6 +38,10 @@ public class ClassroomService {
     	return lst;
     }
     
+    public Classroom find(int clsbuildingid, String serialnumber) {
+    	return classroomDao.find(clsbuildingid, serialnumber);
+    }
+    
     public void add(Classroom classroom) {
     	classroomDao.add(classroom);
     }

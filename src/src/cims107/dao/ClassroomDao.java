@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import cims107.model.Building;
 import cims107.model.Classroom;
 
 public class ClassroomDao {
@@ -63,6 +64,20 @@ public class ClassroomDao {
 		session.close();
 		
 		return c;
+	}
+	
+	public Classroom find(int clsbuildingid, String serialnumber) {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Classroom AS c WHERE c.clsBuildingId = :clsbuildingid AND c.clsSerialNumber = :serialnumber";
+		Query q = session.createQuery(hql);
+		
+		q.setInteger("clsbuildingid", clsbuildingid);
+		q.setString("serialnumber", serialnumber);
+		
+		List<Classroom> list = q.list();
+		session.close();
+		//获取buildingId
+		return list.get(0);
 	}
 	
 	//检查教学楼名称是否重名

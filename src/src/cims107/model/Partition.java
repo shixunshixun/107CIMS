@@ -1,5 +1,7 @@
 package cims107.model;
 
+import java.sql.Date;
+
 public class Partition {
 	private int pId;
 	private String pYear;
@@ -10,8 +12,43 @@ public class Partition {
 	private int pExamNum;
 	private int pBeginWeek;
 	private int pEndWeek;
+	private Date pBeginDate;
+	private Date pEndDate;
+	private int pBeginLession;
+	private int pEndLession;
+	private String pWhichDay;
 	private Boolean pIsUsed;
 	
+	public String getpWhichDay() {
+		return pWhichDay;
+	}
+	public void setpWhichDay(String pWhichDay) {
+		this.pWhichDay = pWhichDay;
+	}
+	public Date getpBeginDate() {
+		return pBeginDate;
+	}
+	public void setpBeginDate(Date pBeginDate) {
+		this.pBeginDate = pBeginDate;
+	}
+	public Date getpEndDate() {
+		return pEndDate;
+	}
+	public void setpEndDate(Date pEndDate) {
+		this.pEndDate = pEndDate;
+	}
+	public int getpBeginLession() {
+		return pBeginLession;
+	}
+	public void setpBeginLession(int pBeginLession) {
+		this.pBeginLession = pBeginLession;
+	}
+	public int getpEndLession() {
+		return pEndLession;
+	}
+	public void setpEndLession(int pEndLession) {
+		this.pEndLession = pEndLession;
+	}
 	public int getpId() {
 		return pId;
 	}
