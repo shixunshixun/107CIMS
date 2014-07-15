@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE struts PUBLIC   
+     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+     "http://struts.apache.org/dtds/struts-2.0.dtd">   
+<struts>   
+    <package name="struts2" extends="struts-default">  
+        <action name="login" class="LoginAction">  
+            <result name="success">loginresult.jsp</result>  
+            <result name="error">Login.jsp</result>  
+        </action>  
+        
+        <action name="BuildingSearchAction" class="BuildingSearchAction">  
+            <result name="success">buildingSearch.jsp</result> 
+            <result name="error">searchResult.jsp</result>   
+        </action>
+        
+        <action name="BuildingCreateAction" class="BuildingCreateAction">  
+            <result name="success">buildingCreate.jsp</result> 
+            <result name="error">createResult.jsp</result>   
+        </action>
+        
+        <action name="buildingDelete" class="BuildingDeleteAction">  
+            <result name="success">deleteResult.jsp</result> 
+            <result name="error">deleteResult.jsp</result>   
+        </action>
+        
+        <action name="buildingUpdate" class="BuildingUpdateAction">  
+            <result name="success">updateResult.jsp</result> 
+            <result name="error">updateResult.jsp</result>   
+        </action>
+        
+        <action name="buildingExport" class="BuildingExportAction">  
+            <result name="success">exportResult.jsp</result>   
+        </action>
+        
+        <action name="buildingImport" class="BuildingImportAction">  
+            <result name="success">importResult.jsp</result>   
+        </action>
+    </package>    
+</struts>  

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+           http://www.springframework.org/schema/tx 
+  		   http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+  		   
+  	<bean id="BuildingSearchAction" class="cims107.action.BuildingSearchAction" scope="prototype">  
+        <property name="buildingService" ref="buildingService" />      
+    </bean>  
+    
+    <bean id="BuildingCreateAction" class="cims107.action.BuildingCreateAction" scope="prototype">  
+        <property name="buildingService" ref="buildingService" />  
+    </bean> 
+    
+    <bean id="BuildingDeleteAction" class="cims107.action.BuildingDeleteAction" scope="prototype">  
+        <property name="buildingService" ref="buildingService" />  
+    </bean> 
+    
+    <bean id="BuildingUpdateAction" class="cims107.action.BuildingUpdateAction" scope="prototype">  
+        <property name="buildingService" ref="buildingService" />  
+    </bean> 
+    
+    <bean id="BuildingExportAction" class="cims107.action.BuildingExportAction" scope="prototype">  
+        <property name="buildingService" ref="buildingService" />  
+    </bean> 
+    
+    <bean id="BuildingImportAction" class="cims107.action.BuildingImportAction" scope="prototype">  
+        <property name="buildingService" ref="buildingService" />  
+    </bean> 
+      
+    <bean id="buildingDao" class="cims107.dao.BuildingDao">  
+        <property name="sessionFactory" ref="sessionFactory"></property>  
+    </bean>  
+      
+    <bean id="buildingService" class="cims107.service.BuildingService">  
+        <property name="buildingDao" ref="buildingDao"></property>  
+    </bean>  
+</beans>

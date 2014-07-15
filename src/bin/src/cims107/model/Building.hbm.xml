@@ -1,0 +1,35 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<hibernate-mapping>  
+	<!-- catalog指定数据库  -->
+    <class name="cims107.model.Building" table="cims_building" catalog="test">
+    
+        <id name="buildingId" type="java.lang.Integer">
+            <column name="buildingId" />
+            <generator class="native" />
+        </id>
+        
+        <property name="buildingName" type="java.lang.String">
+            <column name="buildingName" length="40" />
+        </property>
+        
+        <property name="buildingDepartment" type="java.lang.String">
+            <column name="buildingDepartment" length="40" />
+        </property>
+        
+        <property name="buildingSimpleName" type="java.lang.String">
+            <column name="buildingSimpleName" length="40" />
+        </property>
+        
+        <property name="buildingCompus" type="java.lang.String">
+            <column name="buildingCompus" length="40" />
+        </property>
+        
+        <property name="buildingFloorNum" type="java.lang.Integer">
+            <column name="buildingFloorNum" length="8" />
+        </property>
+        
+    </class>
+</hibernate-mapping>

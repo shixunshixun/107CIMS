@@ -1,0 +1,91 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<hibernate-mapping>  
+	<!-- catalog指定数据库  -->
+    <class name="cims107.model.Classroom" table="cims_cls" catalog="test">
+    
+        <id name="clsId" type="java.lang.Integer">
+            <column name="clsId" />
+            <generator class="native" />
+        </id>
+        
+        <property name="clsType" type="java.lang.String">
+            <column name="clsType" length="40" />
+        </property>
+        
+        <property name="clsFloor" type="java.lang.Integer">
+            <column name="clsFloor" length="8" />
+        </property>
+        
+        <property name="clsBuildingId" type="java.lang.Integer">
+            <column name="clsBuildingId" length="8" />
+        </property>
+        
+        <property name="clsSerialNumber" type="java.lang.String">
+            <column name="clsSerialNumber" length="40" />
+        </property>
+        
+        <property name="clsClassNum" type="java.lang.Integer">
+            <column name="clsClassNum" length="8" />
+        </property>
+        
+        <property name="clsExamNum" type="java.lang.Integer">
+            <column name="clsExamNum" length="8" />
+        </property>
+        
+        <property name="clsArea" type="java.lang.Integer">
+            <column name="clsArea" length="8" />
+        </property>
+        
+        <property name="clsLocation" type="java.lang.String">
+            <column name="clsLocation" length="40" />
+        </property>
+        
+        <property name="clsIsAmphi" type="java.lang.Boolean">
+            <column name="clsIsAmphi" length="1" />
+        </property>
+        
+        <property name="clsShape" type="java.lang.String">
+            <column name="clsShape" length="40" />
+        </property>
+        
+        <property name="clsHasMicrophone" type="java.lang.Boolean">
+            <column name="clsHasMicrophone" length="1" />
+        </property>
+        
+        <property name="clsUsage" type="java.lang.String">
+            <column name="clsUsage" length="40" />
+        </property>
+        
+        <property name="clsIsUsed" type="java.lang.Boolean">
+            <column name="clsIsUsed" length="1" />
+        </property>
+        
+        <property name="clsSeatNum" type="java.lang.Integer">
+            <column name="clsSeatNum" length="8" />
+        </property>
+        
+        <property name="clsAvailableSeatNum" type="java.lang.Integer">
+            <column name="clsAvailableSeatNum" length="8" />
+        </property>
+        
+        <property name="clsMaxCol" type="java.lang.Integer">
+            <column name="clsMaxCol" length="8" />
+        </property>
+        
+        <property name="clsMaxRow" type="java.lang.Integer">
+            <column name="clsMaxRow" length="8" />
+        </property>
+        
+        <property name="clsVCorridorLocate" type="java.lang.String">
+            <column name="clsVCorridorLocate" length="40" />
+        </property>
+        
+        <property name="clsHCorridorLocate" type="java.lang.String">
+            <column name="clsHCorridorLocate" length="40" />
+        </property>
+        
+    </class>
+</hibernate-mapping>

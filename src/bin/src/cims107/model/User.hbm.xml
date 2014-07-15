@@ -1,0 +1,27 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<hibernate-mapping>  
+	<!-- catalog指定数据库  -->
+    <class name="cims107.model.User" table="cims_user" catalog="test">
+    
+        <id name="userId" type="java.lang.Integer">
+            <column name="userId" />
+            <generator class="native" />
+        </id>
+        
+        <property name="userName" type="java.lang.String">
+            <column name="userName" length="40" />
+        </property>
+        
+        <property name="userPassword" type="java.lang.String">
+            <column name="userPassword" length="40" />
+        </property>
+        
+        <property name="userIsAdmin" type="java.lang.Boolean">
+            <column name="userIsAdmin" length="1" />
+        </property>
+        
+    </class>
+</hibernate-mapping>
