@@ -1,0 +1,51 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<hibernate-mapping>  
+	<!-- catalog指定数据库  -->
+    <class name="cims107.model.Partition" table="cims_partition" catalog="test">
+    
+        <id name="pId" type="java.lang.Integer">
+            <column name="pId" />
+            <generator class="native" />
+        </id>
+        
+        <property name="pYear" type="java.lang.String">
+            <column name="pYear" length="40" />
+        </property>
+        
+        <property name="pTerm" type="java.lang.String">
+            <column name="pTerm" length="40" />
+        </property>
+        
+        <property name="pClsId" type="java.lang.Integer">
+            <column name="pClsId" length="8" />
+        </property>
+        
+        <property name="pDepartment" type="java.lang.String">
+            <column name="pDepartment" length="40" />
+        </property>
+        
+        <property name="pClassNum" type="java.lang.Integer">
+            <column name="pClassNum" length="8" />
+        </property>
+        
+        <property name="pExamNum" type="java.lang.Integer">
+            <column name="pExamNum" length="8" />
+        </property>
+        
+        <property name="pBeginWeek" type="java.lang.Integer">
+            <column name="pBeginWeek" length="8" />
+        </property>
+        
+        <property name="pEndWeek" type="java.lang.Integer">
+            <column name="pEndWeek" length="8" />
+        </property>
+        
+        <property name="pIsUsed" type="java.lang.Boolean">
+            <column name="pIsUsed" length="1" />
+        </property>
+        
+    </class>
+</hibernate-mapping>

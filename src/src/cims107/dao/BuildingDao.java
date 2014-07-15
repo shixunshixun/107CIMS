@@ -93,17 +93,19 @@ public class BuildingDao {
 	public boolean delete(List<Integer> buildingidlst) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		/*
+		
 		for (int i = 0; i < buildingidlst.size(); i ++) {
 			Building b = (Building) session.get(Building.class, buildingidlst.get(i));
 			session.delete(b);
+		}
+		
+		/*
+		for (Iterator iter = buildingidlst.iterator(); iter.hasNext();) {
+			//Building temp = (Building)(iter.next());
+			Building b = (Building) session.get(Building.class, iter.next());
+			session.delete(b);
 		}*/
 		
-		for (Iterator iter = buildingidlst.iterator(); iter.hasNext();) {
-			Building temp = (Building)(iter.next());
-			Building b = (Building) session.get(Building.class, temp.getBuildingId());
-			session.delete(b);
-		}
 		
 		tx.commit();
 		session.close();

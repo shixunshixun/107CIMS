@@ -19,12 +19,13 @@ public class ClassroomDao {
 			Boolean isamphi, String shape, Boolean hasmicrophone, String usage, Boolean isused) {
 		
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Classroom AS c WHERE c.compus = :compus AND c.departmentname = :departmentname"
-				+ "c.type = :type AND c.buildingname = :buildingname AND c.floor = :floor"
-				+ "c.serialnumber = :serialnumber AND c.minClassNum = :minClassNum AND c.maxClassNum = :maxClassNum"
-				+ "c.area = :area AND c.minExamNum = :minExamNum AND c.maxClassNum = :maxClassNum"
-				+ "c.location = :location AND c.isamphi = :isamphi AND c.shape = :shape"
-				+ "c.hasmicrophone = :hasmicrophone AND c.usage = :usage AND c.isused = :isused";
+		
+		String hql = "FROM Classroom AS c AND Building As b WHERE b.buildingCompus = :compus AND b.buildingDepartment = :departmentname AND"
+				+ " c.clsType = :type AND b.buildingName = :buildingname AND c.clsFloor = :floor AND"
+				+ " c.clsSerialNumber = :serialnumber AND c.clsClassNum >= :minClassNum AND c.clsClassNum <= :maxClassNum AND"
+				+ " c.clsArea = :area AND c.clsExamNum >= :minExamNum AND c.clsExamNum <= :maxExamNum AND"
+				+ " c.clsLocation = :location AND c.clsIsAmphi = :isamphi AND c.clsShape = :shape AND"
+				+ " c.clsHasMicrophone = :hasmicrophone AND c.clsUsage = :usage AND c.clsIsUsed = :isused AND b.buildingId = c.clsBuildingId";
 				
 		Query q = session.createQuery(hql);
 		

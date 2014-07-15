@@ -20,10 +20,6 @@ public class ClassroomCreateAction extends ActionSupport{
 	public int examnum;
 	public int maxrow;
 	public int maxcol;
-	//public int vcorridorlocatex;
-	//public int vcorridorlocatey;
-	//public int hcorridorlocatex;
-	//public int hcorridorlocatey;
 	public String hcorridorlocate;
 	public String vcorridorlocate;
 	public int area;
