@@ -43,12 +43,6 @@ public class ClassroomCreateAction extends ActionSupport{
         this.classroomService = classroomService;  
     }
 	
-	public String int2CorridorString(int x, int y) {
-		String result;
-		result = String.valueOf(x)+","+String.valueOf(y);
-		return result;
-	}
-	
 	public String execute()
 	{
 		Building building = new Building();
@@ -56,31 +50,35 @@ public class ClassroomCreateAction extends ActionSupport{
 		
 		building = buildingService.find(buildingname, compus);
 		
-		//hcorridorlocate = int2CorridorString(hcorridorlocatex, hcorridorlocatey);
-		//vcorridorlocate = int2CorridorString(vcorridorlocatex, vcorridorlocatey);
-		Classroom classroom = new Classroom();
-    	classroom.setClsSerialNumber(serialnumber);
-    	classroom.setClsFloor(floor);
-    	classroom.setClsType(type);
-    	classroom.setClsShape(shape);
-    	classroom.setClsClassNum(classnum);
-    	classroom.setClsExamNum(examnum);
-    	classroom.setClsMaxRow(maxrow);
-    	classroom.setClsMaxCol(maxcol);
-    	classroom.setClsHCorridorLocate(hcorridorlocate);
-    	classroom.setClsVCorridorLocate(vcorridorlocate);
-    	classroom.setClsArea(area);
-    	classroom.setClsLocation(location);
-    	classroom.setClsIsAmphi(isamphi);
-    	classroom.setClsHasMicrophone(hasmicrophone);
-    	classroom.setClsIsUsed(isused);
-    	classroom.setClsUsage(usage);
-    	classroom.setClsSeatNum(seatnum);
-    	classroom.setClsAvailableSeatNum(availableseatnum);
-    	classroom.setClsBuildingId(building.getBuildingId());
-    	
-    	classroomService.add(classroom);
-    	
-    	return "ADDSUCCESS";
+		if(building == null) {
+			return ERROR;  //this place should raise exception or set error message
+		}
+		else {
+			
+			Classroom classroom = new Classroom();
+	    	classroom.setClsSerialNumber(serialnumber);
+	    	classroom.setClsFloor(floor);
+	    	classroom.setClsType(type);
+	    	classroom.setClsShape(shape);
+	    	classroom.setClsClassNum(classnum);
+	    	classroom.setClsExamNum(examnum);
+	    	classroom.setClsMaxRow(maxrow);
+	    	classroom.setClsMaxCol(maxcol);
+	    	classroom.setClsHCorridorLocate(hcorridorlocate);
+	    	classroom.setClsVCorridorLocate(vcorridorlocate);
+	    	classroom.setClsArea(area);
+	    	classroom.setClsLocation(location);
+	    	classroom.setClsIsAmphi(isamphi);
+	    	classroom.setClsHasMicrophone(hasmicrophone);
+	    	classroom.setClsIsUsed(isused);
+	    	classroom.setClsUsage(usage);
+	    	classroom.setClsSeatNum(seatnum);
+	    	classroom.setClsAvailableSeatNum(availableseatnum);
+	    	classroom.setClsBuildingId(building.getBuildingId());
+	    	
+	    	classroomService.add(classroom);
+	    	
+	    	return "ADDSUCCESS";
+		}
 	}
 }

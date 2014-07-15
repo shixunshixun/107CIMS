@@ -27,6 +27,16 @@ public class ClassroomSearchAction extends ActionSupport{
 	public int maxExamNum;
 	public int minExamNum;
 	
+	List<Classroom> classroomlst;
+	
+	public List<Classroom> getClassroomlst() {
+		return classroomlst;
+	}
+
+	public void setClassroomlst(List<Classroom> classroomlst) {
+		this.classroomlst = classroomlst;
+	}
+
 	private ClassroomService classroomService;
 	
 	public ClassroomSearchAction()  
@@ -41,14 +51,13 @@ public class ClassroomSearchAction extends ActionSupport{
 	
 	public String execute()
 	{
-		List<Classroom> classroomlst;
-		
+				
 		classroomlst = classroomService.find(compus, departmentname, type, buildingname, 
 				floor, serialnumber, minClassNum, maxClassNum, 
 				area, minExamNum, maxExamNum, location, 
 				isamphi, shape, hasmicrophone, usage, isused);
 		
-		//ÏÔÊ¾»ñÈ¡µ½µÄ½ÌÊÒÐÅÏ¢
+		//ï¿½ï¿½Ê¾ï¿½ï¿½È¡ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 		
 		
 		return SUCCESS;

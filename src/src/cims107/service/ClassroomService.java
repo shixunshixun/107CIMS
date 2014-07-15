@@ -28,11 +28,15 @@ public class ClassroomService {
 				isamphi, shape, hasmicrophone, usage, isused);
     }
     
-    public List<Classroom> find(List<Integer> classroomlst) {
+    public List<Classroom> find(List<Integer> classroomIdlst) {
     	List<Classroom> lst = new ArrayList<Classroom>();
+    	Classroom c;
     	
-    	for (int i = 0; i < classroomlst.size(); i ++) {
-    		lst.add(classroomDao.find(classroomlst.get(i)));
+    	for (int i = 0; i < classroomIdlst.size(); i ++) {
+    		c = classroomDao.find(classroomIdlst.get(i));
+    		if(c != null) {
+    			lst.add(c);
+    		}
     	}
     	
     	return lst;

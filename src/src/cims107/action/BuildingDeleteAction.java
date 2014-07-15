@@ -34,21 +34,10 @@ public class BuildingDeleteAction extends ActionSupport{
 
 	public String execute()  
     {  
-        /*if (true == this.userService.isLogin(username, password))  
-        {  
-            ActionContext.getContext().getSession().put("username", username);  
-            return SUCCESS;  
-        }else{  
-            super.addActionError(super.getText("loginfailed"));  
-            return ERROR;  
-        }  */
-    	
-    	/*ActionContext.getContext().getSession().put("buildingname", buildingname);
-    	ActionContext.getContext().getSession().put("departmentname", departmentname);
-    	ActionContext.getContext().getSession().put("simplename", simplename);
-    	ActionContext.getContext().getSession().put("compus", compus);*/
+        
     	List<Integer> buildingidlst = new ArrayList<Integer>();
     	
+    	//auto convert?
     	for(int i=0; i<buildingid.length;i++){
     		buildingidlst.add(new Integer (buildingid[i]));
     	}

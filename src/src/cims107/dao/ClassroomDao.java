@@ -76,11 +76,11 @@ public class ClassroomDao {
 		
 		List<Classroom> list = q.list();
 		session.close();
-		//»ñÈ¡buildingId
+		//ï¿½ï¿½È¡buildingId
 		return list.get(0);
 	}
 	
-	//¼ì²é½ÌÑ§Â¥Ãû³ÆÊÇ·ñÖØÃû
+	//ï¿½ï¿½ï¿½ï¿½Ñ§Â¥ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void add(Classroom classroom) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
@@ -123,17 +123,19 @@ public class ClassroomDao {
 	public Boolean delete(List<Integer> clsidlst) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		/*
-		for (int i = 0; i < buildingidlst.size(); i ++) {
-			Classroom b = (Classroom) session.get(Classroom.class, buildingidlst.get(i));
-			session.delete(b);
-		}*/
 		
+		for (int i = 0; i < clsidlst.size(); i ++) {
+			Classroom b = (Classroom) session.get(Classroom.class, clsidlst.get(i));
+			//if b == null??
+			session.delete(b);
+		}
+		
+		/*
 		for (Iterator iter = clsidlst.iterator(); iter.hasNext();) {
 			Classroom temp = (Classroom)(iter.next());
 			Classroom b = (Classroom) session.get(Classroom.class, temp.getClsId());
 			session.delete(b);
-		}
+		}*/
 		
 		tx.commit();
 		session.close();

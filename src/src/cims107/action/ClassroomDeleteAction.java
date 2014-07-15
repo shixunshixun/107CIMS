@@ -34,6 +34,7 @@ public class ClassroomDeleteAction extends ActionSupport{
 	public String execute() {
 		List<Integer> clsidlst = new ArrayList<Integer>();
     	
+		//auto conversion??
     	for(int i=0; i<clsid.length;i++){
     		clsidlst.add(new Integer (clsid[i]));
     	}

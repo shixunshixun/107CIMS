@@ -27,21 +27,7 @@ public class BuildingCreateAction extends ActionSupport{
     }  
       
     public String execute()  
-    {  
-        /*if (true == this.userService.isLogin(username, password))  
-        {  
-            ActionContext.getContext().getSession().put("username", username);  
-            return SUCCESS;  
-        }else{  
-            super.addActionError(super.getText("loginfailed"));  
-            return ERROR;  
-        }  */
-    	
-    	/*ActionContext.getContext().getSession().put("buildingname", buildingname);
-    	ActionContext.getContext().getSession().put("departmentname", departmentname);
-    	ActionContext.getContext().getSession().put("simplename", simplename);
-    	ActionContext.getContext().getSession().put("compus", compus);*/
-    	
+    {    	
     	
     	Building building = new Building();
     	building.setBuildingName(buildingname);
@@ -58,19 +44,5 @@ public class BuildingCreateAction extends ActionSupport{
     		return ERROR;    		
     	}
     }  
-     
-    /*
-    public void validate()  
-    {  
-        if ((null == username) || (0==username.length()))  
-        {  
-            super.addActionError(super.getText("warning.empty",new String[] {getText("username")}));  
-        }  
-          
-        if ((null == password) || (0 == password.length()))  
-        {  
-            super.addActionError(super.getText("warning.empty",new String[] {getText("password")}));  
-              
-        }  
-    }  */
+   
 }

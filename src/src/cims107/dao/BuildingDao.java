@@ -43,8 +43,13 @@ public class BuildingDao {
 		
 		List<Building> list = q.list();
 		session.close();
-		//»ñÈ¡buildingId
-		return list.get(0);
+		//ï¿½ï¿½È¡buildingId
+		// in case find nothing
+		if (list.size()==0)
+			return null;
+		else
+			return list.get(0);
+		
 	}
 	
 	public Building find(int buildingid) {
@@ -61,7 +66,7 @@ public class BuildingDao {
 		return list.get(0);
 	}
 	
-	//¼ì²é½ÌÑ§Â¥Ãû³ÆÊÇ·ñÖØÃû
+	//ï¿½ï¿½ï¿½ï¿½Ñ§Â¥ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½
 	public boolean add(Building building) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
