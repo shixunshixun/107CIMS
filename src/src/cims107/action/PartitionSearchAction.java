@@ -9,7 +9,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class PartitionSearchAction extends ActionSupport{
 	private PartitionService partitionService;
-	private List<Partition> allPartitionlst;
 	private List<Partition> partitionlst;
 	
 	public String pyear;
@@ -28,14 +27,6 @@ public class PartitionSearchAction extends ActionSupport{
 	public int endweek;
 	public Boolean pisused;
 	
-
-	public List<Partition> getAllPartitionlst() {
-		return allPartitionlst;
-	}
-
-	public void setAllPartitionlst(List<Partition> allPartitionlst) {
-		this.allPartitionlst = allPartitionlst;
-	}
 
 	public List<Partition> getPartitionlst() {
 		return partitionlst;
@@ -56,7 +47,6 @@ public class PartitionSearchAction extends ActionSupport{
     }
     
     public String execute() {
-    	allPartitionlst = partitionService.find();
     	
     	partitionlst = partitionService.find(pyear, buildingname, pterm, serialnumber, 
     			departmentname, type, maxavailableseat, minavailableseat, 
