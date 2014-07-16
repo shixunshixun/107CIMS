@@ -69,7 +69,7 @@ public class BuildingExportAction extends ActionSupport{
 			row.createCell(3).setCellValue("所属单位");
 			row.createCell(4).setCellValue("楼层数");
 			
-			for(int i=0; i<=buildingid.length;i++){
+			for(int i=0; i<buildingid.length;i++){
             	row = sheet.createRow(i+1);
 
     			row.createCell(0).setCellValue(searchResult.get(i).getBuildingName());
