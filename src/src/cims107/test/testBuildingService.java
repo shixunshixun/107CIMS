@@ -8,7 +8,7 @@
  */
 
 package cims107.test;
-/*
+
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -141,6 +141,6 @@ public class testBuildingService {
 			e.printStackTrace();
 		}
 	}
-
-}
 */
+}
+
