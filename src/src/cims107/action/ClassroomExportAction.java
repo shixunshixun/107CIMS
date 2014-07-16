@@ -80,7 +80,7 @@ public class ClassroomExportAction extends ActionSupport{
 			row.createCell(19).setCellValue("总座位数");
 			row.createCell(20).setCellValue("有效座位数");
 			
-			for(int i=0; i<=clsid.length;i++){
+			for(int i=0; i<clsid.length;i++){
 				Building building = new Building();
             	row = sheet.createRow(i+1);
 
