@@ -15,17 +15,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="easyTalk">
-	<meta http-equiv="description" content="BuildingCreate">
+	<meta http-equiv="description" content="BuildingDelete">
 </head>
 <body>
-	<s:form name="buildingCreateForm" action="BuildingCreateAction">
-		<s:textfield name="buildingname" label="buildingname"></s:textfield>
-		<s:textfield name="departmentname" label="departmentname"></s:textfield>
-		<s:textfield name="simplename" label="simplename"></s:textfield>
-		<s:textfield name="compus" label="compus"></s:textfield>
-		<s:textfield name="floor" label="floor"></s:textfield>
-	</s:form>
-	<s:text name="ADDSUCCESS">ADDSUCCESS</s:text>
+	<s:text name="DELETESUCCESS">DELETESUCCESS</s:text>
 	<s:actionerror/>
 </body>
 </html>
