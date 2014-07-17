@@ -8,5 +8,7 @@
     <constant name="struts.devMode" value="true" /> 
     <constant name="struts.action.extension" value=","></constant>
       
-    <include file="struts-building.xml"></include>    
+    <include file="struts-building.xml"></include>   
+    <include file="struts-classroom.xml"></include> 
+    <include file="struts-partition.xml"></include>
 </struts>  

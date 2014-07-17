@@ -35,6 +35,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 			<list>
 				<value>cims107/model/User.hbm.xml</value>
 				<value>cims107/model/Building.hbm.xml</value>
+				<value>cims107/model/Classroom.hbm.xml</value>
+				<value>cims107/model/Partition.hbm.xml</value>
 			</list>
 		</property>
 	</bean>

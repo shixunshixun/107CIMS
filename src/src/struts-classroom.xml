@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>   
+<!DOCTYPE struts PUBLIC   
+     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+     "http://struts.apache.org/dtds/struts-2.0.dtd">   
+<struts>   
+    <package name="struts2-classroom" extends="struts-default"> 
+        
+        <action name="ClassroomSearchAction" class="ClassroomSearchAction">  
+            <result name="success">classroomSearch.jsp</result> 
+            <result name="error">searchResult.jsp</result>   
+        </action>
+        
+        <action name="ClassroomCreateAction" class="ClassroomCreateAction">  
+            <result name="success">classroomCreate.jsp</result> 
+            <result name="error">createResult.jsp</result>   
+        </action>
+        
+        <action name="ClassroomDeleteAction" class="ClassroomDeleteAction">  
+            <result name="success">deleteResult.jsp</result> 
+            <result name="error">deleteResult.jsp</result>   
+        </action>
+        
+        <action name="classroomUpdate" class="ClassroomUpdateAction">  
+            <result name="success">updateResult.jsp</result> 
+            <result name="error">updateResult.jsp</result>   
+        </action>
+        
+        <action name="classroomExport" class="ClassroomExportAction">  
+            <result name="success">exportResult.jsp</result>   
+        </action>
+        
+        <action name="classroomImport" class="ClassroomImportAction">  
+            <result name="success">importResult.jsp</result>   
+        </action>
+    </package>    
+</struts>  
