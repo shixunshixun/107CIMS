@@ -1,7 +1,9 @@
 package cims107.test;
 
-import cims107.action.BuildingDeleteAction;
-import cims107.dao.BuildingDao;
+import java.util.ArrayList;
+import java.util.List;
+
+import cims107.action.ClassroomDeleteAction;
 import cims107.model.*;
 import cims107.service.*;
 
@@ -20,28 +22,29 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 /*
-public class testBuildingDeleteAction extends AbstractModelAndViewTests{
-	public static BuildingService service;
-	public BuildingDeleteAction action;
+public class testClassroomDeleteAction extends AbstractModelAndViewTests{
+	public static ClassroomService service;
+	public ClassroomDeleteAction action;
 
 	
 	@Test
 	public void testExectue() {
 		try{
-			System.out.println("The exectue method for BuildingDeleteAction is to be tested....");
+			System.out.println("The exectue method for ClassroomDeleteAction is to be tested....");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
 			request.setSession(session);
 			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
 			
-		    action = new BuildingDeleteAction();
-		    service = EasyMock.createMock(BuildingService.class);
-		    action.setBuildingService(service);
+		    action = new ClassroomDeleteAction();
+		    service = EasyMock.createMock(ClassroomService.class);
+		    action.setClassroomService(service);
+		    
+		    String[] clsid = {"1","2"};
+		    action.setClsid(clsid);
 
-		    String[] buildingid = {"2" , "1" };
-		    action.setBuildingid(buildingid);
-	    	
+		    
 	    	EasyMock.expect(service.delete(EasyMock.anyObject())).andReturn(true);
 	    	EasyMock.replay(service);
 	    	
@@ -53,7 +56,5 @@ public class testBuildingDeleteAction extends AbstractModelAndViewTests{
 
 	}
 
-}
+}*/
 
-
-/*id一定是要数字的字符串，开发的程序在容错性上存在漏洞 */

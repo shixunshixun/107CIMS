@@ -22,7 +22,7 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
 
-
+/*
 public class testBuildingUpdateAction extends AbstractModelAndViewTests{
 	public static BuildingService service;
 	public BuildingUpdateAction action;
@@ -61,5 +61,5 @@ public class testBuildingUpdateAction extends AbstractModelAndViewTests{
 
 	}
 
-}
+}*/
 

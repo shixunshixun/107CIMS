@@ -33,7 +33,7 @@ import cims107.service.UserService;
 import cims107.model.Building;
 import cims107.model.User;
 
-
+/*
 public class testBuildingService {
 	public static BuildingService service;
 	private int foundNum;   //It is used to record the number of building which insert in this test process
@@ -141,6 +141,6 @@ public class testBuildingService {
 			e.printStackTrace();
 		}
 	}
-*/
-}
+
+}*/
 

@@ -1,12 +1,15 @@
 package cims107.test;
 
-import cims107.action.BuildingDeleteAction;
-import cims107.dao.BuildingDao;
+import java.sql.Date;
+
+import cims107.action.PartitionDeleteAction;
+import cims107.dao.PartitionDao;
 import cims107.model.*;
 import cims107.service.*;
 
 import org.apache.coyote.Request;
 import org.easymock.EasyMock;
+import org.easymock.IMocksControl;
 import org.junit.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -19,31 +22,35 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
 
-/*
-public class testBuildingDeleteAction extends AbstractModelAndViewTests{
-	public static BuildingService service;
-	public BuildingDeleteAction action;
+
+public class testPartitionDeleteAction extends AbstractModelAndViewTests{
+	public static PartitionService partition_service;
+
+	public PartitionDeleteAction action;
 
 	
 	@Test
 	public void testExectue() {
 		try{
-			System.out.println("The exectue method for BuildingDeleteAction is to be tested....");
+			System.out.println("The exectue method for PartitionDeleteAction is to be tested....");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
 			request.setSession(session);
 			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
 			
-		    action = new BuildingDeleteAction();
-		    service = EasyMock.createMock(BuildingService.class);
-		    action.setBuildingService(service);
-
-		    String[] buildingid = {"2" , "1" };
-		    action.setBuildingid(buildingid);
+		    action = new PartitionDeleteAction();
+		    partition_service = EasyMock.createMock(PartitionService.class);
+		    action.setPartitionService(partition_service);
+		    
+		    String[] partitionid = {"1","2"};
+		    action.setPartitionid(partitionid);
 	    	
-	    	EasyMock.expect(service.delete(EasyMock.anyObject())).andReturn(true);
-	    	EasyMock.replay(service);
+	    	Classroom classroom = new Classroom();
+	    	classroom.setClsSerialNumber("123");
+	    	
+	    	EasyMock.expect(partition_service.delete(EasyMock.anyObject())).andReturn(true);
+	    	EasyMock.replay(partition_service);
 	    	
 	    	assertEquals( "success" , action.execute() );
 		
@@ -54,6 +61,3 @@ public class testBuildingDeleteAction extends AbstractModelAndViewTests{
 	}
 
 }
-
-
-/*id一定是要数字的字符串，开发的程序在容错性上存在漏洞 */

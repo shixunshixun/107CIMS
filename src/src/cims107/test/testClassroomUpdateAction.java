@@ -1,7 +1,7 @@
 package cims107.test;
 
-import cims107.action.ClassroomCreateAction;
-import cims107.dao.BuildingDao;
+import cims107.action.ClassroomUpdateAction;
+import cims107.dao.ClassroomDao;
 import cims107.model.*;
 import cims107.service.*;
 
@@ -19,25 +19,25 @@ import org.springframework.web.servlet.HandlerMapping;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
+/*
 
-
-public class testClassroomCreateAction extends AbstractModelAndViewTests{
+public class testClassroomUpdateAction extends AbstractModelAndViewTests{
 	public static ClassroomService classroom_service;
 	public static BuildingService building_service;
-	public ClassroomCreateAction action;
+	public ClassroomUpdateAction action;
 
 	
 	@Test
 	public void testExectue() {
 		try{
-			System.out.println("The exectue method for ClassroomCreateAction is to be tested....");
+			System.out.println("The exectue method for ClassroomUpateAction is to be tested....");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
 			request.setSession(session);
 			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
 			
-		    action = new ClassroomCreateAction();
+		    action = new ClassroomUpdateAction();
 		    IMocksControl control = EasyMock.createControl();
 		    classroom_service = control.createMock(ClassroomService.class);
 		    building_service = control.createMock(BuildingService.class);
@@ -64,6 +64,7 @@ public class testClassroomCreateAction extends AbstractModelAndViewTests{
 		    action.type = "TestType";
 		    action.usage = "TestUsage";
 		    action.vcorridorlocate = "Testv";
+		    action.clsid = 1;
 		    
 		    Building building = new Building();
 		    building.setBuildingCompus("TestingCompus");
@@ -75,11 +76,11 @@ public class testClassroomCreateAction extends AbstractModelAndViewTests{
 		    
 		    
 	    	EasyMock.expect( building_service.find("TestingBuilding", "TestingCompus")).andReturn(building);
-	    	classroom_service.add(EasyMock.anyObject() );
+	    	classroom_service.update(EasyMock.anyInt(), EasyMock.anyString(), EasyMock.anyString(), EasyMock.anyObject() );
 	    	EasyMock.expectLastCall();
 	    	control.replay();
 	    	
-	    	assertEquals( "ADDSUCCESS" , action.execute() );
+	    	assertEquals( "success" , action.execute() );
 		
 		}catch( Exception e ){
 			e.printStackTrace();
@@ -87,4 +88,4 @@ public class testClassroomCreateAction extends AbstractModelAndViewTests{
 
 	}
 
-}
+}*/
