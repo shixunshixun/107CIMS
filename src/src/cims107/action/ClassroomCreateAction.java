@@ -32,6 +32,16 @@ public class ClassroomCreateAction extends ActionSupport{
 	public int availableseatnum;
 	
 	private ClassroomService classroomService;
+	public BuildingService getBuildingService() {
+		return buildingService;
+	}
+
+	public void setBuildingService(BuildingService buildingService) {
+		this.buildingService = buildingService;
+	}
+
+
+	BuildingService buildingService;
 	
 	public ClassroomCreateAction()  
     {  
@@ -46,8 +56,7 @@ public class ClassroomCreateAction extends ActionSupport{
 	public String execute()
 	{
 		Building building = new Building();
-		BuildingService buildingService = new BuildingService();
-		
+				
 		building = buildingService.find(buildingname, compus);
 		
 		if(building == null) {

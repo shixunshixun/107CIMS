@@ -22,8 +22,17 @@ public class ClassroomExportAction extends ActionSupport{
 	private HttpServletResponse response;
 	
     private ClassroomService classroomService;  
+    BuildingService buildingService;
       
-    public ClassroomExportAction()  
+    public BuildingService getBuildingService() {
+		return buildingService;
+	}
+
+	public void setBuildingService(BuildingService buildingService) {
+		this.buildingService = buildingService;
+	}
+
+	public ClassroomExportAction()  
     {  
         System.out.println("initialize BuildingExportAction......");  
     }
@@ -44,7 +53,6 @@ public class ClassroomExportAction extends ActionSupport{
 	public String execute() {
 		List<Integer> clsidlst = new ArrayList<Integer>();
     	List<Classroom> searchResult = new ArrayList<Classroom>();
-    	BuildingService buildingService = new BuildingService();
     	
     	for(int i=0; i<clsid.length;i++){
     		clsidlst.add(new Integer (clsid[i]));

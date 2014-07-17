@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop 
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd  
+           http://www.springframework.org/schema/tx 
+  		   http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+  		   
+  	<bean id="ClassroomSearchAction" class="cims107.action.ClassroomSearchAction" scope="prototype">  
+        <property name="classroomService" ref="classroomService" />      
+    </bean>  
+    
+    <bean id="ClassroomCreateAction" class="cims107.action.ClassroomCreateAction" scope="prototype">  
+        <property name="classroomService" ref="classroomService" />  
+         <property name="buildingService" ref="buildingService" />
+    </bean> 
+    
+    <bean id="ClassroomDeleteAction" class="cims107.action.ClassroomDeleteAction" scope="prototype">  
+        <property name="classroomService" ref="classroomService" />  
+    </bean> 
+    
+    <bean id="ClassroomUpdateAction" class="cims107.action.ClassroomUpdateAction" scope="prototype">  
+        <property name="classroomService" ref="classroomService" /> 
+        <property name="buildingService" ref="buildingService" />   
+    </bean> 
+    
+    <bean id="ClassroomExportAction" class="cims107.action.ClassroomExportAction" scope="prototype">  
+        <property name="classroomService" ref="classroomService" />
+        <property name="buildingService" ref="buildingService" />  
+    </bean> 
+    
+    <bean id="ClassroomImportAction" class="cims107.action.ClassroomImportAction" scope="prototype">  
+        <property name="classroomService" ref="classroomService" />  
+        <property name="buildingService" ref="buildingService" />  
+    </bean> 
+      
+    <bean id="classroomDao" class="cims107.dao.ClassroomDao">  
+        <property name="sessionFactory" ref="sessionFactory"></property>  
+    </bean>  
+      
+    <bean id="classroomService" class="cims107.service.ClassroomService">  
+        <property name="classroomDao" ref="classroomDao"></property>  
+    </bean>  
+</beans>

@@ -28,8 +28,17 @@ public class ClassroomImportAction extends ActionSupport{
     private String excelFileFileName;
     
     private ClassroomService classroomService;  
+    BuildingService buildingService;
     
-    public ClassroomImportAction()  
+    public BuildingService getBuildingService() {
+		return buildingService;
+	}
+
+	public void setBuildingService(BuildingService buildingService) {
+		this.buildingService = buildingService;
+	}
+
+	public ClassroomImportAction()  
     {  
         System.out.println("initialize BuildingImportAction......");  
     }
@@ -88,7 +97,7 @@ public class ClassroomImportAction extends ActionSupport{
 	            
 	            Classroom classroom = new Classroom();
 	            Building building = new Building();
-	    		BuildingService buildingService = new BuildingService();
+	    		
 	    		
 	    		building = buildingService.find(ros.getCell(0).getStringCellValue(), ros.getCell(1).getStringCellValue());
 	            

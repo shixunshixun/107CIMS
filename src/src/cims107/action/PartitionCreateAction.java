@@ -36,7 +36,25 @@ public class PartitionCreateAction extends ActionSupport{
 	public String[] whichday; 
 	
 	private PartitionService partitionService;
+	BuildingService buildingService;
+	ClassroomService classroomService;
 	
+	public BuildingService getBuildingService() {
+		return buildingService;
+	}
+
+	public void setBuildingService(BuildingService buildingService) {
+		this.buildingService = buildingService;
+	}
+
+	public ClassroomService getClassroomService() {
+		return classroomService;
+	}
+
+	public void setClassroomService(ClassroomService classroomService) {
+		this.classroomService = classroomService;
+	}
+
 	public String[] getWhichday() {
 		return whichday;
 	}
@@ -76,10 +94,8 @@ public class PartitionCreateAction extends ActionSupport{
 	    	
 	    	Partition partition = new Partition();
 	    	Building building = new Building();
-			BuildingService buildingService = new BuildingService();
 			building = buildingService.find(buildingname, compus);
 			Classroom classroom = new Classroom();
-			ClassroomService classroomService = new ClassroomService();
 			classroom = classroomService.find(building.getBuildingId(), serialnumber);
 	    	
 	    	partition.setpYear(pyear);

@@ -32,7 +32,16 @@ public class ClassroomUpdateAction extends ActionSupport{
 	public String departmentname; 
 	
 	private ClassroomService classroomService;
+	BuildingService buildingService;
 	
+	public BuildingService getBuildingService() {
+		return buildingService;
+	}
+
+	public void setBuildingService(BuildingService buildingService) {
+		this.buildingService = buildingService;
+	}
+
 	public ClassroomUpdateAction() 
     {  
         System.out.println("initialize ClassroomCreateAction......");  
@@ -60,7 +69,6 @@ public class ClassroomUpdateAction extends ActionSupport{
 	public String execute() {
 		Classroom classroom = new Classroom();
 		Building building = new Building();
-		BuildingService buildingService = new BuildingService();
 		
 		building = buildingService.find(buildingname, compus);
 		
