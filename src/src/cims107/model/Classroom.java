@@ -10,11 +10,11 @@ public class Classroom {
 	private int clsExamNum;
 	private int clsArea;
 	private String clsLocation;
-	private Boolean clsIsAmphi;
+	private int clsIsAmphi;
 	private String clsShape;
-	private Boolean clsHasMicrophone;
+	private int clsHasMicrophone;
 	private String clsUsage;
-	private Boolean clsIsUsed;
+	private int clsIsUsed;
 	private int clsSeatNum;
 	private int clsAvailableSeatNum;
 	private int clsMaxCol;
@@ -75,10 +75,10 @@ public class Classroom {
 	public void setClsLocation(String clsLocation) {
 		this.clsLocation = clsLocation;
 	}
-	public Boolean getClsIsAmphi() {
+	public int getClsIsAmphi() {
 		return clsIsAmphi;
 	}
-	public void setClsIsAmphi(Boolean clsIsAmphi) {
+	public void setClsIsAmphi(int clsIsAmphi) {
 		this.clsIsAmphi = clsIsAmphi;
 	}
 	public String getClsShape() {
@@ -87,10 +87,10 @@ public class Classroom {
 	public void setClsShape(String clsShape) {
 		this.clsShape = clsShape;
 	}
-	public Boolean getClsHasMicrophone() {
+	public int getClsHasMicrophone() {
 		return clsHasMicrophone;
 	}
-	public void setClsHasMicrophone(Boolean clsHasMicrophone) {
+	public void setClsHasMicrophone(int clsHasMicrophone) {
 		this.clsHasMicrophone = clsHasMicrophone;
 	}
 	public String getClsUsage() {
@@ -99,10 +99,10 @@ public class Classroom {
 	public void setClsUsage(String clsUsage) {
 		this.clsUsage = clsUsage;
 	}
-	public Boolean getClsIsUsed() {
+	public int getClsIsUsed() {
 		return clsIsUsed;
 	}
-	public void setClsIsUsed(Boolean clsIsUsed) {
+	public void setClsIsUsed(int clsIsUsed) {
 		this.clsIsUsed = clsIsUsed;
 	}
 	public int getClsSeatNum() {
@@ -141,4 +141,5 @@ public class Classroom {
 	public void setClsHCorridorLocate(String clsHCorridorLocate) {
 		this.clsHCorridorLocate = clsHCorridorLocate;
 	}
+	
 }

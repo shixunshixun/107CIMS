@@ -20,12 +20,12 @@ public class PartitionService {
 		return partitionDao.find();
 	}
 	
-	public List<Partition> find(String pyear, String buildingname, String pterm, String serialnumber, 
+	public List<Partition> find(String pyear, String compus, String buildingname, String pterm, String serialnumber, 
 			String departmentname, String type, int maxavailableseat, int minavailableseat, 
 			int maxclassnum, int minclassnum, int maxexamnum, int minexamnum, 
-			int beginweek, int endweek, Boolean pisused) {
+			int beginweek, int endweek, int pisused) {
 		
-		return partitionDao.find(pyear, buildingname, pterm, serialnumber, 
+		return partitionDao.find(pyear, compus, buildingname, pterm, serialnumber, 
     			departmentname, type, maxavailableseat, minavailableseat, 
     			maxclassnum, minclassnum, maxexamnum, minexamnum, 
     			beginweek, endweek, pisused);

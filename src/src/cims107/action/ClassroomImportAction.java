@@ -34,7 +34,7 @@ public class ClassroomImportAction extends ActionSupport{
         System.out.println("initialize BuildingImportAction......");  
     }
     
-    public void setBuildingService(ClassroomService classroomService)  
+    public void setClassroomService(ClassroomService classroomService)  
     {  
         this.classroomService = classroomService;  
     }  
@@ -92,24 +92,24 @@ public class ClassroomImportAction extends ActionSupport{
 	    		
 	    		building = buildingService.find(ros.getCell(0).getStringCellValue(), ros.getCell(1).getStringCellValue());
 	            
-	            classroom.setClsSerialNumber(ros.getCell(0).getStringCellValue());
-	            classroom.setClsFloor((int)ros.getCell(0).getNumericCellValue());
-	            classroom.setClsType(ros.getCell(0).getStringCellValue());
-	            classroom.setClsShape(ros.getCell(0).getStringCellValue());
-	            classroom.setClsClassNum((int)ros.getCell(0).getNumericCellValue());
-	            classroom.setClsExamNum((int)ros.getCell(0).getNumericCellValue());
-	            classroom.setClsMaxRow((int)ros.getCell(0).getNumericCellValue());
-	            classroom.setClsMaxCol((int)ros.getCell(0).getNumericCellValue());
-	            classroom.setClsVCorridorLocate(ros.getCell(0).getStringCellValue());
-	            classroom.setClsHCorridorLocate(ros.getCell(0).getStringCellValue());
-	            classroom.setClsArea((int)ros.getCell(0).getNumericCellValue());
-	            classroom.setClsLocation(ros.getCell(0).getStringCellValue());
-	            classroom.setClsIsAmphi(ros.getCell(0).getBooleanCellValue());
-	            classroom.setClsHasMicrophone(ros.getCell(0).getBooleanCellValue());
-	            classroom.setClsIsUsed(ros.getCell(0).getBooleanCellValue());
-	            classroom.setClsUsage(ros.getCell(0).getStringCellValue());
-	            classroom.setClsSeatNum((int)ros.getCell(0).getNumericCellValue());
-	            classroom.setClsAvailableSeatNum((int)ros.getCell(0).getNumericCellValue());
+	            classroom.setClsSerialNumber(ros.getCell(2).getStringCellValue());
+	            classroom.setClsFloor((int)ros.getCell(3).getNumericCellValue());
+	            classroom.setClsType(ros.getCell(4).getStringCellValue());
+	            classroom.setClsShape(ros.getCell(5).getStringCellValue());
+	            classroom.setClsClassNum((int)ros.getCell(6).getNumericCellValue());
+	            classroom.setClsExamNum((int)ros.getCell(7).getNumericCellValue());
+	            classroom.setClsMaxRow((int)ros.getCell(8).getNumericCellValue());
+	            classroom.setClsMaxCol((int)ros.getCell(9).getNumericCellValue());
+	            classroom.setClsVCorridorLocate(ros.getCell(10).getStringCellValue());
+	            classroom.setClsHCorridorLocate(ros.getCell(11).getStringCellValue());
+	            classroom.setClsArea((int)ros.getCell(12).getNumericCellValue());
+	            classroom.setClsLocation(ros.getCell(13).getStringCellValue());
+	            classroom.setClsIsAmphi((int)ros.getCell(14).getNumericCellValue());
+	            classroom.setClsHasMicrophone((int)ros.getCell(15).getNumericCellValue());
+	            classroom.setClsIsUsed((int)ros.getCell(16).getNumericCellValue());
+	            classroom.setClsUsage(ros.getCell(17).getStringCellValue());
+	            classroom.setClsSeatNum((int)ros.getCell(18).getNumericCellValue());
+	            classroom.setClsAvailableSeatNum((int)ros.getCell(19).getNumericCellValue());
 	            classroom.setClsBuildingId(building.getBuildingId());
 	            
 	            classroomlst.add(classroom);

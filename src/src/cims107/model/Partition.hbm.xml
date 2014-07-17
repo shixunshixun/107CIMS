@@ -63,8 +63,8 @@
             <column name="pWhichDay" length="40" />
         </property>
         
-        <property name="pIsUsed" type="java.lang.Boolean">
-            <column name="pIsUsed" length="1" />
+        <property name="pIsUsed" type="java.lang.Integer">
+            <column name="pIsUsed" length="8" />
         </property>
         
     </class>

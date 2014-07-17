@@ -17,16 +17,26 @@ public class ClassroomDao {
 	public List<Classroom> find(String compus, String departmentname, String type, String buildingname, 
 			int floor, String serialnumber, int minClassNum, int maxClassNum, 
 			int area, int minExamNum, int maxExamNum, String location, 
-			Boolean isamphi, String shape, Boolean hasmicrophone, String usage, Boolean isused) {
+			int isamphi, String shape, int hasmicrophone, String usage, int isused) {
 		
 		Session session = sessionFactory.openSession();
 		
-		String hql = "FROM Classroom AS c AND Building As b WHERE b.buildingCompus = :compus AND b.buildingDepartment = :departmentname AND"
+		/*String hql = "FROM Classroom AS c AND Building As b WHERE b.buildingCompus = :compus AND b.buildingDepartment = :departmentname AND"
 				+ " c.clsType = :type AND b.buildingName = :buildingname AND c.clsFloor = :floor AND"
 				+ " c.clsSerialNumber = :serialnumber AND c.clsClassNum >= :minClassNum AND c.clsClassNum <= :maxClassNum AND"
 				+ " c.clsArea = :area AND c.clsExamNum >= :minExamNum AND c.clsExamNum <= :maxExamNum AND"
 				+ " c.clsLocation = :location AND c.clsIsAmphi = :isamphi AND c.clsShape = :shape AND"
-				+ " c.clsHasMicrophone = :hasmicrophone AND c.clsUsage = :usage AND c.clsIsUsed = :isused AND b.buildingId = c.clsBuildingId";
+				+ " c.clsHasMicrophone = :hasmicrophone AND c.clsUsage = :usage AND c.clsIsUsed = :isused AND b.buildingId = c.clsBuildingId";*/
+		
+		
+		String hql = "FROM Classroom AS c WHERE c.clsType = :type AND c.clsFloor = :floor AND"
+				+ " c.clsSerialNumber = :serialnumber AND c.clsClassNum >= :minClassNum AND c.clsClassNum <= :maxClassNum AND"
+				+ " c.clsArea = :area AND c.clsExamNum >= :minExamNum AND c.clsExamNum <= :maxExamNum AND"
+				+ " c.clsLocation = :location AND c.clsIsAmphi = :isamphi AND c.clsShape = :shape AND"
+				+ " c.clsHasMicrophone = :hasmicrophone AND c.clsUsage = :usage AND c.clsIsUsed = :isused AND"
+				+ " c.clsBuildingId in (select buildingId from Building where buildingCompus=:compus and buildingDepartment=:departmentname and buildingName=:buildingname)";
+		
+		
 				
 		Query q = session.createQuery(hql);
 		
@@ -42,11 +52,11 @@ public class ClassroomDao {
 		q.setInteger("minExamNum", minExamNum);
 		q.setInteger("maxExamNum", maxExamNum);
 		q.setString("location", location);
-		q.setBoolean("isamphi", isamphi);
+		q.setInteger("isamphi", isamphi);
 		q.setString("shape", shape);
-		q.setBoolean("hasmicrophone", hasmicrophone);
+		q.setInteger("hasmicrophone", hasmicrophone);
 		q.setString("usage", usage);
-		q.setBoolean("isused", isused);
+		q.setInteger("isused", isused);
 		
 		List<Classroom> list = q.list();
 		session.close();

@@ -20,7 +20,7 @@ public class PartitionUpdateAction extends ActionSupport{
         System.out.println("initialize ParitionCreateAction......");  
     }
 	
-	public void setParitionService(PartitionService partitionService)  
+	public void setPartitionService(PartitionService partitionService)  
     {  
         this.partitionService = partitionService;  
     }

@@ -33,21 +33,32 @@ public class PartitionDao {
 		return list;
 	}
 	
-	public List<Partition> find(String pyear, String buildingname, String pterm, String serialnumber, 
+	public List<Partition> find(String pyear, String compus, String buildingname, String pterm, String serialnumber, 
 			String departmentname, String type, int maxavailableseat, int minavailableseat, 
 			int maxclassnum, int minclassnum, int maxexamnum, int minexamnum, 
-			int beginweek, int endweek, Boolean pisused) {
+			int beginweek, int endweek, int pisused) {
 		
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Partition AS p AND Building AS b AND Classroom As c WHERE p.pYear = :pyear AND b.buildingName = :buildingname AND"
+		/*String hql = "FROM Partition AS p, Building AS b, Classroom As c WHERE p.pYear = :pyear AND b.buildingName = :buildingname AND"
 				+ " p.pTerm = :pterm AND c.clsSerialNumber = :serialnumber AND p.pDepartment = :departmentname AND"
 				+ " c.clsType = :type AND c.clsAvailableSeatNum <= :maxavailableseat AND c.clsAvailableSeatNum >= :minavailableseat AND"
 				+ " p.pClassNum <= :maxclassnum AND p.pClassNum >= :minclassnum AND p.pExamNum <= :maxexamnum AND"
 				+ " p.pExamNum >= :minexamnum AND p.pBeginWeek = :beginweek AND p.pEndWeek = :endweek AND p.pIsUsed = :pisused AND"
-				+ " p.pClsId = c.clsId AND b.buildingId = c.clsBuildingId";
+				+ " p.pClsId = c.clsId AND b.buildingId = c.clsBuildingId";*/
+		
+		String hql = "FROM Partition AS p WHERE p.pYear = :pyear AND p.pTerm = :pterm AND p.pDepartment = :departmentname AND"
+				+ " p.pClassNum <= :maxclassnum AND p.pClassNum >= :minclassnum AND p.pExamNum <= :maxexamnum AND"
+				+ " p.pExamNum >= :minexamnum AND p.pBeginWeek = :beginweek AND p.pEndWeek = :endweek AND p.pIsUsed = :pisused AND"
+				+ " p.pClsId in (select clsId from Classroom where clsType=:type and clsSerialNumber=:serialnumber and"
+				+ " clsAvailableSeatNum<=:maxavailableseat and clsAvailableSeatNum>=:minavailableseat and clsBuildingId in "
+				+ " (select buildingId from Building where buildingName=:buildingname and buildingCompus=:compus))";
+		
+		
+		
 		Query q = session.createQuery(hql);
 		
 		q.setString("pyear", pyear);
+		q.setString("compus", compus);
 		q.setString("buildingname", buildingname);
 		q.setString("pterm", pterm);
 		q.setString("serialnumber", serialnumber);
@@ -64,7 +75,7 @@ public class PartitionDao {
 		
 		q.setInteger("beginweek", beginweek);
 		q.setInteger("endweek", endweek);
-		q.setBoolean("pisused", pisused);
+		q.setInteger("pisused", pisused);
 		
 		List<Partition> list = q.list();
 		session.close();
@@ -106,7 +117,7 @@ public class PartitionDao {
 		
 		for (int i = 0; i < partitionlst.size(); i ++) {
 			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
-			p.setpIsUsed(true);
+			p.setpIsUsed(1);
 			session.update(p);
 		}
 		
@@ -120,7 +131,7 @@ public class PartitionDao {
 		
 		for (int i = 0; i < partitionlst.size(); i ++) {
 			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
-			p.setpIsUsed(false);
+			p.setpIsUsed(0);
 			session.update(p);
 		}
 		

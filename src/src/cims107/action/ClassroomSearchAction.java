@@ -17,9 +17,9 @@ public class ClassroomSearchAction extends ActionSupport{
 	public String shape;
 	public int area;
 	public String location;
-	public Boolean isamphi;
-	public Boolean hasmicrophone;
-	public Boolean isused;
+	public int isamphi;
+	public int hasmicrophone;
+	public int isused;
 	public String usage;
 	public String departmentname; 
 	public int maxClassNum;
@@ -51,15 +51,20 @@ public class ClassroomSearchAction extends ActionSupport{
 	
 	public String execute()
 	{
-				
-		classroomlst = classroomService.find(compus, departmentname, type, buildingname, 
-				floor, serialnumber, minClassNum, maxClassNum, 
-				area, minExamNum, maxExamNum, location, 
-				isamphi, shape, hasmicrophone, usage, isused);
-		
-		//��ʾ��ȡ���Ľ�����Ϣ
-		
-		
-		return SUCCESS;
+		if (isValidate()) {
+			classroomlst = classroomService.find(compus, departmentname, type, buildingname, 
+					floor, serialnumber, minClassNum, maxClassNum, 
+					area, minExamNum, maxExamNum, location, 
+					isamphi, shape, hasmicrophone, usage, isused);
+			
+			return SUCCESS;
+			
+			//��ʾ��ȡ���Ľ�����Ϣ
+		}
+		return ERROR;
+	}
+	
+	public Boolean isValidate() {
+		return (maxClassNum >= minClassNum) && (maxExamNum >= minExamNum);
 	}
 }

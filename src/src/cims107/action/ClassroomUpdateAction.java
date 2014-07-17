@@ -23,9 +23,9 @@ public class ClassroomUpdateAction extends ActionSupport{
 	public String vcorridorlocate;
 	public int area;
 	public String location;
-	public Boolean isamphi;
-	public Boolean hasmicrophone;
-	public Boolean isused;
+	public int isamphi;
+	public int hasmicrophone;
+	public int isused;
 	public String usage;
 	public int seatnum;
 	public int availableseatnum;

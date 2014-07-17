@@ -17,6 +17,7 @@ public class PartitionSearchAction extends ActionSupport{
 	public String serialnumber;
 	public String departmentname;
 	public String type;
+	public String compus;
 	public int maxavailableseat;
 	public int minavailableseat;
 	public int maxclassnum;
@@ -25,7 +26,7 @@ public class PartitionSearchAction extends ActionSupport{
 	public int minexamnum;
 	public int beginweek;
 	public int endweek;
-	public Boolean pisused;
+	public int pisused;
 	
 
 	public List<Partition> getPartitionlst() {
@@ -48,11 +49,19 @@ public class PartitionSearchAction extends ActionSupport{
     
     public String execute() {
     	
-    	partitionlst = partitionService.find(pyear, buildingname, pterm, serialnumber, 
-    			departmentname, type, maxavailableseat, minavailableseat, 
-    			maxclassnum, minclassnum, maxexamnum, minexamnum, 
-    			beginweek, endweek, pisused);
-    	
-    	return SUCCESS;
+    	if (isValidate()) {
+	    	partitionlst = partitionService.find(pyear, compus, buildingname, pterm, serialnumber, 
+	    			departmentname, type, maxavailableseat, minavailableseat, 
+	    			maxclassnum, minclassnum, maxexamnum, minexamnum, 
+	    			beginweek, endweek, pisused);
+	    	
+	    	return SUCCESS;
+    	}
+    	return ERROR;
+    }
+    
+    public Boolean isValidate() {
+    	return (maxavailableseat >= minavailableseat && maxclassnum >= minclassnum 
+    			&& maxexamnum >= minexamnum && beginweek <= endweek);
     }
 }

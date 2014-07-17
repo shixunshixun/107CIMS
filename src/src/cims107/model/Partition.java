@@ -17,7 +17,7 @@ public class Partition {
 	private int pBeginLession;
 	private int pEndLession;
 	private String pWhichDay;
-	private Boolean pIsUsed;
+	private int pIsUsed;
 	
 	public String getpWhichDay() {
 		return pWhichDay;
@@ -103,10 +103,10 @@ public class Partition {
 	public void setpEndWeek(int pEndWeek) {
 		this.pEndWeek = pEndWeek;
 	}
-	public Boolean getpIsUsed() {
+	public int getpIsUsed() {
 		return pIsUsed;
 	}
-	public void setpIsUsed(Boolean pIsUsed) {
+	public void setpIsUsed(int pIsUsed) {
 		this.pIsUsed = pIsUsed;
 	}
 	

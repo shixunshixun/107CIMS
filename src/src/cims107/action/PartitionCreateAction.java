@@ -31,7 +31,7 @@ public class PartitionCreateAction extends ActionSupport{
 	public Date enddate;
 	public int beginlession;
 	public int endlession;
-	public Boolean pisused;
+	public int pisused;
 	
 	public String[] whichday; 
 	
@@ -67,37 +67,49 @@ public class PartitionCreateAction extends ActionSupport{
     }
     
     public String execute() {
-    	List<Integer> whichdaylst = new ArrayList<Integer>();
-    	
-    	for(int i=0; i<whichday.length;i++){
-    		whichdaylst.add(new Integer (whichday[i]));
+    	if (isValidate()) {
+	    	List<Integer> whichdaylst = new ArrayList<Integer>();
+	    	
+	    	for(int i=0; i<whichday.length;i++){
+	    		whichdaylst.add(new Integer (whichday[i]));
+	    	}
+	    	
+	    	Partition partition = new Partition();
+	    	Building building = new Building();
+			BuildingService buildingService = new BuildingService();
+			building = buildingService.find(buildingname, compus);
+			Classroom classroom = new Classroom();
+			ClassroomService classroomService = new ClassroomService();
+			classroom = classroomService.find(building.getBuildingId(), serialnumber);
+	    	
+	    	partition.setpYear(pyear);
+	    	partition.setpTerm(pterm);
+	    	partition.setpClsId(classroom.getClsId());
+	    	partition.setpDepartment(pdepartmentname);
+	    	partition.setpClassNum(pclassnum);
+	    	partition.setpExamNum(pexamnum);
+	    	partition.setpBeginWeek(beginweek);
+	    	partition.setpEndWeek(endweek);
+	    	partition.setpBeginDate(begindate);
+	    	partition.setpEndDate(enddate);
+	    	partition.setpBeginLession(beginlession);
+	    	partition.setpEndLession(endlession);
+	    	partition.setpWhichDay(list2WhichdayString(whichdaylst));
+	    	partition.setpIsUsed(pisused);
+	    	
+	    	partitionService.add(partition);
+	    	
+	    	return SUCCESS;
     	}
-    	
-    	Partition partition = new Partition();
-    	Building building = new Building();
-		BuildingService buildingService = new BuildingService();
-		building = buildingService.find(buildingname, compus);
-		Classroom classroom = new Classroom();
-		ClassroomService classroomService = new ClassroomService();
-		classroom = classroomService.find(building.getBuildingId(), serialnumber);
-    	
-    	partition.setpYear(pyear);
-    	partition.setpTerm(pterm);
-    	partition.setpClsId(classroom.getClsId());
-    	partition.setpDepartment(pdepartmentname);
-    	partition.setpClassNum(pclassnum);
-    	partition.setpExamNum(pexamnum);
-    	partition.setpBeginWeek(beginweek);
-    	partition.setpEndWeek(endweek);
-    	partition.setpBeginDate(begindate);
-    	partition.setpEndDate(enddate);
-    	partition.setpBeginLession(beginlession);
-    	partition.setpEndLession(endlession);
-    	partition.setpWhichDay(list2WhichdayString(whichdaylst));
-    	partition.setpIsUsed(pisused);
-    	
-    	partitionService.add(partition);
-    	
-    	return SUCCESS;
+    	return ERROR;
+    }
+    
+    public Boolean isValidate() {
+    	if (maxavailableseat < minavailableseat || beginweek > endweek || 
+    			beginlession < 1 || endlession > 15 || beginlession > endlession)
+    		return false;
+    	if (begindate.after(enddate))
+    		return false;
+    	return true;
     }
 }

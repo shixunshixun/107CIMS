@@ -43,24 +43,24 @@
             <column name="clsLocation" length="40" />
         </property>
         
-        <property name="clsIsAmphi" type="java.lang.Boolean">
-            <column name="clsIsAmphi" length="1" />
+        <property name="clsIsAmphi" type="java.lang.Integer">
+            <column name="clsIsAmphi" length="8" />
         </property>
         
         <property name="clsShape" type="java.lang.String">
             <column name="clsShape" length="40" />
         </property>
         
-        <property name="clsHasMicrophone" type="java.lang.Boolean">
-            <column name="clsHasMicrophone" length="1" />
+        <property name="clsHasMicrophone" type="java.lang.Integer">
+            <column name="clsHasMicrophone" length="8" />
         </property>
         
         <property name="clsUsage" type="java.lang.String">
             <column name="clsUsage" length="40" />
         </property>
         
-        <property name="clsIsUsed" type="java.lang.Boolean">
-            <column name="clsIsUsed" length="1" />
+        <property name="clsIsUsed" type="java.lang.Integer">
+            <column name="clsIsUsed" length="8" />
         </property>
         
         <property name="clsSeatNum" type="java.lang.Integer">

@@ -20,9 +20,9 @@ public class ClassroomService {
     public List<Classroom> find(String compus, String departmentname, String type, String buildingname, 
 			int floor, String serialnumber, int minClassNum, int maxClassNum, 
 			int area, int minExamNum, int maxExamNum, String location, 
-			Boolean isamphi, String shape, Boolean hasmicrophone, String usage, Boolean isused) {
+			int isamphi, String shape, int hasmicrophone, String usage, int isused) {
     	
-    	return classroomDao.find(compus, buildingname, type, buildingname, 
+    	return classroomDao.find(compus, departmentname, type, buildingname, 
 				floor, serialnumber, minClassNum, maxClassNum, 
 				area, minExamNum, maxExamNum, location, 
 				isamphi, shape, hasmicrophone, usage, isused);
