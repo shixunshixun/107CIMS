@@ -43,12 +43,12 @@
             <column name="pEndWeek" length="8" />
         </property>
         
-        <property name="pBeginDate" type="date">
-            <column name="pBeginDate"/>
+        <property name="pBeginDate" type="java.lang.String">
+            <column name="pBeginDate" length="40"/>
         </property>
         
-        <property name="pEndDate" type="date">
-            <column name="pEndDate"/>
+        <property name="pEndDate" type="java.lang.String">
+            <column name="pEndDate" length="40"/>
         </property>
         
         <property name="pBeginLession" type="java.lang.Integer">

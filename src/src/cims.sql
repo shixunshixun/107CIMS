@@ -59,12 +59,12 @@ pClassNum int(8) not null,
 pExamNum int(8) not null,
 pBeginWeek int(8),
 pEndWeek int(8),
-pBeginDate Date,
-pEndDate Date,
 pBeginLession int(8) not null,
 pEndLession int(8) not null,
 pWhichDay varchar(40) not null,
 pIsUsed boolean default '0',
+pBeginDate varchar(40),
+pEndDate varchar(40),
 foreign key (pClsId) references cims_cls(clsId)
 ) DEFAULT CHARSET=gbk;
 
@@ -95,5 +95,5 @@ insert into cims_cls values('', '多媒体教室', '1', '1', '20140709001', '45', '43
 insert into cims_cls values('', '语音室', '1', '1', '20140709002', '45', '43', '140', '东南', '1', '扇形', '1', '语音', '0', '50', '45', '9', '6', '1,2', '3,4');
 insert into cims_cls values('', '多媒体教室', '1', '2', '20140709003', '45', '43', '140', '东南', '1', '矩形', '1', '上课', '1', '50', '45', '9', '6', '1,2', '3,4'); 
 
-insert into cims_partition values('', '2014-2015', '第二学期', '2', '教务处', '45', '43', '1', '3', '', '', '1', '3', '1,2,3', '0');
-insert into cims_partition values('', '2013-2014', '第一学期', '1', '学生会', '45', '43', '', '', '2014-07-01', '2014-07-04', '4', '6', '1,2,3,4', '1');
+insert into cims_partition values('', '2014-2015', '第二学期', '2', '教务处', '45', '43', '1', '3', '1', '3', '1,2,3', '0', '', '');
+insert into cims_partition values('', '2013-2014', '第一学期', '1', '学生会', '45', '43', '', '', '4', '6', '1,2,3,4', '1', '2014-07-01', '2014-07-04');

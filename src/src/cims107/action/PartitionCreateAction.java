@@ -1,6 +1,5 @@
 package cims107.action;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +26,8 @@ public class PartitionCreateAction extends ActionSupport{
 	public int pexamnum;
 	public int beginweek;
 	public int endweek;
-	public Date begindate;
-	public Date enddate;
+	public String begindate;
+	public String enddate;
 	public int beginlession;
 	public int endlession;
 	public int pisused;
@@ -85,7 +84,7 @@ public class PartitionCreateAction extends ActionSupport{
     }
     
     public String execute() {
-    	if (isValidate()) {
+    	//if (isValidate()) {
 	    	List<Integer> whichdaylst = new ArrayList<Integer>();
 	    	
 	    	for(int i=0; i<whichday.length;i++){
@@ -116,16 +115,16 @@ public class PartitionCreateAction extends ActionSupport{
 	    	partitionService.add(partition);
 	    	
 	    	return SUCCESS;
-    	}
-    	return ERROR;
+    	//}
+    	//return ERROR;
     }
     
-    public Boolean isValidate() {
+    /*public Boolean isValidate() {
     	if (maxavailableseat < minavailableseat || beginweek > endweek || 
     			beginlession < 1 || endlession > 15 || beginlession > endlession)
     		return false;
     	if (begindate.after(enddate))
     		return false;
     	return true;
-    }
+    }*/
 }

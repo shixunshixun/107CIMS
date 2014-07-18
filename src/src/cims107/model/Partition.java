@@ -12,8 +12,8 @@ public class Partition {
 	private int pExamNum;
 	private int pBeginWeek;
 	private int pEndWeek;
-	private Date pBeginDate;
-	private Date pEndDate;
+	private String pBeginDate;
+	private String pEndDate;
 	private int pBeginLession;
 	private int pEndLession;
 	private String pWhichDay;
@@ -25,16 +25,17 @@ public class Partition {
 	public void setpWhichDay(String pWhichDay) {
 		this.pWhichDay = pWhichDay;
 	}
-	public Date getpBeginDate() {
+	
+	public String getpBeginDate() {
 		return pBeginDate;
 	}
-	public void setpBeginDate(Date pBeginDate) {
+	public void setpBeginDate(String pBeginDate) {
 		this.pBeginDate = pBeginDate;
 	}
-	public Date getpEndDate() {
+	public String getpEndDate() {
 		return pEndDate;
 	}
-	public void setpEndDate(Date pEndDate) {
+	public void setpEndDate(String pEndDate) {
 		this.pEndDate = pEndDate;
 	}
 	public int getpBeginLession() {
