@@ -30,7 +30,10 @@ public class PartitionDao {
 		List<Partition> list = q.list();
 		session.close();
 		//ªÒ»°buildingId
-		return list;
+		if (list.size()==0)
+			return null;
+		else
+			return list;
 	}
 	
 	public List<Partition> find(String pyear, String compus, String buildingname, String pterm, String serialnumber, 
