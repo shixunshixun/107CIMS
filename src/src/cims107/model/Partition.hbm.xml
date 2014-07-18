@@ -67,5 +67,9 @@
             <column name="pIsUsed" length="8" />
         </property>
         
+        <many-to-one name="classroom" class="cims107.model.Classroom" cascade="all">
+			<column name="pClsId" length="8" />
+		</many-to-one>
+        
     </class>
 </hibernate-mapping>

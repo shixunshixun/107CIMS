@@ -87,5 +87,16 @@
             <column name="clsHCorridorLocate" length="40" />
         </property>
         
+        <many-to-one name="building" class="cims107.model.Building" cascade="all">
+			<column name="clsBuildingId" length="8" />
+		</many-to-one>
+		
+		<set name="partitions" cascade="all">
+			<key>
+			<column name="pClsId" length="8"/>
+			</key>
+			<one-to-many class="cims107.model.Partition"/>
+		</set>
+        
     </class>
 </hibernate-mapping>

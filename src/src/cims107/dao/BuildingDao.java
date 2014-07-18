@@ -3,10 +3,13 @@ package cims107.dao;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 
 import cims107.model.Building;
 
@@ -15,7 +18,7 @@ public class BuildingDao {
 	private SessionFactory sessionFactory;
 
 	public List<Building> find(String buildingname, String departmentname, String simplename, String compus) {
-		Session session = sessionFactory.openSession();
+		/*Session session = sessionFactory.openSession();
 		String hql = "FROM Building AS b WHERE b.buildingName = :buildingname AND b.buildingDepartment = :departmentname AND"
 				+ " b.buildingSimpleName = :simplename AND b.buildingCompus = :compus";
 		Query q = session.createQuery(hql);
@@ -26,6 +29,34 @@ public class BuildingDao {
 		q.setString("compus", compus);
 		
 		List<Building> list = q.list();
+		session.close();
+		if (list.size()==0)
+			return null;
+		else
+			return list;*/
+		
+		Session session = sessionFactory.openSession();
+		DetachedCriteria dc = DetachedCriteria.forClass(Building.class);
+		
+		if (buildingname != null) {
+			dc.add(Restrictions.eq("buildingName",buildingname));
+		}
+	
+		if (departmentname != null) {	
+			dc.add(Restrictions.eq("buildingDepartment", departmentname));	
+		}
+	
+		if (simplename != null) {	
+			dc.add(Restrictions.eq("buildingSimpleName", simplename));	
+		}
+		
+		if (compus != null) {			
+			dc.add(Restrictions.eq("buildingCompus", compus));	
+		}
+	   
+		Criteria c = dc.getExecutableCriteria(session);
+	
+		List<Building> list = c.list();
 		session.close();
 		if (list.size()==0)
 			return null;

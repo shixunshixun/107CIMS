@@ -1,5 +1,7 @@
 package cims107.model;
 
+import java.util.*;
+
 public class Building {
 	private int buildingId;
 	private String buildingName;  
@@ -7,6 +9,13 @@ public class Building {
 	private String buildingSimpleName;
 	private String buildingCompus;
 	private int buildingFloorNum;
+	private Set<Classroom> classrooms;
+	public Set<Classroom> getClassrooms() {
+		return classrooms;
+	}
+	public void setClassrooms(Set<Classroom> classrooms) {
+		this.classrooms = classrooms;
+	}
 	public int getBuildingId() {
 		return buildingId;
 	}

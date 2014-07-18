@@ -18,7 +18,14 @@ public class Partition {
 	private int pEndLession;
 	private String pWhichDay;
 	private int pIsUsed;
+	private Classroom classroom;
 	
+	public Classroom getClassroom() {
+		return classroom;
+	}
+	public void setClassroom(Classroom classroom) {
+		this.classroom = classroom;
+	}
 	public String getpWhichDay() {
 		return pWhichDay;
 	}

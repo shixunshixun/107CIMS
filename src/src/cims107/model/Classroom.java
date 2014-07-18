@@ -1,5 +1,7 @@
 package cims107.model;
 
+import java.util.Set;
+
 public class Classroom {
 	private int clsId;
 	private String clsType;
@@ -21,6 +23,20 @@ public class Classroom {
 	private int clsMaxRow;
 	private String clsVCorridorLocate;
 	private String clsHCorridorLocate;
+	private Building building;
+	private Set<Partition> partitions;
+	public Set<Partition> getPartitions() {
+		return partitions;
+	}
+	public void setPartitions(Set<Partition> partitions) {
+		this.partitions = partitions;
+	}
+	public Building getBuilding() {
+		return building;
+	}
+	public void setBuilding(Building building) {
+		this.building = building;
+	}
 	public int getClsId() {
 		return clsId;
 	}

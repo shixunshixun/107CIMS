@@ -31,5 +31,12 @@
             <column name="buildingFloorNum" length="8" />
         </property>
         
+        <set name="classrooms" cascade="all">
+			<key>
+			<column name="clsBuildingId" length="8"/>
+			</key>
+			<one-to-many class="cims107.model.Classroom"/>
+		</set>
+        
     </class>
 </hibernate-mapping>
