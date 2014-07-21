@@ -18,23 +18,6 @@ public class BuildingDao {
 	private SessionFactory sessionFactory;
 
 	public List<Building> find(String buildingname, String departmentname, String simplename, String compus) {
-		/*Session session = sessionFactory.openSession();
-		String hql = "FROM Building AS b WHERE b.buildingName = :buildingname AND b.buildingDepartment = :departmentname AND"
-				+ " b.buildingSimpleName = :simplename AND b.buildingCompus = :compus";
-		Query q = session.createQuery(hql);
-		
-		q.setString("buildingname", buildingname);
-		q.setString("departmentname", departmentname);
-		q.setString("simplename", simplename);
-		q.setString("compus", compus);
-		
-		List<Building> list = q.list();
-		session.close();
-		if (list.size()==0)
-			return null;
-		else
-			return list;*/
-		
 		Session session = sessionFactory.openSession();
 		DetachedCriteria dc = DetachedCriteria.forClass(Building.class);
 		

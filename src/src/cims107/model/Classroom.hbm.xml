@@ -93,7 +93,7 @@
 		
 		<set name="partitions" cascade="all">
 			<key>
-			<column name="pClsId" length="8"/>
+			<column name="partitionClsId" length="8"/>
 			</key>
 			<one-to-many class="cims107.model.Partition"/>
 		</set>

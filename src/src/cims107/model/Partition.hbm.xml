@@ -6,69 +6,69 @@
 	<!-- catalog指定数据库  -->
     <class name="cims107.model.Partition" table="cims_partition" catalog="test">
     
-        <id name="pId" type="java.lang.Integer">
+        <id name="partitionId" type="java.lang.Integer">
             <column name="pId" />
             <generator class="native" />
         </id>
         
-        <property name="pYear" type="java.lang.String">
-            <column name="pYear" length="40" />
+        <property name="partitionYear" type="java.lang.String">
+            <column name="partitionYear" length="40" />
         </property>
         
-        <property name="pTerm" type="java.lang.String">
-            <column name="pTerm" length="40" />
+        <property name="partitionTerm" type="java.lang.String">
+            <column name="partitionTerm" length="40" />
         </property>
         
-        <property name="pClsId" type="java.lang.Integer">
-            <column name="pClsId" length="8" />
+        <property name="partitionClsId" type="java.lang.Integer">
+            <column name="partitionClsId" length="8" />
         </property>
         
-        <property name="pDepartment" type="java.lang.String">
-            <column name="pDepartment" length="40" />
+        <property name="partitionDepartment" type="java.lang.String">
+            <column name="partitionDepartment" length="40" />
         </property>
         
-        <property name="pClassNum" type="java.lang.Integer">
-            <column name="pClassNum" length="8" />
+        <property name="partitionClassNum" type="java.lang.Integer">
+            <column name="partitionClassNum" length="8" />
         </property>
         
-        <property name="pExamNum" type="java.lang.Integer">
-            <column name="pExamNum" length="8" />
+        <property name="partitionExamNum" type="java.lang.Integer">
+            <column name="partitionExamNum" length="8" />
         </property>
         
-        <property name="pBeginWeek" type="java.lang.Integer">
-            <column name="pBeginWeek" length="8" />
+        <property name="partitionBeginWeek" type="java.lang.Integer">
+            <column name="partitionBeginWeek" length="8" />
         </property>
         
-        <property name="pEndWeek" type="java.lang.Integer">
-            <column name="pEndWeek" length="8" />
+        <property name="partitionEndWeek" type="java.lang.Integer">
+            <column name="partitionEndWeek" length="8" />
         </property>
         
-        <property name="pBeginDate" type="java.lang.String">
-            <column name="pBeginDate" length="40"/>
+        <property name="partitionBeginDate" type="java.lang.String">
+            <column name="partitionBeginDate" length="40"/>
         </property>
         
-        <property name="pEndDate" type="java.lang.String">
-            <column name="pEndDate" length="40"/>
+        <property name="partitionEndDate" type="java.lang.String">
+            <column name="partitionEndDate" length="40"/>
         </property>
         
-        <property name="pBeginLession" type="java.lang.Integer">
-            <column name="pBeginLession" length="8" />
+        <property name="partitionBeginLession" type="java.lang.Integer">
+            <column name="partitionBeginLession" length="8" />
         </property>
         
-        <property name="pEndLession" type="java.lang.Integer">
-            <column name="pEndLession" length="8" />
+        <property name="partitionEndLession" type="java.lang.Integer">
+            <column name="partitionEndLession" length="8" />
         </property>
         
-        <property name="pWhichDay" type="java.lang.String">
-            <column name="pWhichDay" length="40" />
+        <property name="partitionWhichDay" type="java.lang.String">
+            <column name="partitionWhichDay" length="40" />
         </property>
         
-        <property name="pIsUsed" type="java.lang.Integer">
-            <column name="pIsUsed" length="8" />
+        <property name="partitionIsUsed" type="java.lang.Integer">
+            <column name="partitionIsUsed" length="8" />
         </property>
         
         <many-to-one name="classroom" class="cims107.model.Classroom" cascade="all">
-			<column name="pClsId" length="8" />
+			<column name="partitionClsId" length="8" />
 		</many-to-one>
         
     </class>

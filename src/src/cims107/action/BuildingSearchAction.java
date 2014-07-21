@@ -2,25 +2,31 @@ package cims107.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ModelDriven;
 
 import cims107.service.BuildingService;
 
-import java.util.List;
+import java.util.*;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import cims107.model.Building;
 
-public class BuildingSearchAction extends ActionSupport{
+public class BuildingSearchAction extends ActionSupport implements ModelDriven<Building>{
 	
-	public String buildingname;  
-	public String departmentname;  
-	public String simplename;
-	public String compus;
-	
-	List<Building> buildinglst;
-    
+	private Building building;
+	private String result;   
     private BuildingService buildingService;  
       
-    public BuildingSearchAction()  
+    @Override
+    public Building getModel() {
+    	if(building == null) {
+    		building = new Building();
+    	}
+    	return building;
+    }
+
+	public BuildingSearchAction()  
     {  
         System.out.println("initialize BuildingSearchAction......");  
     }
@@ -33,9 +39,24 @@ public class BuildingSearchAction extends ActionSupport{
     public String execute()  
     {  
         
-    	buildinglst = buildingService.find(buildingname, departmentname, simplename, compus);
-    	    	  	
+    	List<Building> buildinglst = buildingService.find(building.getBuildingName(), building.getBuildingDepartment(), 
+    			building.getBuildingSimpleName(), building.getBuildingCompus());
+    	
     	if(buildinglst != null) {
+	    	JSONArray ja = new JSONArray();
+	    	for(int i = 0; i < buildinglst.size(); i++) {
+	    		Building b = buildinglst.get(i);
+	    		b.setClassrooms(null);
+	    		ja.add(JSONObject.fromObject(b));
+	    	}
+	    	result = ja.toString();
+    	}
+    	else {
+    		result = "";
+    	}
+    	
+    	return SUCCESS;
+    	/*if(buildinglst != null) {
     		System.out.print(buildinglst.get(0).getBuildingCompus());
     		ActionContext.getContext().getSession().put("buildinglst", buildinglst);
     	   	return SUCCESS;
@@ -43,16 +64,25 @@ public class BuildingSearchAction extends ActionSupport{
     	else {
     		super.addActionError("no building found");
     		return ERROR;
-    	}
+    	}*/
     }
 
-	public List<Building> getBuildinglst() {
-		return buildinglst;
+	
+	public Building getBuilding() {
+		return building;
 	}
 
-	public void setBuildinglst(List<Building> buildinglst) {
-		this.buildinglst = buildinglst;
-	}  
+	public void setBuilding(Building building) {
+		this.building = building;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
      
     
 }

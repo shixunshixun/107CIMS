@@ -45,25 +45,19 @@ public class PartitionDao {
 		
 		Session session = sessionFactory.openSession();
 		
-		
 		String hql = "FROM Partition AS p WHERE p.pYear = :pyear AND p.pTerm = :pterm AND p.pDepartment = :departmentname AND"
 				+ " p.pClassNum <= :maxclassnum AND p.pClassNum >= :minclassnum AND p.pExamNum <= :maxexamnum AND"
 				+ " p.pExamNum >= :minexamnum AND p.pBeginWeek = :beginweek AND p.pEndWeek = :endweek AND p.pIsUsed = :pisused";
-		
-		
 		
 		Query q = session.createQuery(hql);
 		
 		q.setString("pyear", pyear);
 		q.setString("pterm", pterm);
-		
 		q.setString("departmentname", departmentname);
-		
 		q.setInteger("maxclassnum", maxclassnum);
 		q.setInteger("minclassnum", minclassnum);
 		q.setInteger("maxexamnum", maxexamnum);
 		q.setInteger("minexamnum", minexamnum);
-		
 		q.setInteger("beginweek", beginweek);
 		q.setInteger("endweek", endweek);
 		q.setInteger("pisused", pisused);
@@ -103,11 +97,11 @@ public class PartitionDao {
 		Transaction tx = session.beginTransaction();
 		Partition p = (Partition) session.get(Partition.class, pid);
 		
-		p.setpYear(pyear);
-		p.setpTerm(pterm);
-		p.setpBeginWeek(beginweek);
-		p.setpEndWeek(endweek);
-		p.setpDepartment(pdepartmentname);
+		p.setPartitionYear(pyear);
+		p.setPartitionTerm(pterm);
+		p.setPartitionBeginWeek(beginweek);
+		p.setPartitionEndWeek(endweek);
+		p.setPartitionDepartment(pdepartmentname);
     	
 		session.update(p); 
 		tx.commit();
@@ -122,7 +116,7 @@ public class PartitionDao {
 		
 		for (int i = 0; i < partitionlst.size(); i ++) {
 			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
-			p.setpIsUsed(1);
+			p.setPartitionIsUsed(1);
 			session.update(p);
 		}
 		
@@ -136,7 +130,7 @@ public class PartitionDao {
 		
 		for (int i = 0; i < partitionlst.size(); i ++) {
 			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
-			p.setpIsUsed(0);
+			p.setPartitionIsUsed(0);
 			session.update(p);
 		}
 		

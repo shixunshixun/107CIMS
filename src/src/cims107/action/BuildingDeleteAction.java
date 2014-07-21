@@ -5,11 +5,16 @@ import cims107.service.BuildingService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 public class BuildingDeleteAction extends ActionSupport{
 	
 	public String[] buildingid;
+	private String result;
 	
     private BuildingService buildingService;  
       
@@ -21,10 +26,17 @@ public class BuildingDeleteAction extends ActionSupport{
     public void setBuildingService(BuildingService buildingService)  
     {  
         this.buildingService = buildingService;  
-    }  
+    }      
     
-    
-    public String[] getBuildingid() {
+    public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public String[] getBuildingid() {
 		return buildingid;
 	}
 
@@ -34,7 +46,7 @@ public class BuildingDeleteAction extends ActionSupport{
 
 	public String execute()  
     {  
-        
+		//JSONArray ja = new JSONArray();
     	List<Integer> buildingidlst = new ArrayList<Integer>();
     	
     	//auto convert?
@@ -43,6 +55,8 @@ public class BuildingDeleteAction extends ActionSupport{
     	}
     	
     	if(buildingService.delete(buildingidlst)){
+    		//ja.add(JSONObject.fromObject(1));
+    		result = JSONObject.fromObject(1).toString();
     		return SUCCESS;
     	}
     	else {

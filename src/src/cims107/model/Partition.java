@@ -3,120 +3,120 @@ package cims107.model;
 import java.sql.Date;
 
 public class Partition {
-	private int pId;
-	private String pYear;
-	private String pTerm;
-	private int pClsId;
-	private String pDepartment;
-	private int pClassNum;
-	private int pExamNum;
-	private int pBeginWeek;
-	private int pEndWeek;
-	private String pBeginDate;
-	private String pEndDate;
-	private int pBeginLession;
-	private int pEndLession;
-	private String pWhichDay;
-	private int pIsUsed;
+	private int partitionId;
+	private String partitionYear;
+	private String partitionTerm;
+	private int partitionClsId;
+	private String partitionDepartment;
+	private int partitionClassNum;
+	private int partitionExamNum;
+	private int partitionBeginWeek;
+	private int partitionEndWeek;
+	private String partitionBeginDate;
+	private String partitionEndDate;
+	private int partitionBeginLession;
+	private int partitionEndLession;
+	private String partitionWhichDay;
+	private int partitionIsUsed;
 	private Classroom classroom;
 	
+	public int getPartitionId() {
+		return partitionId;
+	}
+	public void setPartitionId(int partitionId) {
+		this.partitionId = partitionId;
+	}
+	public String getPartitionYear() {
+		return partitionYear;
+	}
+	public void setPartitionYear(String partitionYear) {
+		this.partitionYear = partitionYear;
+	}
+	public String getPartitionTerm() {
+		return partitionTerm;
+	}
+	public void setPartitionTerm(String partitionTerm) {
+		this.partitionTerm = partitionTerm;
+	}
+	public int getPartitionClsId() {
+		return partitionClsId;
+	}
+	public void setPartitionClsId(int partitionClsId) {
+		this.partitionClsId = partitionClsId;
+	}
+	public String getPartitionDepartment() {
+		return partitionDepartment;
+	}
+	public void setPartitionDepartment(String partitionDepartment) {
+		this.partitionDepartment = partitionDepartment;
+	}
+	public int getPartitionClassNum() {
+		return partitionClassNum;
+	}
+	public void setPartitionClassNum(int partitionClassNum) {
+		this.partitionClassNum = partitionClassNum;
+	}
+	public int getPartitionExamNum() {
+		return partitionExamNum;
+	}
+	public void setPartitionExamNum(int partitionExamNum) {
+		this.partitionExamNum = partitionExamNum;
+	}
+	public int getPartitionBeginWeek() {
+		return partitionBeginWeek;
+	}
+	public void setPartitionBeginWeek(int partitionBeginWeek) {
+		this.partitionBeginWeek = partitionBeginWeek;
+	}
+	public int getPartitionEndWeek() {
+		return partitionEndWeek;
+	}
+	public void setPartitionEndWeek(int partitionEndWeek) {
+		this.partitionEndWeek = partitionEndWeek;
+	}
+	public String getPartitionBeginDate() {
+		return partitionBeginDate;
+	}
+	public void setPartitionBeginDate(String partitionBeginDate) {
+		this.partitionBeginDate = partitionBeginDate;
+	}
+	public String getPartitionEndDate() {
+		return partitionEndDate;
+	}
+	public void setPartitionEndDate(String partitionEndDate) {
+		this.partitionEndDate = partitionEndDate;
+	}
+	public int getPartitionBeginLession() {
+		return partitionBeginLession;
+	}
+	public void setPartitionBeginLession(int partitionBeginLession) {
+		this.partitionBeginLession = partitionBeginLession;
+	}
+	public int getPartitionEndLession() {
+		return partitionEndLession;
+	}
+	public void setPartitionEndLession(int partitionEndLession) {
+		this.partitionEndLession = partitionEndLession;
+	}
+	public String getPartitionWhichDay() {
+		return partitionWhichDay;
+	}
+	public void setPartitionWhichDay(String partitionWhichDay) {
+		this.partitionWhichDay = partitionWhichDay;
+	}
+	public int getPartitionIsUsed() {
+		return partitionIsUsed;
+	}
+	public void setPartitionIsUsed(int partitionIsUsed) {
+		this.partitionIsUsed = partitionIsUsed;
+	}
 	public Classroom getClassroom() {
 		return classroom;
 	}
 	public void setClassroom(Classroom classroom) {
 		this.classroom = classroom;
 	}
-	public String getpWhichDay() {
-		return pWhichDay;
-	}
-	public void setpWhichDay(String pWhichDay) {
-		this.pWhichDay = pWhichDay;
-	}
 	
-	public String getpBeginDate() {
-		return pBeginDate;
-	}
-	public void setpBeginDate(String pBeginDate) {
-		this.pBeginDate = pBeginDate;
-	}
-	public String getpEndDate() {
-		return pEndDate;
-	}
-	public void setpEndDate(String pEndDate) {
-		this.pEndDate = pEndDate;
-	}
-	public int getpBeginLession() {
-		return pBeginLession;
-	}
-	public void setpBeginLession(int pBeginLession) {
-		this.pBeginLession = pBeginLession;
-	}
-	public int getpEndLession() {
-		return pEndLession;
-	}
-	public void setpEndLession(int pEndLession) {
-		this.pEndLession = pEndLession;
-	}
-	public int getpId() {
-		return pId;
-	}
-	public void setpId(int pId) {
-		this.pId = pId;
-	}
-	public String getpYear() {
-		return pYear;
-	}
-	public void setpYear(String pYear) {
-		this.pYear = pYear;
-	}
-	public String getpTerm() {
-		return pTerm;
-	}
-	public void setpTerm(String pTerm) {
-		this.pTerm = pTerm;
-	}
-	public int getpClsId() {
-		return pClsId;
-	}
-	public void setpClsId(int pClsId) {
-		this.pClsId = pClsId;
-	}
-	public String getpDepartment() {
-		return pDepartment;
-	}
-	public void setpDepartment(String pDepartment) {
-		this.pDepartment = pDepartment;
-	}
-	public int getpClassNum() {
-		return pClassNum;
-	}
-	public void setpClassNum(int pClassNum) {
-		this.pClassNum = pClassNum;
-	}
-	public int getpExamNum() {
-		return pExamNum;
-	}
-	public void setpExamNum(int pExamNum) {
-		this.pExamNum = pExamNum;
-	}
-	public int getpBeginWeek() {
-		return pBeginWeek;
-	}
-	public void setpBeginWeek(int pBeginWeek) {
-		this.pBeginWeek = pBeginWeek;
-	}
-	public int getpEndWeek() {
-		return pEndWeek;
-	}
-	public void setpEndWeek(int pEndWeek) {
-		this.pEndWeek = pEndWeek;
-	}
-	public int getpIsUsed() {
-		return pIsUsed;
-	}
-	public void setpIsUsed(int pIsUsed) {
-		this.pIsUsed = pIsUsed;
-	}
 	
 	
 }

@@ -97,20 +97,20 @@ public class PartitionCreateAction extends ActionSupport{
 			Classroom classroom = new Classroom();
 			classroom = classroomService.find(building.getBuildingId(), serialnumber);
 	    	
-	    	partition.setpYear(pyear);
-	    	partition.setpTerm(pterm);
-	    	partition.setpClsId(classroom.getClsId());
-	    	partition.setpDepartment(pdepartmentname);
-	    	partition.setpClassNum(pclassnum);
-	    	partition.setpExamNum(pexamnum);
-	    	partition.setpBeginWeek(beginweek);
-	    	partition.setpEndWeek(endweek);
-	    	partition.setpBeginDate(begindate);
-	    	partition.setpEndDate(enddate);
-	    	partition.setpBeginLession(beginlession);
-	    	partition.setpEndLession(endlession);
-	    	partition.setpWhichDay(list2WhichdayString(whichdaylst));
-	    	partition.setpIsUsed(pisused);
+	    	partition.setPartitionYear(pyear);
+	    	partition.setPartitionTerm(pterm);
+	    	partition.setPartitionClsId(classroom.getClsId());
+	    	partition.setPartitionDepartment(pdepartmentname);
+	    	partition.setPartitionClassNum(pclassnum);
+	    	partition.setPartitionExamNum(pexamnum);
+	    	partition.setPartitionBeginWeek(beginweek);
+	    	partition.setPartitionEndWeek(endweek);
+	    	partition.setPartitionBeginDate(begindate);
+	    	partition.setPartitionEndDate(enddate);
+	    	partition.setPartitionBeginLession(beginlession);
+	    	partition.setPartitionEndLession(endlession);
+	    	partition.setPartitionWhichDay(list2WhichdayString(whichdaylst));
+	    	partition.setPartitionIsUsed(pisused);
 	    	
 	    	partitionService.add(partition);
 	    	

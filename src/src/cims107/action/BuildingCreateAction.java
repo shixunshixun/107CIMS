@@ -4,19 +4,30 @@ import cims107.model.Building;
 import cims107.service.BuildingService;
 
 import java.util.List;
-import com.opensymphony.xwork2.ActionSupport;
 
-public class BuildingCreateAction extends ActionSupport{
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+public class BuildingCreateAction extends ActionSupport implements ModelDriven<Building>{
 	
-	public String buildingname;  
-	public String departmentname;  
-	public String simplename;
-	public String compus;
-	public int floor;
+	
+    private Building building;
+    private String result;
+    private BuildingService buildingService; 
     
-    private BuildingService buildingService;  
-      
-    public BuildingCreateAction()  
+    @Override
+    public Building getModel() {
+    	if(building == null) {
+    		building = new Building();
+    	}
+    	return building;
+    }
+    
+
+	public BuildingCreateAction()  
     {  
         System.out.println("initialize BuildingQueryAction......");  
     }
@@ -27,22 +38,41 @@ public class BuildingCreateAction extends ActionSupport{
     }  
       
     public String execute()  
-    {    	
+    {
+    	//JSONArray ja = new JSONArray();
     	
-    	Building building = new Building();
-    	building.setBuildingName(buildingname);
-    	building.setBuildingDepartment(departmentname);
-    	building.setBuildingSimpleName(simplename);
-    	building.setBuildingCompus(compus);
-    	building.setBuildingFloorNum(floor);
+//    	building.setBuildingName(building.getBuildingName());
+//    	building.setBuildingDepartment(building.getBuildingDepartment());
+//    	building.setBuildingSimpleName(building.getBuildingSimpleName());
+//    	building.setBuildingCompus(building.getBuildingCompus());
+//    	building.setBuildingFloorNum(building.getBuildingFloorNum());
+    	
+    	
     	
     	if(buildingService.add(building)){
+    		//ja.add(JSONObject.fromObject(1));
+    		result = JSONObject.fromObject(1).toString();
     	   	return SUCCESS;
     	}
     	else{
     		super.addActionError("update failed");
-    		return ERROR;    		
+    		return ERROR;
     	}
     }  
    
+    public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public Building getBuilding() {
+		return building;
+	}
+
+	public void setBuilding(Building building) {
+		this.building = building;
+	}
 }
