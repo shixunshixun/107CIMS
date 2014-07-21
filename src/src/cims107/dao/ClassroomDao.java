@@ -1,7 +1,6 @@
 package cims107.dao;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -10,6 +9,7 @@ import org.hibernate.Transaction;
 
 import cims107.model.Building;
 import cims107.model.Classroom;
+import cims107.model.Partition;
 
 public class ClassroomDao {
 	private SessionFactory sessionFactory;
@@ -21,29 +21,15 @@ public class ClassroomDao {
 		
 		Session session = sessionFactory.openSession();
 		
-		/*String hql = "FROM Classroom AS c AND Building As b WHERE b.buildingCompus = :compus AND b.buildingDepartment = :departmentname AND"
-				+ " c.clsType = :type AND b.buildingName = :buildingname AND c.clsFloor = :floor AND"
-				+ " c.clsSerialNumber = :serialnumber AND c.clsClassNum >= :minClassNum AND c.clsClassNum <= :maxClassNum AND"
-				+ " c.clsArea = :area AND c.clsExamNum >= :minExamNum AND c.clsExamNum <= :maxExamNum AND"
-				+ " c.clsLocation = :location AND c.clsIsAmphi = :isamphi AND c.clsShape = :shape AND"
-				+ " c.clsHasMicrophone = :hasmicrophone AND c.clsUsage = :usage AND c.clsIsUsed = :isused AND b.buildingId = c.clsBuildingId";*/
-		
-		
 		String hql = "FROM Classroom AS c WHERE c.clsType = :type AND c.clsFloor = :floor AND"
 				+ " c.clsSerialNumber = :serialnumber AND c.clsClassNum >= :minClassNum AND c.clsClassNum <= :maxClassNum AND"
 				+ " c.clsArea = :area AND c.clsExamNum >= :minExamNum AND c.clsExamNum <= :maxExamNum AND"
 				+ " c.clsLocation = :location AND c.clsIsAmphi = :isamphi AND c.clsShape = :shape AND"
-				+ " c.clsHasMicrophone = :hasmicrophone AND c.clsUsage = :usage AND c.clsIsUsed = :isused AND"
-				+ " c.clsBuildingId in (select buildingId from Building where buildingCompus=:compus and buildingDepartment=:departmentname and buildingName=:buildingname)";
-		
-		
+				+ " c.clsHasMicrophone = :hasmicrophone AND c.clsUsage = :usage AND c.clsIsUsed = :isused";
 				
 		Query q = session.createQuery(hql);
 		
-		q.setString("compus", compus);
-		q.setString("departmentname", departmentname);
 		q.setString("type", type);
-		q.setString("buildingname", buildingname);
 		q.setInteger("floor", floor);
 		q.setString("serialnumber", serialnumber);
 		q.setInteger("minClassNum", minClassNum);
@@ -60,10 +46,21 @@ public class ClassroomDao {
 		
 		List<Classroom> list = q.list();
 		session.close();
-		if (list.size()==0)
+		
+		List<Classroom> result = new ArrayList<Classroom>();
+		
+		for (int i = 0; i < list.size(); i ++) {
+			if (list.get(i).getBuilding().getBuildingCompus().equals(compus) &&
+					list.get(i).getBuilding().getBuildingDepartment().equals(departmentname) && 
+					list.get(i).getBuilding().getBuildingName().equals(buildingname)) {
+				result.add(list.get(i));
+			}
+		}
+		
+		if (result.size()==0)
 			return null;
 		else
-			return list;
+			return result;
 	}
 	
 	public Classroom find(int clsid) {

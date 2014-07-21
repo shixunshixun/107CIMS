@@ -1,5 +1,6 @@
 package cims107.dao;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import cims107.model.Building;
+import cims107.model.Classroom;
 import cims107.model.Partition;
 
 public class PartitionDao {
@@ -42,34 +44,20 @@ public class PartitionDao {
 			int beginweek, int endweek, int pisused) {
 		
 		Session session = sessionFactory.openSession();
-		/*String hql = "FROM Partition AS p, Building AS b, Classroom As c WHERE p.pYear = :pyear AND b.buildingName = :buildingname AND"
-				+ " p.pTerm = :pterm AND c.clsSerialNumber = :serialnumber AND p.pDepartment = :departmentname AND"
-				+ " c.clsType = :type AND c.clsAvailableSeatNum <= :maxavailableseat AND c.clsAvailableSeatNum >= :minavailableseat AND"
-				+ " p.pClassNum <= :maxclassnum AND p.pClassNum >= :minclassnum AND p.pExamNum <= :maxexamnum AND"
-				+ " p.pExamNum >= :minexamnum AND p.pBeginWeek = :beginweek AND p.pEndWeek = :endweek AND p.pIsUsed = :pisused AND"
-				+ " p.pClsId = c.clsId AND b.buildingId = c.clsBuildingId";*/
+		
 		
 		String hql = "FROM Partition AS p WHERE p.pYear = :pyear AND p.pTerm = :pterm AND p.pDepartment = :departmentname AND"
 				+ " p.pClassNum <= :maxclassnum AND p.pClassNum >= :minclassnum AND p.pExamNum <= :maxexamnum AND"
-				+ " p.pExamNum >= :minexamnum AND p.pBeginWeek = :beginweek AND p.pEndWeek = :endweek AND p.pIsUsed = :pisused AND"
-				+ " p.pClsId in (select clsId from Classroom where clsType=:type and clsSerialNumber=:serialnumber and"
-				+ " clsAvailableSeatNum<=:maxavailableseat and clsAvailableSeatNum>=:minavailableseat and clsBuildingId in "
-				+ " (select buildingId from Building where buildingName=:buildingname and buildingCompus=:compus))";
+				+ " p.pExamNum >= :minexamnum AND p.pBeginWeek = :beginweek AND p.pEndWeek = :endweek AND p.pIsUsed = :pisused";
 		
 		
 		
 		Query q = session.createQuery(hql);
 		
 		q.setString("pyear", pyear);
-		q.setString("compus", compus);
-		q.setString("buildingname", buildingname);
 		q.setString("pterm", pterm);
-		q.setString("serialnumber", serialnumber);
 		
 		q.setString("departmentname", departmentname);
-		q.setString("type", type);
-		q.setInteger("maxavailableseat", maxavailableseat);
-		q.setInteger("minavailableseat", minavailableseat);
 		
 		q.setInteger("maxclassnum", maxclassnum);
 		q.setInteger("minclassnum", minclassnum);
@@ -82,10 +70,24 @@ public class PartitionDao {
 		
 		List<Partition> list = q.list();
 		session.close();
-		if (list.size()==0)
+		
+		List<Partition> result = new ArrayList<Partition>();
+		
+		for (int i = 0; i < list.size(); i ++) {
+			if (list.get(i).getClassroom().getClsType().equals(type) && 
+					list.get(i).getClassroom().getClsSerialNumber().equals(serialnumber) && 
+					list.get(i).getClassroom().getClsAvailableSeatNum() <= maxavailableseat && 
+					list.get(i).getClassroom().getClsAvailableSeatNum() >= minavailableseat && 
+					list.get(i).getClassroom().getBuilding().getBuildingName().equals(buildingname) && 
+					list.get(i).getClassroom().getBuilding().getBuildingCompus().equals(compus)) {
+				result.add(list.get(i));
+			}
+		}
+		
+		if (result.size()==0)
 			return null;
 		else
-			return list;
+			return result;
 	}
 	
 	public void add(Partition partition) {

@@ -38,19 +38,19 @@ public class BuildingDao {
 		Session session = sessionFactory.openSession();
 		DetachedCriteria dc = DetachedCriteria.forClass(Building.class);
 		
-		if (buildingname != null) {
+		if (!buildingname.isEmpty()) {
 			dc.add(Restrictions.eq("buildingName",buildingname));
 		}
 	
-		if (departmentname != null) {	
+		if (!departmentname.isEmpty()) {	
 			dc.add(Restrictions.eq("buildingDepartment", departmentname));	
 		}
 	
-		if (simplename != null) {	
+		if (!simplename.isEmpty()) {	
 			dc.add(Restrictions.eq("buildingSimpleName", simplename));	
 		}
 		
-		if (compus != null) {			
+		if (!compus.isEmpty()) {			
 			dc.add(Restrictions.eq("buildingCompus", compus));	
 		}
 	   
