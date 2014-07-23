@@ -3,6 +3,7 @@ package cims107.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONObject;
 import cims107.service.BuildingService;
 import cims107.service.ClassroomService;
 
@@ -10,6 +11,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class ClassroomDeleteAction extends ActionSupport{
 	public String[] clsid;
+	private String result;
 	
 	private ClassroomService classroomService;
 	
@@ -40,6 +42,7 @@ public class ClassroomDeleteAction extends ActionSupport{
     	}
     	
     	if(classroomService.delete(clsidlst)){
+    		result = JSONObject.fromObject("{\"success\":1}").toString();
     		return SUCCESS;
     	}
     	else {

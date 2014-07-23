@@ -50,8 +50,8 @@ public class ClassroomService {
     	classroomDao.add(classroom);
     }
     
-    public void update(int clsid, String buildingname, String departmentname,  Classroom classroom) {
-    	classroomDao.update(clsid, buildingname, departmentname, classroom);
+    public void update(Classroom classroom) {
+    	classroomDao.update(classroom);
     }
     
     public Boolean delete(List<Integer> clsidlst) {

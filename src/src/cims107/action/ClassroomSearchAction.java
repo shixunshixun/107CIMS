@@ -2,40 +2,52 @@ package cims107.action;
 
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import cims107.model.Building;
 import cims107.model.Classroom;
 import cims107.service.BuildingService;
 import cims107.service.ClassroomService;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 
-public class ClassroomSearchAction extends ActionSupport{
-	public String buildingname;
-	public String serialnumber;
-	public String compus;
-	public int floor;
-	public String type;
-	public String shape;
-	public int area;
-	public String location;
-	public int isamphi;
-	public int hasmicrophone;
-	public int isused;
-	public String usage;
-	public String departmentname; 
+public class ClassroomSearchAction extends ActionSupport implements ModelDriven<Classroom>{
+	private Classroom classroom;
+    private String result;
 	public int maxClassNum;
 	public int minClassNum;
 	public int maxExamNum;
 	public int minExamNum;
+	public String compus;
+	public String departmentname;
+	public String buildingname;
 	
-	List<Classroom> classroomlst;
 	
-	public List<Classroom> getClassroomlst() {
-		return classroomlst;
+	@Override
+    public Classroom getModel() {
+    	if(classroom == null) {
+    		classroom = new Classroom();
+    	}
+    	return classroom;
+    }
+
+	public Classroom getClassroom() {
+		return classroom;
 	}
 
-	public void setClassroomlst(List<Classroom> classroomlst) {
-		this.classroomlst = classroomlst;
+	public void setClassroom(Classroom classroom) {
+		this.classroom = classroom;
 	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
 
 	private ClassroomService classroomService;
 	
@@ -52,12 +64,30 @@ public class ClassroomSearchAction extends ActionSupport{
 	public String execute()
 	{
 		if (isValidate()) {
-			classroomlst = classroomService.find(compus, departmentname, type, buildingname, 
-					floor, serialnumber, minClassNum, maxClassNum, 
-					area, minExamNum, maxExamNum, location, 
-					isamphi, shape, hasmicrophone, usage, isused);
+			classroom.getBuilding().setBuildingName(buildingname);
+			classroom.getBuilding().setBuildingCompus(compus);
+			classroom.getBuilding().setBuildingDepartment(departmentname);
 			
-			return SUCCESS;
+			List<Classroom> classroomlst = classroomService.find(classroom.getBuilding().getBuildingCompus(), classroom.getBuilding().getBuildingDepartment(), classroom.getClsType(), classroom.getBuilding().getBuildingName(), 
+					classroom.getClsFloor(), classroom.getClsSerialNumber(), minClassNum, maxClassNum, 
+					classroom.getClsArea(), minExamNum, maxExamNum, classroom.getClsLocation(), 
+					classroom.getClsIsAmphi(), classroom.getClsShape(), classroom.getClsHasMicrophone(), classroom.getClsUsage(), classroom.getClsIsUsed());
+			
+			if(classroomlst != null) {
+		    	JSONArray ja = new JSONArray();
+		    	for(int i = 0; i < classroomlst.size(); i++) {
+		    		Classroom c = classroomlst.get(i);
+		    		c.setPartitions(null);
+		    		c.getBuilding().setClassrooms(null);
+		    		ja.add(JSONObject.fromObject(c));
+		    	}
+		    	result = ja.toString();
+	    	}
+	    	else {
+	    		result = "";
+	    	}
+	    	
+	    	return SUCCESS;
 			
 			//��ʾ��ȡ���Ľ�����Ϣ
 		}
@@ -65,6 +95,6 @@ public class ClassroomSearchAction extends ActionSupport{
 	}
 	
 	public Boolean isValidate() {
-		return (maxClassNum >= minClassNum) && (maxExamNum >= minExamNum);
+		return (maxClassNum >= minClassNum) && (maxExamNum >= minExamNum) && (minClassNum > 0) && (minExamNum > 0);
 	}
 }

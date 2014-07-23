@@ -38,20 +38,10 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
     }  
       
     public String execute()  
-    {
-    	//JSONArray ja = new JSONArray();
-    	
-//    	building.setBuildingName(building.getBuildingName());
-//    	building.setBuildingDepartment(building.getBuildingDepartment());
-//    	building.setBuildingSimpleName(building.getBuildingSimpleName());
-//    	building.setBuildingCompus(building.getBuildingCompus());
-//    	building.setBuildingFloorNum(building.getBuildingFloorNum());
-    	
-    	
-    	
+    {    	
     	if(buildingService.add(building)){
     		//ja.add(JSONObject.fromObject(1));
-    		result = JSONObject.fromObject(1).toString();
+    		result = JSONObject.fromObject("{\"success\":1}").toString();
     	   	return SUCCESS;
     	}
     	else{

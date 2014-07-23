@@ -3,7 +3,10 @@ package cims107.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONObject;
+
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 
 import cims107.model.Building;
 import cims107.model.Classroom;
@@ -12,8 +15,8 @@ import cims107.service.BuildingService;
 import cims107.service.ClassroomService;
 import cims107.service.PartitionService;
 
-public class PartitionCreateAction extends ActionSupport{
-	public String pyear;
+public class PartitionCreateAction extends ActionSupport implements ModelDriven<Partition>{
+	/*public String pyear;
 	public String buildingname;
 	public String compus;
 	public String pterm;
@@ -30,14 +33,45 @@ public class PartitionCreateAction extends ActionSupport{
 	public String enddate;
 	public int beginlession;
 	public int endlession;
-	public int pisused;
+	public int pisused;*/
 	
 	public String[] whichday; 
+	public int maxavailableseat;
+	public int minavailableseat;
+	public String buildingname;
+	public String compus;
+	public String serialnumber;
 	
+	private String result;
+	private Partition partition;
 	private PartitionService partitionService;
 	BuildingService buildingService;
 	ClassroomService classroomService;
 	
+	@Override
+    public Partition getModel() {
+    	if(partition == null) {
+    		partition = new Partition();
+    	}
+    	return partition;
+    }
+	
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
+	public Partition getPartition() {
+		return partition;
+	}
+
+	public void setPartition(Partition partition) {
+		this.partition = partition;
+	}
+
 	public BuildingService getBuildingService() {
 		return buildingService;
 	}
@@ -93,26 +127,21 @@ public class PartitionCreateAction extends ActionSupport{
 	    	
 	    	Partition partition = new Partition();
 	    	Building building = new Building();
-			building = buildingService.find(buildingname, compus);
-			Classroom classroom = new Classroom();
-			classroom = classroomService.find(building.getBuildingId(), serialnumber);
 	    	
-	    	partition.setPartitionYear(pyear);
-	    	partition.setPartitionTerm(pterm);
-	    	partition.setPartitionClsId(classroom.getClsId());
-	    	partition.setPartitionDepartment(pdepartmentname);
-	    	partition.setPartitionClassNum(pclassnum);
-	    	partition.setPartitionExamNum(pexamnum);
-	    	partition.setPartitionBeginWeek(beginweek);
-	    	partition.setPartitionEndWeek(endweek);
-	    	partition.setPartitionBeginDate(begindate);
-	    	partition.setPartitionEndDate(enddate);
-	    	partition.setPartitionBeginLession(beginlession);
-	    	partition.setPartitionEndLession(endlession);
+	    	partition.getClassroom().setClsSerialNumber(serialnumber);
+	    	partition.getClassroom().getBuilding().setBuildingName(buildingname);
+	    	partition.getClassroom().getBuilding().setBuildingCompus(compus);
+	    	
+			building = buildingService.find(partition.getClassroom().getBuilding().getBuildingName(), partition.getClassroom().getBuilding().getBuildingCompus());
+			Classroom classroom = new Classroom();
+			classroom = classroomService.find(building.getBuildingId(), partition.getClassroom().getClsSerialNumber());
+	    	
+	    	
 	    	partition.setPartitionWhichDay(list2WhichdayString(whichdaylst));
-	    	partition.setPartitionIsUsed(pisused);
+	    	partition.setClassroom(classroom);
 	    	
 	    	partitionService.add(partition);
+	    	result = JSONObject.fromObject("{\"success\":1}").toString();
 	    	
 	    	return SUCCESS;
     	//}

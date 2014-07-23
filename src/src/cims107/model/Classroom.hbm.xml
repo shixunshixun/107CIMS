@@ -19,9 +19,9 @@
             <column name="clsFloor" length="8" />
         </property>
         
-        <property name="clsBuildingId" type="java.lang.Integer">
+        <!-- <property name="clsBuildingId" type="java.lang.Integer">
             <column name="clsBuildingId" length="8" />
-        </property>
+        </property> -->
         
         <property name="clsSerialNumber" type="java.lang.String">
             <column name="clsSerialNumber" length="40" />

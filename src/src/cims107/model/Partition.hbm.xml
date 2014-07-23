@@ -7,7 +7,7 @@
     <class name="cims107.model.Partition" table="cims_partition" catalog="test">
     
         <id name="partitionId" type="java.lang.Integer">
-            <column name="pId" />
+            <column name="partitionId" />
             <generator class="native" />
         </id>
         
@@ -19,9 +19,9 @@
             <column name="partitionTerm" length="40" />
         </property>
         
-        <property name="partitionClsId" type="java.lang.Integer">
+        <!-- <property name="partitionClsId" type="java.lang.Integer">
             <column name="partitionClsId" length="8" />
-        </property>
+        </property>  -->
         
         <property name="partitionDepartment" type="java.lang.String">
             <column name="partitionDepartment" length="40" />

@@ -35,8 +35,8 @@ public class PartitionService {
 		partitionDao.add(partition);
 	}
 	
-	public Boolean update(int pid, String pyear, String pterm, int beginweek, int endweek, String pdepartmentname) {
-		return partitionDao.update(pid, pyear, pterm, beginweek, endweek, pdepartmentname);
+	public Boolean update(Partition partition) {
+		return partitionDao.update(partition);
 	}
 	
 	public void enabeUpdate(List<Integer> partitionlst) {

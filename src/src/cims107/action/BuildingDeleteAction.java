@@ -56,7 +56,7 @@ public class BuildingDeleteAction extends ActionSupport{
     	
     	if(buildingService.delete(buildingidlst)){
     		//ja.add(JSONObject.fromObject(1));
-    		result = JSONObject.fromObject(1).toString();
+    		result = JSONObject.fromObject("{\"success\":1}").toString();
     		return SUCCESS;
     	}
     	else {

@@ -6,7 +6,7 @@ public class Partition {
 	private int partitionId;
 	private String partitionYear;
 	private String partitionTerm;
-	private int partitionClsId;
+	//private int partitionClsId;
 	private String partitionDepartment;
 	private int partitionClassNum;
 	private int partitionExamNum;
@@ -38,12 +38,12 @@ public class Partition {
 	public void setPartitionTerm(String partitionTerm) {
 		this.partitionTerm = partitionTerm;
 	}
-	public int getPartitionClsId() {
+	/*public int getPartitionClsId() {
 		return partitionClsId;
 	}
 	public void setPartitionClsId(int partitionClsId) {
 		this.partitionClsId = partitionClsId;
-	}
+	}*/
 	public String getPartitionDepartment() {
 		return partitionDepartment;
 	}

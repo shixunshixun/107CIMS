@@ -2,10 +2,13 @@ package cims107.dao;
 
 import java.util.*;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 
 import cims107.model.Building;
 import cims107.model.Classroom;
@@ -19,48 +22,73 @@ public class ClassroomDao {
 			int area, int minExamNum, int maxExamNum, String location, 
 			int isamphi, String shape, int hasmicrophone, String usage, int isused) {
 		
+		
 		Session session = sessionFactory.openSession();
+		DetachedCriteria dc = DetachedCriteria.forClass(Building.class);
 		
-		String hql = "FROM Classroom AS c WHERE c.clsType = :type AND c.clsFloor = :floor AND"
-				+ " c.clsSerialNumber = :serialnumber AND c.clsClassNum >= :minClassNum AND c.clsClassNum <= :maxClassNum AND"
-				+ " c.clsArea = :area AND c.clsExamNum >= :minExamNum AND c.clsExamNum <= :maxExamNum AND"
-				+ " c.clsLocation = :location AND c.clsIsAmphi = :isamphi AND c.clsShape = :shape AND"
-				+ " c.clsHasMicrophone = :hasmicrophone AND c.clsUsage = :usage AND c.clsIsUsed = :isused";
-				
-		Query q = session.createQuery(hql);
+		if (!type.isEmpty()) {
+			dc.add(Restrictions.eq("clsType",type));
+		}
+		if (floor > 0) {
+			dc.add(Restrictions.eq("clsFloor",floor));
+		}
+		if (!serialnumber.isEmpty()) {
+			dc.add(Restrictions.eq("clsSerialNumber",serialnumber));
+		}
+		if (area > 0) {
+			dc.add(Restrictions.eq("clsArea",area));
+		}
+		if (!location.isEmpty()) {
+			dc.add(Restrictions.eq("clsLocation",location));
+		}
+		if (isamphi == 0 || isamphi == 1) {
+			dc.add(Restrictions.eq("clsIsAmphi",isamphi));
+		}
+		if (!shape.isEmpty()) {
+			dc.add(Restrictions.eq("clsShape",shape));
+		}
+		if (hasmicrophone == 0 || hasmicrophone == 1) {
+			dc.add(Restrictions.eq("clsHasMicrophone",hasmicrophone));
+		}
+		if (!usage.isEmpty()) {
+			dc.add(Restrictions.eq("clsUsage",usage));
+		}
+		if (isused == 0 || isused == 1) {
+			dc.add(Restrictions.eq("clsIsUsed",isused));
+		}
+		dc.add(Restrictions.between("clsClassNum", minClassNum, maxClassNum));
+		dc.add(Restrictions.between("clsExamNum", minExamNum, maxExamNum));
 		
-		q.setString("type", type);
-		q.setInteger("floor", floor);
-		q.setString("serialnumber", serialnumber);
-		q.setInteger("minClassNum", minClassNum);
-		q.setInteger("maxClassNum", maxClassNum);
-		q.setInteger("area", area);
-		q.setInteger("minExamNum", minExamNum);
-		q.setInteger("maxExamNum", maxExamNum);
-		q.setString("location", location);
-		q.setInteger("isamphi", isamphi);
-		q.setString("shape", shape);
-		q.setInteger("hasmicrophone", hasmicrophone);
-		q.setString("usage", usage);
-		q.setInteger("isused", isused);
+		Criteria c = dc.getExecutableCriteria(session);
 		
-		List<Classroom> list = q.list();
+		List<Classroom> list = c.list();
+		Iterator<Classroom> iter = list.iterator();
+		
 		session.close();
 		
-		List<Classroom> result = new ArrayList<Classroom>();
-		
-		for (int i = 0; i < list.size(); i ++) {
-			if (list.get(i).getBuilding().getBuildingCompus().equals(compus) &&
-					list.get(i).getBuilding().getBuildingDepartment().equals(departmentname) && 
-					list.get(i).getBuilding().getBuildingName().equals(buildingname)) {
-				result.add(list.get(i));
+		while (iter.hasNext()) {
+			if (!compus.isEmpty()) {
+				if (!iter.next().getBuilding().getBuildingCompus().equals(compus)) {
+					iter.remove();
+					continue;
+				}
+			}
+			if (!departmentname.isEmpty()) {
+				if (!iter.next().getBuilding().getBuildingDepartment().equals(departmentname)) {
+					iter.remove();
+					continue;
+				}
+			}
+			if (!buildingname.isEmpty()) {
+				if (!iter.next().getBuilding().getBuildingName().equals(buildingname)) {
+					iter.remove();
+				}
 			}
 		}
-		
-		if (result.size()==0)
+		if (list.size()==0)
 			return null;
 		else
-			return result;
+			return list;
 	}
 	
 	public Classroom find(int clsid) {
@@ -96,11 +124,11 @@ public class ClassroomDao {
 		session.close();
 	}
 	
-	public void update(int clsid, String buildingname, String departmentname,  Classroom classroom) {
+	public void update(Classroom classroom) {
 		
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		Classroom c = (Classroom) session.get(Classroom.class, clsid);
+		Classroom c = (Classroom) session.get(Classroom.class, classroom.getClsId());
 		
 		c.setClsSerialNumber(classroom.getClsSerialNumber());
     	c.setClsFloor(classroom.getClsFloor());
@@ -120,7 +148,7 @@ public class ClassroomDao {
     	c.setClsUsage(classroom.getClsUsage());
     	c.setClsSeatNum(classroom.getClsSeatNum());
     	c.setClsAvailableSeatNum(classroom.getClsAvailableSeatNum());
-    	c.setClsBuildingId(classroom.getClsBuildingId());
+    	//c.setBuilding(classroom.getBuilding());
     	
 		session.update(c); 
 		tx.commit();

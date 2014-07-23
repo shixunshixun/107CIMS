@@ -1,15 +1,17 @@
 package cims107.action;
 
+import net.sf.json.JSONObject;
 import cims107.model.Building;
 import cims107.model.Classroom;
 import cims107.service.BuildingService;
 import cims107.service.ClassroomService;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 
-public class ClassroomUpdateAction extends ActionSupport{
-	public int clsid;
-	public String buildingname;
+public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<Classroom>{
+	
+	/*public String buildingname;
 	public String serialnumber;
 	public String compus;
 	public int floor;
@@ -29,11 +31,41 @@ public class ClassroomUpdateAction extends ActionSupport{
 	public String usage;
 	public int seatnum;
 	public int availableseatnum;
-	public String departmentname; 
+	public String departmentname; */
+	
+	/*public String buildingname;
+	public String compus;
+	public String departmentname;*/
 	
 	private ClassroomService classroomService;
 	BuildingService buildingService;
+	private Classroom classroom;
+    private String result;
+    
+    @Override
+    public Classroom getModel() {
+    	if(classroom == null) {
+    		classroom = new Classroom();
+    	}
+    	return classroom;
+    }
 	
+	public Classroom getClassroom() {
+		return classroom;
+	}
+
+	public void setClassroom(Classroom classroom) {
+		this.classroom = classroom;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+
 	public BuildingService getBuildingService() {
 		return buildingService;
 	}
@@ -51,14 +83,6 @@ public class ClassroomUpdateAction extends ActionSupport{
     {  
         this.classroomService = classroomService;  
     }
-	
-	public int getClsid() {
-		return clsid;
-	}
-
-	public void setClsid(int clsid) {
-		this.clsid = clsid;
-	}
 
 	public String int2CorridorString(int x, int y) {
 		String result;
@@ -67,32 +91,19 @@ public class ClassroomUpdateAction extends ActionSupport{
 	}
 	
 	public String execute() {
-		Classroom classroom = new Classroom();
-		Building building = new Building();
+		//Classroom c = new Classroom();
+		//Building building = new Building();
 		
-		building = buildingService.find(buildingname, compus);
+		/*classroom.getBuilding().setBuildingName(buildingname);
+		classroom.getBuilding().setBuildingCompus(compus);
+		classroom.getBuilding().setBuildingDepartment(departmentname);*/
+		//building = buildingService.find(classroom.getBuilding().getBuildingName(), classroom.getBuilding().getBuildingCompus());
 		
-		classroom.setClsSerialNumber(serialnumber);
-    	classroom.setClsFloor(floor);
-    	classroom.setClsType(type);
-    	classroom.setClsShape(shape);
-    	classroom.setClsClassNum(classnum);
-    	classroom.setClsExamNum(examnum);
-    	classroom.setClsMaxRow(maxrow);
-    	classroom.setClsMaxCol(maxcol);
-    	classroom.setClsHCorridorLocate(hcorridorlocate);
-    	classroom.setClsVCorridorLocate(vcorridorlocate);
-    	classroom.setClsArea(area);
-    	classroom.setClsLocation(location);
-    	classroom.setClsIsAmphi(isamphi);
-    	classroom.setClsHasMicrophone(hasmicrophone);
-    	classroom.setClsIsUsed(isused);
-    	classroom.setClsUsage(usage);
-    	classroom.setClsSeatNum(seatnum);
-    	classroom.setClsAvailableSeatNum(availableseatnum);
-    	classroom.setClsBuildingId(building.getBuildingId());
+    	//classroom.setClsBuildingId(building.getBuildingId());
+		//classroom.setBuilding(building);
 		
-		classroomService.update(clsid, buildingname, departmentname, classroom);
+		classroomService.update(classroom);
+		result = JSONObject.fromObject("{\"success\":1}").toString();
 		return SUCCESS;
 	}
 }

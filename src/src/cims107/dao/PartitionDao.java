@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 
 import cims107.model.Building;
 import cims107.model.Classroom;
@@ -44,44 +47,96 @@ public class PartitionDao {
 			int beginweek, int endweek, int pisused) {
 		
 		Session session = sessionFactory.openSession();
+		DetachedCriteria dc = DetachedCriteria.forClass(Partition.class);
 		
-		String hql = "FROM Partition AS p WHERE p.pYear = :pyear AND p.pTerm = :pterm AND p.pDepartment = :departmentname AND"
-				+ " p.pClassNum <= :maxclassnum AND p.pClassNum >= :minclassnum AND p.pExamNum <= :maxexamnum AND"
-				+ " p.pExamNum >= :minexamnum AND p.pBeginWeek = :beginweek AND p.pEndWeek = :endweek AND p.pIsUsed = :pisused";
+		if(!pyear.isEmpty())
+			dc.add(Restrictions.eq("pYear", pyear));
+		if(!pterm.isEmpty())
+			dc.add(Restrictions.eq("pTerm", pterm));
+		if(!departmentname.isEmpty())
+			dc.add(Restrictions.eq("pDepartment", departmentname));
 		
-		Query q = session.createQuery(hql);
+		dc.add(Restrictions.between("pClassNum", minclassnum, maxclassnum));
+		dc.add(Restrictions.between("pExamNum", minexamnum, maxexamnum));
+		dc.add(Restrictions.eq("pBeginWeek", beginweek));
+		dc.add(Restrictions.eqOrIsNull("pEndWeek", endweek));
+		dc.add(Restrictions.eqOrIsNull("pIsUsed", pisused));
 		
-		q.setString("pyear", pyear);
-		q.setString("pterm", pterm);
-		q.setString("departmentname", departmentname);
-		q.setInteger("maxclassnum", maxclassnum);
-		q.setInteger("minclassnum", minclassnum);
-		q.setInteger("maxexamnum", maxexamnum);
-		q.setInteger("minexamnum", minexamnum);
-		q.setInteger("beginweek", beginweek);
-		q.setInteger("endweek", endweek);
-		q.setInteger("pisused", pisused);
+		Criteria c = dc.getExecutableCriteria(session);
+
 		
-		List<Partition> list = q.list();
+		List<Partition> list = c.list();
+		Iterator<Partition> iter = list.iterator();
 		session.close();
-		
-		List<Partition> result = new ArrayList<Partition>();
-		
-		for (int i = 0; i < list.size(); i ++) {
-			if (list.get(i).getClassroom().getClsType().equals(type) && 
-					list.get(i).getClassroom().getClsSerialNumber().equals(serialnumber) && 
-					list.get(i).getClassroom().getClsAvailableSeatNum() <= maxavailableseat && 
-					list.get(i).getClassroom().getClsAvailableSeatNum() >= minavailableseat && 
-					list.get(i).getClassroom().getBuilding().getBuildingName().equals(buildingname) && 
-					list.get(i).getClassroom().getBuilding().getBuildingCompus().equals(compus)) {
-				result.add(list.get(i));
+		//可能会出错
+		/*for (int i = 0; i < list.size(); i ++) {
+			Partition p = list.get(i);
+			if(!type.isEmpty()) {
+				if(!p.getClassroom().getClsType().equals(type)) {
+					list.remove(i);
+					continue;
+				}
+			}
+			if(!serialnumber.isEmpty()) {
+				if(!p.getClassroom().getClsSerialNumber().equals(serialnumber)) {
+					list.remove(i);
+					continue;
+				}
+			}
+			if(p.getClassroom().getClsAvailableSeatNum() > maxavailableseat ||
+					p.getClassroom().getClsAvailableSeatNum() < minavailableseat) {
+				list.remove(i);
+				continue;
+			}
+			if(!buildingname.isEmpty()) {
+				if(!p.getClassroom().getBuilding().getBuildingName().equals(buildingname)) {
+					list.remove(i);
+					continue;
+				}
+			}
+			if(!compus.isEmpty()) {
+				if(!p.getClassroom().getBuilding().equals(compus)) {
+					list.remove(i);
+					continue;
+				}
+			}
+		}*/
+		while (iter.hasNext()) {
+			if(!type.isEmpty()) {
+				if(!iter.next().getClassroom().getClsType().equals(type)) {
+					iter.remove();
+					continue;
+				}
+			}
+			if(!serialnumber.isEmpty()) {
+				if(!iter.next().getClassroom().getClsSerialNumber().equals(serialnumber)) {
+					iter.remove();
+					continue;
+				}
+			}
+			if(iter.next().getClassroom().getClsAvailableSeatNum() > maxavailableseat ||
+					iter.next().getClassroom().getClsAvailableSeatNum() < minavailableseat) {
+				iter.remove();
+				continue;
+			}
+			if(!buildingname.isEmpty()) {
+				if(!iter.next().getClassroom().getBuilding().getBuildingName().equals(buildingname)) {
+					iter.remove();
+					continue;
+				}
+			}
+			if(!compus.isEmpty()) {
+				if(!iter.next().getClassroom().getBuilding().equals(compus)) {
+					iter.remove();
+					continue;
+				}
 			}
 		}
 		
-		if (result.size()==0)
+		if (list.size()==0)
 			return null;
 		else
-			return result;
+			return list;
 	}
 	
 	public void add(Partition partition) {
@@ -92,17 +147,17 @@ public class PartitionDao {
 		session.close();
 	}
 	
-	public Boolean update(int pid, String pyear, String pterm, int beginweek, int endweek, String pdepartmentname) {
+	public Boolean update(Partition partition) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		Partition p = (Partition) session.get(Partition.class, pid);
+		Partition p = (Partition) session.get(Partition.class, partition.getPartitionId());
 		
-		p.setPartitionYear(pyear);
-		p.setPartitionTerm(pterm);
-		p.setPartitionBeginWeek(beginweek);
-		p.setPartitionEndWeek(endweek);
-		p.setPartitionDepartment(pdepartmentname);
-    	
+		p.setPartitionYear(partition.getPartitionYear());
+		p.setPartitionTerm(partition.getPartitionTerm());
+		p.setPartitionBeginWeek(partition.getPartitionBeginWeek());
+		p.setPartitionEndWeek(partition.getPartitionEndWeek());
+		p.setPartitionDepartment(partition.getPartitionDepartment());
+		
 		session.update(p); 
 		tx.commit();
 		session.close();

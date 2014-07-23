@@ -10,7 +10,6 @@ import com.opensymphony.xwork2.ModelDriven;
 
 public class BuildingUpdateAction extends ActionSupport implements ModelDriven<Building>{
 	
-	public int buildingid;
 	private Building building;
     private String result;    
     private BuildingService buildingService;  
@@ -31,15 +30,7 @@ public class BuildingUpdateAction extends ActionSupport implements ModelDriven<B
     public void setBuildingService(BuildingService buildingService)  
     {  
         this.buildingService = buildingService;  
-    }  
-      
-    public int getBuildingid() {
-		return buildingid;
-	}
-
-	public void setBuildingid(int buildingid) {
-		this.buildingid = buildingid;
-	}
+    } 
 
 	public Building getBuilding() {
 		return building;
@@ -59,8 +50,8 @@ public class BuildingUpdateAction extends ActionSupport implements ModelDriven<B
 
 	public String execute()  
     {  
-    	if(buildingService.update(buildingid, building)) {
-    		result = JSONObject.fromObject(1).toString();
+    	if(buildingService.update(building)) {
+    		result = JSONObject.fromObject("{\"success\":1}").toString();
     		return SUCCESS;
     	}
     	else {

@@ -45,8 +45,8 @@ public class BuildingService {
     	return buildingDao.add(building);
     }
     
-    public boolean update(int buildingid, Building building) {
-    	return buildingDao.update(buildingid, building);
+    public boolean update(Building building) {
+    	return buildingDao.update(building);
     }
     
     public boolean delete(List<Integer> buildingidlst) {

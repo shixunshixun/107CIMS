@@ -90,11 +90,11 @@ public class BuildingDao {
 		return true;
 	}
 	
-	public boolean update(int buildingid, Building building) {
+	public boolean update(Building building) {
 		
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		Building b = (Building) session.get(Building.class, buildingid);
+		Building b = (Building) session.get(Building.class, building.getBuildingId());
 		
 		b.setBuildingName(building.getBuildingName());
     	b.setBuildingDepartment(building.getBuildingDepartment());

@@ -6,7 +6,7 @@ public class Classroom {
 	private int clsId;
 	private String clsType;
 	private int clsFloor;
-	private int clsBuildingId;
+	//private int clsBuildingId;
 	private String clsSerialNumber;
 	private int clsClassNum;
 	private int clsExamNum;
@@ -55,12 +55,12 @@ public class Classroom {
 	public void setClsFloor(int clsFloor) {
 		this.clsFloor = clsFloor;
 	}
-	public int getClsBuildingId() {
+	/*public int getClsBuildingId() {
 		return clsBuildingId;
 	}
 	public void setClsBuildingId(int clsBuildingId) {
 		this.clsBuildingId = clsBuildingId;
-	}
+	}*/
 	public String getClsSerialNumber() {
 		return clsSerialNumber;
 	}
