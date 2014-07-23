@@ -128,17 +128,19 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
 	    	Partition partition = new Partition();
 	    	Building building = new Building();
 	    	
-	    	partition.getClassroom().setClsSerialNumber(serialnumber);
-	    	partition.getClassroom().getBuilding().setBuildingName(buildingname);
-	    	partition.getClassroom().getBuilding().setBuildingCompus(compus);
+	    	//partition.getClassroom().setClsSerialNumber(serialnumber);
+	    	//partition.getClassroom().getBuilding().setBuildingName(buildingname);
+	    	//partition.getClassroom().getBuilding().setBuildingCompus(compus);
 	    	
-			building = buildingService.find(partition.getClassroom().getBuilding().getBuildingName(), partition.getClassroom().getBuilding().getBuildingCompus());
+			building = buildingService.find(buildingname, compus);
 			Classroom classroom = new Classroom();
-			classroom = classroomService.find(building.getBuildingId(), partition.getClassroom().getClsSerialNumber());
+			classroom = classroomService.find(building.getBuildingId(), serialnumber);
 	    	
 	    	
 	    	partition.setPartitionWhichDay(list2WhichdayString(whichdaylst));
+	    	
 	    	partition.setClassroom(classroom);
+	    	partition.getClassroom().setBuilding(building);
 	    	
 	    	partitionService.add(partition);
 	    	result = JSONObject.fromObject("{\"success\":1}").toString();

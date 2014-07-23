@@ -64,11 +64,11 @@ public class ClassroomSearchAction extends ActionSupport implements ModelDriven<
 	public String execute()
 	{
 		if (isValidate()) {
-			classroom.getBuilding().setBuildingName(buildingname);
-			classroom.getBuilding().setBuildingCompus(compus);
-			classroom.getBuilding().setBuildingDepartment(departmentname);
+			//classroom.getBuilding().setBuildingName(buildingname);
+			//classroom.getBuilding().setBuildingCompus(compus);
+			//classroom.getBuilding().setBuildingDepartment(departmentname);
 			
-			List<Classroom> classroomlst = classroomService.find(classroom.getBuilding().getBuildingCompus(), classroom.getBuilding().getBuildingDepartment(), classroom.getClsType(), classroom.getBuilding().getBuildingName(), 
+			List<Classroom> classroomlst = classroomService.find(compus, departmentname, classroom.getClsType(), buildingname, 
 					classroom.getClsFloor(), classroom.getClsSerialNumber(), minClassNum, maxClassNum, 
 					classroom.getClsArea(), minExamNum, maxExamNum, classroom.getClsLocation(), 
 					classroom.getClsIsAmphi(), classroom.getClsShape(), classroom.getClsHasMicrophone(), classroom.getClsUsage(), classroom.getClsIsUsed());

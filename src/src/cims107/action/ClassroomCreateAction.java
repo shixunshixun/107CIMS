@@ -86,9 +86,9 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 	{
 		Building building = new Building();
 		
-		classroom.getBuilding().setBuildingName(buildingname);
-		classroom.getBuilding().setBuildingCompus(compus);
-		building = buildingService.find(classroom.getBuilding().getBuildingName(), classroom.getBuilding().getBuildingCompus());
+		//classroom.getBuilding().setBuildingName(buildingname);
+		//classroom.getBuilding().setBuildingCompus(compus);
+		building = buildingService.find(buildingname, compus);
 		
 		if(building == null) {
 			return ERROR;  //this place should raise exception or set error message

@@ -39,7 +39,7 @@ public class PartitionSearchAction extends ActionSupport implements ModelDriven<
 	public int maxexamnum;
 	public int minexamnum;
 	public String buildingname;
-	public String serialnumber;
+	public String serialnumber;	
 	public String compus;
 
 	@Override
@@ -79,11 +79,11 @@ public class PartitionSearchAction extends ActionSupport implements ModelDriven<
     public String execute() {
     	
     	if (isValidate()) {
-    		partition.getClassroom().setClsSerialNumber(serialnumber);
-    		partition.getClassroom().getBuilding().setBuildingCompus(compus);
-    		partition.getClassroom().getBuilding().setBuildingName(buildingname);
+    		//partition.getClassroom().setClsSerialNumber(serialnumber);
+    		//partition.getClassroom().getBuilding().setBuildingCompus(compus);
+    		//partition.getClassroom().getBuilding().setBuildingName(buildingname);
     		
-	    	List<Partition> partitionlst = partitionService.find(partition.getPartitionYear(), partition.getClassroom().getBuilding().getBuildingCompus(), partition.getClassroom().getBuilding().getBuildingName(), partition.getPartitionTerm(), partition.getClassroom().getClsSerialNumber(), 
+	    	List<Partition> partitionlst = partitionService.find(partition.getPartitionYear(), compus, buildingname, partition.getPartitionTerm(), serialnumber, 
 	    			partition.getPartitionDepartment(), partition.getClassroom().getClsType(), maxavailableseat, minavailableseat, 
 	    			maxclassnum, minclassnum, maxexamnum, minexamnum, 
 	    			partition.getPartitionBeginWeek(), partition.getPartitionEndWeek(), partition.getPartitionIsUsed());

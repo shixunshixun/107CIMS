@@ -68,39 +68,7 @@ public class PartitionDao {
 		List<Partition> list = c.list();
 		Iterator<Partition> iter = list.iterator();
 		session.close();
-		//可能会出错
-		/*for (int i = 0; i < list.size(); i ++) {
-			Partition p = list.get(i);
-			if(!type.isEmpty()) {
-				if(!p.getClassroom().getClsType().equals(type)) {
-					list.remove(i);
-					continue;
-				}
-			}
-			if(!serialnumber.isEmpty()) {
-				if(!p.getClassroom().getClsSerialNumber().equals(serialnumber)) {
-					list.remove(i);
-					continue;
-				}
-			}
-			if(p.getClassroom().getClsAvailableSeatNum() > maxavailableseat ||
-					p.getClassroom().getClsAvailableSeatNum() < minavailableseat) {
-				list.remove(i);
-				continue;
-			}
-			if(!buildingname.isEmpty()) {
-				if(!p.getClassroom().getBuilding().getBuildingName().equals(buildingname)) {
-					list.remove(i);
-					continue;
-				}
-			}
-			if(!compus.isEmpty()) {
-				if(!p.getClassroom().getBuilding().equals(compus)) {
-					list.remove(i);
-					continue;
-				}
-			}
-		}*/
+		
 		while (iter.hasNext()) {
 			if(!type.isEmpty()) {
 				if(!iter.next().getClassroom().getClsType().equals(type)) {
