@@ -3,7 +3,7 @@
      "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
      "http://struts.apache.org/dtds/struts-2.0.dtd">   
 <struts>   
-    <package name="struts2" extends="struts-default">  
+    <!-- <package name="struts2" extends="struts-default">  
         <action name="login" class="LoginAction">  
             <result name="success">loginresult.jsp</result>  
             <result name="error">Login.jsp</result>  
@@ -36,5 +36,48 @@
         <action name="buildingImport" class="BuildingImportAction">  
             <result name="success">importResult.jsp</result>   
         </action>
-    </package>    
+    </package>     -->
+    <package name="ajax" extends="json-default">  
+        <action name="BuildingSearch" class="BuildingSearchAction">  
+  
+            <!-- 返回类型为json 在sjon-default中定义 -->  
+            <result type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+        </action>  
+        <action name="BuildingCreate" class="BuildingCreateAction">  
+  
+            <!-- 返回类型为json 在sjon-default中定义 -->  
+            <result type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+        </action> 
+        <action name="BuildingDelete" class="BuildingDeleteAction">  
+  
+            <!-- 返回类型为json 在sjon-default中定义 -->  
+            <result type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+        </action> 
+        <action name="BuildingUpdate" class="BuildingUpdateAction">  
+  
+            <!-- 返回类型为json 在sjon-default中定义 -->  
+            <result type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+        </action>
+    </package>  
+    
 </struts>  
