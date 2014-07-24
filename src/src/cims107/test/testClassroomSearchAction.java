@@ -21,12 +21,49 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
 
-/*
+
 public class testClassroomSearchAction extends AbstractModelAndViewTests{
 	public static ClassroomService service;
 	public ClassroomSearchAction action;
+	public Classroom TClassroom;
+	public Building TBuilding;
 
+	public testClassroomSearchAction(){
+	    
+        TBuilding = new Building();
+	    TBuilding.setBuildingCompus("TestingCompus");
+	    TBuilding.setBuildingDepartment("TestingDepartment");
+	    TBuilding.setBuildingFloorNum(2);
+	    TBuilding.setBuildingId(1);
+	    TBuilding.setBuildingName("TestingBuilding");
+	    TBuilding.setBuildingSimpleName("TB");
+	    
+	    TClassroom = new Classroom();
+	    TClassroom.setBuilding(TBuilding);
+	    TClassroom.setClsArea(50);
+	    TClassroom.setClsAvailableSeatNum(50);
+	    TClassroom.setClsExamNum(50);
+	    TClassroom.setClsClassNum(50);
+	    TClassroom.setClsFloor(3);
+	    TClassroom.setClsHasMicrophone(1);
+	    TClassroom.setClsHCorridorLocate("2,3");
+	    TClassroom.setClsId(1);
+	    TClassroom.setClsIsAmphi(1);
+	    TClassroom.setClsIsUsed(1);
+	    TClassroom.setClsLocation("12");
+	    TClassroom.setClsMaxCol(50);
+	    TClassroom.setClsMaxRow(50);
+	    TClassroom.setClsSeatNum(50);
+	    TClassroom.setClsSerialNumber("123");
+	    TClassroom.setClsShape("");
+	    TClassroom.setClsType("");
+	    TClassroom.setClsUsage("");
+	    TClassroom.setClsVCorridorLocate("2,3");
+	    TClassroom.setPartitions(null);
+
+	}
 	
+    //Ö÷³¡¾°
 	@Test
 	public void testExectue() {
 		try{
@@ -40,53 +77,38 @@ public class testClassroomSearchAction extends AbstractModelAndViewTests{
 		    action = new ClassroomSearchAction();
 		    service = EasyMock.createMock(ClassroomService.class);
 		    action.setClassroomService(service);
+		    action.setClassroom(TClassroom);
 		    
-		    action.area = 50;
 		    action.buildingname = "TesingBuilding";
 		    action.compus = "TestingCompus";
 		    action.departmentname = "TestingDepartment";
-		    action.floor = 6;
-		    action.hasmicrophone = true;
-		    action.isamphi = true;
-		    action.isused = true;
-		    action.location = "West";
 		    action.maxClassNum = 100;
 		    action.maxExamNum = 100;
 		    action.minClassNum = 50;
 		    action.minExamNum = 50;
-		    action.serialnumber = "123";
-		    action.shape = "TestingShape";
-		    action.type = "TestingType";
-		    action.usage = "TestingUsage";
-		    
+
 		    
 			List<Classroom> classroomlst = new ArrayList<Classroom>();
-			
-			Classroom classroom = new Classroom();
-			classroom.setClsArea(50);
-			classroom.setClsBuildingId(1);
-			classroom.setClsFloor(6);
-			classroom.setClsHasMicrophone(true);
-			classroom.setClsHasMicrophone(true);
-			classroom.setClsIsAmphi(true);
-			classroom.setClsIsUsed(true);
-			classroom.setClsLocation("West");
-			classroom.setClsClassNum(100);
-			classroom.setClsExamNum(50);
-			classroom.setClsSerialNumber("123");
-			classroom.setClsShape("TestingShape");
-			classroom.setClsType("TestingType");
-			classroom.setClsUsage("TestingUsage");
 
-			classroomlst.add(classroom);
+			classroomlst.add(TClassroom);
 		    
 	    	EasyMock.expect(service.find(EasyMock.anyString(), 
-	    			EasyMock.anyString(), EasyMock.anyString(), EasyMock.anyString(), 
-					EasyMock.anyInt(), EasyMock.anyString(), EasyMock.anyInt(),
-					EasyMock.anyInt(), EasyMock.anyInt(), EasyMock.anyInt(),
-					EasyMock.anyInt(), EasyMock.anyString(), EasyMock.anyBoolean(),
-					EasyMock.anyString(), EasyMock.anyBoolean(), EasyMock.anyString(),
-					EasyMock.anyBoolean())).andReturn(classroomlst);
+	    			EasyMock.anyString(),
+	    			EasyMock.anyString(),
+	    			EasyMock.anyString(),
+	    			EasyMock.anyInt(), 
+	    			EasyMock.anyString(), 
+	    			EasyMock.anyInt(), 
+	    			EasyMock.anyInt(), 
+	    			EasyMock.anyInt(),
+	    			EasyMock.anyInt(),
+	    			EasyMock.anyInt(), 
+	    			EasyMock.anyString(), 
+	    			EasyMock.anyInt(),
+	    			EasyMock.anyString(), 
+	    			EasyMock.anyInt(), 
+	    			EasyMock.anyString(), 
+	    			EasyMock.anyInt())).andReturn(classroomlst);
 	    	EasyMock.replay(service);
 	    	
 	    	assertEquals( "success" , action.execute() );
@@ -97,5 +119,5 @@ public class testClassroomSearchAction extends AbstractModelAndViewTests{
 
 	}
 
-}*/
+}
 

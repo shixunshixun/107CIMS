@@ -21,7 +21,7 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
 
-
+/*
 public class testSeatManageAction extends AbstractModelAndViewTests{
 	public static ClassroomService service;
 	public SeatManageAction action;
@@ -52,4 +52,4 @@ public class testSeatManageAction extends AbstractModelAndViewTests{
 	}
 
 }
-
+*/

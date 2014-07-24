@@ -22,7 +22,7 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
 
-
+/*
 public class testPartitionEnableAction extends AbstractModelAndViewTests{
 	public static PartitionService partition_service;
 
@@ -58,4 +58,4 @@ public class testPartitionEnableAction extends AbstractModelAndViewTests{
 
 	}
 
-}
+}*/

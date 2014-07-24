@@ -21,7 +21,7 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
 
-/*
+
 public class testClassroomDeleteAction extends AbstractModelAndViewTests{
 	public static ClassroomService service;
 	public ClassroomDeleteAction action;
@@ -56,5 +56,5 @@ public class testClassroomDeleteAction extends AbstractModelAndViewTests{
 
 	}
 
-}*/
+}
 

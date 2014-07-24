@@ -1,5 +1,5 @@
 package cims107.test;
-
+/*
 import java.sql.Date;
 
 import cims107.action.PartitionDisableAction;
@@ -58,4 +58,4 @@ public class testPartitionDisableAction extends AbstractModelAndViewTests{
 
 	}
 
-}
+}*/

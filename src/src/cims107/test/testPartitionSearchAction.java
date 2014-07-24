@@ -24,7 +24,7 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
 
-
+/*
 public class testPartitionSearchAction extends AbstractModelAndViewTests{
 	public static PartitionService partition_service;
 	public PartitionSearchAction action;
@@ -97,4 +97,4 @@ public class testPartitionSearchAction extends AbstractModelAndViewTests{
 
 	}
 
-}
+}*/

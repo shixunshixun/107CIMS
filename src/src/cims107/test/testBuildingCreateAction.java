@@ -1,5 +1,6 @@
 package cims107.test;
-/*
+
+import static org.junit.Assert.*;
 import cims107.action.BuildingCreateAction;
 import cims107.dao.BuildingDao;
 import cims107.model.*;
@@ -19,16 +20,26 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
 
-
-public class testBuildingCreateAction extends AbstractModelAndViewTests{
+/*
+public class testBuildingCreateAction extends  AbstractModelAndViewTests  {
 	public static BuildingService service;
 	public BuildingCreateAction action;
+	public Building TBuilding;
 
+	public testBuildingCreateAction() {
+		TBuilding = new Building();
+		TBuilding.setBuildingCompus("TCompus");
+		TBuilding.setBuildingDepartment("TDepartment");
+		TBuilding.setBuildingFloorNum(1);
+		TBuilding.setBuildingId(0);
+		TBuilding.setBuildingName("TBuilding");
+		TBuilding.setBuildingSimpleName("TB");
+	}
 	
 	@Test
-	public void testExectue() {
+	public void testExectue1() {
 		try{
-			System.out.println("The exectue method for BuildingCreateAction is to be tested....");
+			System.out.println("The exectue1 method for BuildingCreateAction is to be tested....");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
@@ -38,23 +49,43 @@ public class testBuildingCreateAction extends AbstractModelAndViewTests{
 		    action = new BuildingCreateAction();
 		    service = EasyMock.createMock(BuildingService.class);
 		    action.setBuildingService(service);
-
-		    action.buildingname = "TestingBuilding";
-	    	action.compus = "TestingCompus";
-	    	action.departmentname = "TestingDepartment";
-	    	action.floor = 5;
-	    	action.simplename = "TB";
-	    	
+	    	action.setBuilding(TBuilding);
 	    	
 	    	EasyMock.expect(service.add(EasyMock.anyObject())).andReturn(true);
 	    	EasyMock.replay(service);
-	    	
 	    	assertEquals( "success" , action.execute() );
-		
+	    	
+	    	
 		}catch( Exception e ){
 			e.printStackTrace();
 		}	
 
 	}
+	
+	@Test
+	public void testExectue2() {
+		try{
+			System.out.println("The exectue2 method for BuildingCreateAction is to be tested....");
+			
+			MockHttpServletRequest request = new MockHttpServletRequest();
+			MockHttpSession session = new MockHttpSession();
+			request.setSession(session);
+			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
+			
+		    action = new BuildingCreateAction();
+		    service = EasyMock.createMock(BuildingService.class);
+		    action.setBuildingService(service);
+	    	
+	    	EasyMock.expect(service.add(EasyMock.anyObject())).andReturn(false);
+	    	EasyMock.replay(service);
+	    	assertEquals( "error" , action.execute() );
+	    	
+	    	
+		}catch( Exception e ){
+			e.printStackTrace();
+		}	
+
+	}
+
 
 }*/

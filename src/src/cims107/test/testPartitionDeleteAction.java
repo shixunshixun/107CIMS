@@ -21,7 +21,7 @@ import org.springframework.web.servlet.HandlerMapping;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
-
+/*
 
 public class testPartitionDeleteAction extends AbstractModelAndViewTests{
 	public static PartitionService partition_service;
@@ -60,4 +60,4 @@ public class testPartitionDeleteAction extends AbstractModelAndViewTests{
 
 	}
 
-}
+}*/

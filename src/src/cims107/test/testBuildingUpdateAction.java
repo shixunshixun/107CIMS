@@ -22,16 +22,27 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
 
-/*
+
 public class testBuildingUpdateAction extends AbstractModelAndViewTests{
 	public static BuildingService service;
 	public BuildingUpdateAction action;
+	public Building TBuilding;
 
 	
+	public testBuildingUpdateAction(){
+		TBuilding = new Building();
+		TBuilding.setBuildingCompus("TCompus");
+		TBuilding.setBuildingDepartment("TDepartment");
+		TBuilding.setBuildingFloorNum(1);
+		TBuilding.setBuildingId(0);
+		TBuilding.setBuildingName("TBuilding");
+		TBuilding.setBuildingSimpleName("TB");
+	}
+	
 	@Test
-	public void testExectue() {
+	public void testExecute1() {
 		try{
-			System.out.println("The exectue method for BuildingUpdateAction is to be tested....");
+			System.out.println("The execute method for BuildingUpdateAction is to be tested....");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
@@ -41,16 +52,9 @@ public class testBuildingUpdateAction extends AbstractModelAndViewTests{
 		    action = new BuildingUpdateAction();
 		    service = EasyMock.createMock(BuildingService.class);
 		    action.setBuildingService(service);
-
-		    action.buildingname = "TestingBuilding";
-	    	action.compus = "TestingCompus";
-	    	action.departmentname = "TestingDepartment";
-	    	action.floor = 5;
-	    	action.simplename = "TB";
-	    	action.buildingid = 1;
+		    action.setBuilding(TBuilding);
 	    	
-	    	
-	    	EasyMock.expect(service.update(EasyMock.anyInt(), EasyMock.anyObject())).andReturn(true);
+	    	EasyMock.expect(service.update(EasyMock.anyObject())).andReturn(true);
 	    	EasyMock.replay(service);
 	    	
 	    	assertEquals( "success" , action.execute() );
@@ -61,5 +65,29 @@ public class testBuildingUpdateAction extends AbstractModelAndViewTests{
 
 	}
 
-}*/
+	@Test
+	public void testExecute2() {
+		try{
+			System.out.println("The execute method for BuildingUpdateAction is to be tested....");
+			
+			MockHttpServletRequest request = new MockHttpServletRequest();
+			MockHttpSession session = new MockHttpSession();
+			request.setSession(session);
+			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
+			
+		    action = new BuildingUpdateAction();
+		    service = EasyMock.createMock(BuildingService.class);
+		    action.setBuildingService(service);
+	    	
+	    	EasyMock.expect(service.update(EasyMock.anyObject())).andReturn(false);
+	    	EasyMock.replay(service);
+	    	
+	    	assertEquals( "error" , action.execute() );
+		
+		}catch( Exception e ){
+			e.printStackTrace();
+		}	
+
+	}
+}
 

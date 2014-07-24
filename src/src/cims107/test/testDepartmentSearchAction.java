@@ -24,7 +24,7 @@ import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
 
-
+/*
 public class testDepartmentSearchAction extends AbstractModelAndViewTests{
 	public static DepartmentService service;
 	public DepartmentSearchAction action;
@@ -62,4 +62,4 @@ public class testDepartmentSearchAction extends AbstractModelAndViewTests{
 
 	}
 
-}
+}*/
