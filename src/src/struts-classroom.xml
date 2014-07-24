@@ -3,34 +3,46 @@
      "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
      "http://struts.apache.org/dtds/struts-2.0.dtd">   
 <struts>   
-    <package name="struts2-classroom" extends="struts-default"> 
-        
-        <action name="ClassroomSearchAction" class="ClassroomSearchAction">  
-            <result name="success">classroomSearch.jsp</result> 
-            <result name="error">searchResult.jsp</result>   
+    <package name="ajax-classroom" extends="json-default">  
+        <action name="ClassroomSearch" class="ClassroomSearchAction">  
+  
+            <!-- 返回类型为json 在sjon-default中定义 -->  
+            <result type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+        </action>  
+        <action name="ClassroomCreate" class="ClassroomCreateAction">  
+  
+            <!-- 返回类型为json 在sjon-default中定义 -->  
+            <result type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+        </action> 
+        <action name="ClassroomDelete" class="ClassroomDeleteAction">  
+  
+            <!-- 返回类型为json 在sjon-default中定义 -->  
+            <result type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+        </action> 
+        <action name="ClassroomUpdate" class="ClassroomUpdateAction">  
+  
+            <!-- 返回类型为json 在sjon-default中定义 -->  
+            <result type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
         </action>
-        
-        <action name="ClassroomCreateAction" class="ClassroomCreateAction">  
-            <result name="success">classroomCreate.jsp</result> 
-            <result name="error">createResult.jsp</result>   
-        </action>
-        
-        <action name="ClassroomDeleteAction" class="ClassroomDeleteAction">  
-            <result name="success">deleteResult.jsp</result> 
-            <result name="error">deleteResult.jsp</result>   
-        </action>
-        
-        <action name="classroomUpdate" class="ClassroomUpdateAction">  
-            <result name="success">updateResult.jsp</result> 
-            <result name="error">updateResult.jsp</result>   
-        </action>
-        
-        <action name="classroomExport" class="ClassroomExportAction">  
-            <result name="success">exportResult.jsp</result>   
-        </action>
-        
-        <action name="classroomImport" class="ClassroomImportAction">  
-            <result name="success">importResult.jsp</result>   
-        </action>
-    </package>    
+    </package>  
 </struts>  

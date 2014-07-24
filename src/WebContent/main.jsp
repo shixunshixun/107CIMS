@@ -23,53 +23,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script src="js/bootstrap.js"></script>
   	
   	<script>
-  		function iFrameHeightcls() { 
-  			var ifm= document.getElementById("ifmclassroom"); 
-  			var subWeb = document.frames ? document.frames["ifmclassroom"].document : ifm.contentDocument; 
+  		function iFrameHeight() { 
+  			var ifm= document.getElementById("ifm"); 
+  			var subWeb = document.frames ? document.frames["ifm"].document : ifm.contentDocument; 
   			if(ifm != null && subWeb != null) { 
   				ifm.height = subWeb.body.scrollHeight; 
-  			} 
+  			}
   		}
-  		function iFrameHeightbld() { 
-  			var ifm= document.getElementById("ifmbuilding"); 
-  			var subWeb = document.frames ? document.frames["ifmbuilding"].document : ifm.contentDocument; 
-  			if(ifm != null && subWeb != null) { 
-  				ifm.height = subWeb.body.scrollHeight; 
-  			} 
-  		}
-  		function iFrameHeightptt() { 
-  			var ifm= document.getElementById("ifmpartition"); 
-  			var subWeb = document.frames ? document.frames["ifmpartition"].document : ifm.contentDocument; 
-  			if(ifm != null && subWeb != null) { 
-  				ifm.height = subWeb.body.scrollHeight; 
-  			} 
-  		}
+  		setInterval(iFrameHeight,100);
   		function building(){
-  			//document.getElementById('ifmbuilding').src='buildingSearch.jsp';
-  			document.getElementById('buildingmanage').style.display = 'block';
-  			if (document.getElementById('classroommanage').style.display == 'block')
-  				document.getElementById('classroommanage').style.display = 'none';
-  			if (document.getElementById('partitionmanage').style.display == 'block')
-  				document.getElementById('partitionmanage').style.display = 'none';
-  			document.getElementById("title").innerHTML="教学楼管理";
+  			document.getElementById('ifm').src='buildingSearch.jsp';
+  			document.getElementById('title').innerHTML="教学楼管理";
   		}
   		function classroom(){
-  			//document.getElementById('ifmclassroom').src='classroomSearch.jsp';
-  			document.getElementById('classroommanage').style.display = 'block';
-  			if (document.getElementById('buildingmanage').style.display == 'block')
-  				document.getElementById('buildingmanage').style.display = 'none';
-  			if (document.getElementById('partitionmanage').style.display == 'block')
-  				document.getElementById('partitionmanage').style.display = 'none';	
-  			document.getElementById("title").innerHTML="教室管理";
+  			document.getElementById('ifm').src='classroomSearch.jsp';
+  			document.getElementById('title').innerHTML="教室管理";
   		}
   		function partition(){
-  			//document.getElementById('ifmbuilding').src='buildingSearch.jsp';
-  			document.getElementById('partitionmanage').style.display = 'block';
-  			if (document.getElementById('classroommanage').style.display == 'block')
-  				document.getElementById('classroommanage').style.display = 'none';
-  			if (document.getElementById('buildingmanage').style.display == 'block')
-  				document.getElementById('buildingmanage').style.display = 'none';
-  			document.getElementById("title").innerHTML="教室资源划分";
+  			document.getElementById('ifm').src='partitionSearch.jsp';
+  			document.getElementById('title').innerHTML="教室划分";
   		}
   	</script>
 </head>
@@ -87,16 +59,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			<li><a onclick="partition();">教室划分</a></li>
      	 		</ul>
     		</div>
-    		<div class="span8 hide" id="buildingmanage">
-    			<IFRAME id="ifmbuilding" frameborder="no" scrolling="no" onLoad="iFrameHeightbld()" width="100%" height="100%" name="ifmbuilding" src="buildingSearch.jsp"></IFRAME>
+    		<div class="span10" id=manage">
+    			<IFRAME id="ifm" frameborder="no" scrolling="no" width="100%" height="100%" name="ifmbuilding"></IFRAME>
     		</div>
-    		<div class="span8 hide" id="classroommanage">
-    			<IFRAME id="ifmclassroom" frameborder="no" scrolling="no" onLoad="iFrameHeightcls()" width="100%" height="100%" name="ifmclassroom" src="classroomSearch.jsp"></IFRAME>
-			</div>
-			<div class="span8 hide" id="partitionmanage">
-    			<IFRAME id="ifmpartition" frameborder="no" scrolling="no" onLoad="iFrameHeightptt()" width="100%" height="100%" name="ifmpartition" src="partitionSearch.jsp"></IFRAME>
-    		</div>
-  		</div>
+    	</div>
 	</div>
 </body>
 </html>
