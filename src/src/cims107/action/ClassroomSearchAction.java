@@ -4,6 +4,8 @@ import java.util.List;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.processors.JsonValueProcessor;
 import cims107.model.Building;
 import cims107.model.Classroom;
 import cims107.service.BuildingService;
@@ -63,7 +65,7 @@ public class ClassroomSearchAction extends ActionSupport implements ModelDriven<
 	
 	public String execute()
 	{
-		if (isValidate()) {
+		//if (isValidate()) {
 			//classroom.getBuilding().setBuildingName(buildingname);
 			//classroom.getBuilding().setBuildingCompus(compus);
 			//classroom.getBuilding().setBuildingDepartment(departmentname);
@@ -74,12 +76,42 @@ public class ClassroomSearchAction extends ActionSupport implements ModelDriven<
 					classroom.getClsIsAmphi(), classroom.getClsShape(), classroom.getClsHasMicrophone(), classroom.getClsUsage(), classroom.getClsIsUsed());
 			
 			if(classroomlst != null) {
-		    	JSONArray ja = new JSONArray();
+				JSONArray ja = new JSONArray();
+		    	JsonConfig jc = new JsonConfig();
+		    	jc.registerJsonValueProcessor(Building.class, new JsonValueProcessor() {
+		    		@Override
+		    		public Object processObjectValue(String key, Object value, JsonConfig arg2) {
+		    			if(key.equals("building")) {
+		    				Building b = (Building)value;
+		    				Building c = new Building();
+		    				c.setBuildingCompus(b.getBuildingCompus());
+		    				c.setBuildingDepartment(b.getBuildingDepartment());
+		    				c.setBuildingFloorNum(b.getBuildingFloorNum());
+		    				c.setBuildingId(b.getBuildingId());
+		    				c.setBuildingName(b.getBuildingName());
+		    				c.setBuildingSimpleName(b.getBuildingSimpleName());
+		    				c.setClassrooms(null);
+		    				b.setClassrooms(null);
+		    				//System.out.println(JSONObject.fromObject(b).toString());
+		    				//System.out.println(b.getBuildingCompus());
+		    				return JSONObject.fromObject(c).toString();
+		    			}
+		    			return value;
+		    		}
+		    		
+		    		@Override  
+		            public Object processArrayValue(Object value, JsonConfig arg1) {  
+		                // TODO Auto-generated method stub  
+		                return value;  
+		            }  
+		    	});
+
 		    	for(int i = 0; i < classroomlst.size(); i++) {
 		    		Classroom c = classroomlst.get(i);
 		    		c.setPartitions(null);
-		    		c.getBuilding().setClassrooms(null);
-		    		ja.add(JSONObject.fromObject(c));
+		    		//c.setBuilding(null);
+		    		//c.getBuilding().setClassrooms(null);
+		    		ja.add(JSONObject.fromObject(c, jc));
 		    	}
 		    	result = ja.toString();
 	    	}
@@ -90,8 +122,7 @@ public class ClassroomSearchAction extends ActionSupport implements ModelDriven<
 	    	return SUCCESS;
 			
 			//��ʾ��ȡ���Ľ�����Ϣ
-		}
-		return ERROR;
+		//}
 	}
 	
 	public Boolean isValidate() {

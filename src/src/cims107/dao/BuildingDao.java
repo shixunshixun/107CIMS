@@ -33,7 +33,7 @@ public class BuildingDao {
 			dc.add(Restrictions.eq("buildingSimpleName", simplename));	
 		}
 		
-		if (!compus.isEmpty()) {			
+		if (!compus.isEmpty()) {
 			dc.add(Restrictions.eq("buildingCompus", compus));	
 		}
 	   

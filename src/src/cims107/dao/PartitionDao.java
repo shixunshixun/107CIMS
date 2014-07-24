@@ -55,19 +55,23 @@ public class PartitionDao {
 			dc.add(Restrictions.eq("pTerm", pterm));
 		if(!departmentname.isEmpty())
 			dc.add(Restrictions.eq("pDepartment", departmentname));
-		
-		dc.add(Restrictions.between("pClassNum", minclassnum, maxclassnum));
-		dc.add(Restrictions.between("pExamNum", minexamnum, maxexamnum));
-		dc.add(Restrictions.eq("pBeginWeek", beginweek));
-		dc.add(Restrictions.eqOrIsNull("pEndWeek", endweek));
-		dc.add(Restrictions.eqOrIsNull("pIsUsed", pisused));
+		if (minclassnum > 0)
+			dc.add(Restrictions.between("pClassNum", minclassnum, maxclassnum));
+		if (minexamnum > 0)
+			dc.add(Restrictions.between("pExamNum", minexamnum, maxexamnum));
+		if (beginweek > 0)
+			dc.add(Restrictions.eq("pBeginWeek", beginweek));
+		if (endweek > 0)
+			dc.add(Restrictions.eqOrIsNull("pEndWeek", endweek));
+		if (pisused == 1 || pisused == 2)
+			dc.add(Restrictions.eqOrIsNull("pIsUsed", pisused));
 		
 		Criteria c = dc.getExecutableCriteria(session);
 
 		
 		List<Partition> list = c.list();
 		Iterator<Partition> iter = list.iterator();
-		session.close();
+		
 		
 		while (iter.hasNext()) {
 			if(!type.isEmpty()) {
@@ -99,8 +103,16 @@ public class PartitionDao {
 					continue;
 				}
 			}
+			if (type.isEmpty() && serialnumber.isEmpty() && buildingname.isEmpty() && buildingname.isEmpty() 
+					&& compus.isEmpty() && iter.next().getClassroom().getClsAvailableSeatNum() >= minavailableseat && 
+					iter.next().getClassroom().getClsAvailableSeatNum() <= maxavailableseat) {
+				Partition temp = iter.next();
+			}
+			else
+				break;
 		}
 		
+		session.close();
 		if (list.size()==0)
 			return null;
 		else

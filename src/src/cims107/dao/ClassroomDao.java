@@ -24,7 +24,7 @@ public class ClassroomDao {
 		
 		
 		Session session = sessionFactory.openSession();
-		DetachedCriteria dc = DetachedCriteria.forClass(Building.class);
+		DetachedCriteria dc = DetachedCriteria.forClass(Classroom.class);
 		
 		if (!type.isEmpty()) {
 			dc.add(Restrictions.eq("clsType",type));
@@ -41,31 +41,33 @@ public class ClassroomDao {
 		if (!location.isEmpty()) {
 			dc.add(Restrictions.eq("clsLocation",location));
 		}
-		if (isamphi == 0 || isamphi == 1) {
+		if (isamphi == 2 || isamphi == 1) {
 			dc.add(Restrictions.eq("clsIsAmphi",isamphi));
 		}
 		if (!shape.isEmpty()) {
 			dc.add(Restrictions.eq("clsShape",shape));
 		}
-		if (hasmicrophone == 0 || hasmicrophone == 1) {
+		if (hasmicrophone == 2 || hasmicrophone == 1) {
 			dc.add(Restrictions.eq("clsHasMicrophone",hasmicrophone));
 		}
 		if (!usage.isEmpty()) {
 			dc.add(Restrictions.eq("clsUsage",usage));
 		}
-		if (isused == 0 || isused == 1) {
+		if (isused == 2 || isused == 1) {
 			dc.add(Restrictions.eq("clsIsUsed",isused));
 		}
-		dc.add(Restrictions.between("clsClassNum", minClassNum, maxClassNum));
-		dc.add(Restrictions.between("clsExamNum", minExamNum, maxExamNum));
+		if (minClassNum > 0)
+			dc.add(Restrictions.between("clsClassNum", minClassNum, maxClassNum));
+		if (minExamNum > 0)
+			dc.add(Restrictions.between("clsExamNum", minExamNum, maxExamNum));
 		
 		Criteria c = dc.getExecutableCriteria(session);
 		
 		List<Classroom> list = c.list();
 		Iterator<Classroom> iter = list.iterator();
 		
-		session.close();
 		
+		//返回的classroom对象中是数据表中数据，没有building对象属性，要通过clsbuildingid来访问compus和buildingname
 		while (iter.hasNext()) {
 			if (!compus.isEmpty()) {
 				if (!iter.next().getBuilding().getBuildingCompus().equals(compus)) {
@@ -84,7 +86,13 @@ public class ClassroomDao {
 					iter.remove();
 				}
 			}
+			
+			if (compus.isEmpty() && departmentname.isEmpty() && buildingname.isEmpty()) {
+				break;
+			}
 		}
+
+		session.close();
 		if (list.size()==0)
 			return null;
 		else
