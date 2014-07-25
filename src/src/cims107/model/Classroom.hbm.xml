@@ -19,10 +19,6 @@
             <column name="clsFloor" length="8" />
         </property>
         
-        <!-- <property name="clsBuildingId" type="java.lang.Integer">
-            <column name="clsBuildingId" length="8" />
-        </property> -->
-        
         <property name="clsSerialNumber" type="java.lang.String">
             <column name="clsSerialNumber" length="40" />
         </property>
@@ -87,13 +83,13 @@
             <column name="clsHCorridorLocate" length="40" />
         </property>
         
-        <many-to-one name="building" class="cims107.model.Building" cascade="all">
+        <many-to-one name="building" class="cims107.model.Building">
 			<column name="clsBuildingId" length="8" />
 		</many-to-one>
 		
 		<set name="partitions" cascade="all">
 			<key>
-			<column name="partitionClsId" length="8"/>
+			<column name="pClsId" length="8"/>
 			</key>
 			<one-to-many class="cims107.model.Partition"/>
 		</set>

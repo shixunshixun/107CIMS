@@ -3,6 +3,7 @@ package cims107.dao;
 import java.util.*;
 
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -66,7 +67,12 @@ public class ClassroomDao {
 		List<Classroom> list = c.list();
 		Iterator<Classroom> iter = list.iterator();
 		
-		
+		//Hibernate.initialize();
+		Iterator<Classroom> tempiter = list.iterator();
+		while (tempiter.hasNext()) {
+			String tempcompus = tempiter.next().getBuilding().getBuildingCompus();
+			Classroom testc = tempiter.next();
+		}
 		//返回的classroom对象中是数据表中数据，没有building对象属性，要通过clsbuildingid来访问compus和buildingname
 		while (iter.hasNext()) {
 			if (!compus.isEmpty()) {

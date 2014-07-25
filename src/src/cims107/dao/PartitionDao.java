@@ -33,6 +33,14 @@ public class PartitionDao {
 		Query q = session.createQuery(hql);
 		
 		List<Partition> list = q.list();
+		
+		Iterator<Partition> tempiter = list.iterator();
+		while (tempiter.hasNext()) {
+			String tempcompus = tempiter.next().getClassroom().getBuilding().getBuildingCompus();
+			String snumber = tempiter.next().getClassroom().getClsSerialNumber();
+			Partition testc = tempiter.next();
+		}
+		
 		session.close();
 		//ªÒ»°buildingId
 		if (list.size()==0)
@@ -72,6 +80,12 @@ public class PartitionDao {
 		List<Partition> list = c.list();
 		Iterator<Partition> iter = list.iterator();
 		
+		Iterator<Partition> tempiter = list.iterator();
+		while (tempiter.hasNext()) {
+			String tempcompus = tempiter.next().getClassroom().getBuilding().getBuildingCompus();
+			String snumber = tempiter.next().getClassroom().getClsSerialNumber();
+			Partition testc = tempiter.next();
+		}
 		
 		while (iter.hasNext()) {
 			if(!type.isEmpty()) {
