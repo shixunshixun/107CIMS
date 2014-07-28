@@ -65,10 +65,7 @@ public class ClassroomSearchAction extends ActionSupport implements ModelDriven<
 	
 	public String execute()
 	{
-		//if (isValidate()) {
-			//classroom.getBuilding().setBuildingName(buildingname);
-			//classroom.getBuilding().setBuildingCompus(compus);
-			//classroom.getBuilding().setBuildingDepartment(departmentname);
+		if (isValidate()) {
 			
 			List<Classroom> classroomlst = classroomService.find(compus, departmentname, classroom.getClsType(), buildingname, 
 					classroom.getClsFloor(), classroom.getClsSerialNumber(), minClassNum, maxClassNum, 
@@ -120,12 +117,21 @@ public class ClassroomSearchAction extends ActionSupport implements ModelDriven<
 	    	}
 	    	
 	    	return SUCCESS;
-			
-			//��ʾ��ȡ���Ľ�����Ϣ
-		//}
+		}
+		result = JSONObject.fromObject("{\"hint\":\"Please check your search condition\"}").toString();
+		return "hint";
 	}
 	
 	public Boolean isValidate() {
-		return (maxClassNum >= minClassNum) && (maxExamNum >= minExamNum) && (minClassNum > 0) && (minExamNum > 0);
+		//return (maxClassNum >= minClassNum) && (maxExamNum >= minExamNum) && (minClassNum > 0) && (minExamNum > 0);
+		if (classroom.getClsFloor() <= 0 || classroom.getClsArea() <= 0 || 
+				(maxClassNum != 0 && minClassNum != 0 && minClassNum > maxClassNum) || 
+				(maxExamNum != 0 && minExamNum != 0 && minExamNum > maxExamNum) || 
+				(!(classroom.getClsIsAmphi() >= 0 && classroom.getClsIsAmphi() <= 2)) || 
+				(!(classroom.getClsHasMicrophone() >= 0 && classroom.getClsHasMicrophone() <= 2)) || 
+				(!(classroom.getClsIsUsed() >= 0 && classroom.getClsIsUsed() <= 2))) {
+			return false;
+		}
+		return true;
 	}
 }

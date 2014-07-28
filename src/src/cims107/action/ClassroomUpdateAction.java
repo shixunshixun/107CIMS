@@ -11,32 +11,6 @@ import com.opensymphony.xwork2.ModelDriven;
 
 public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<Classroom>{
 	
-	/*public String buildingname;
-	public String serialnumber;
-	public String compus;
-	public int floor;
-	public String type;
-	public String shape;
-	public int classnum;
-	public int examnum;
-	public int maxrow;
-	public int maxcol;
-	public String hcorridorlocate;
-	public String vcorridorlocate;
-	public int area;
-	public String location;
-	public int isamphi;
-	public int hasmicrophone;
-	public int isused;
-	public String usage;
-	public int seatnum;
-	public int availableseatnum;
-	public String departmentname; */
-	
-	/*public String buildingname;
-	public String compus;
-	public String departmentname;*/
-	
 	private ClassroomService classroomService;
 	BuildingService buildingService;
 	private Classroom classroom;
@@ -91,19 +65,82 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 	}
 	
 	public String execute() {
-		//Classroom c = new Classroom();
-		//Building building = new Building();
+		if (isValidate()) {
+			classroomService.update(classroom);
+			result = JSONObject.fromObject("{\"success\":1}").toString();
+			return SUCCESS;
+		}
+		result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
+		return "hint";
+	}
+	
+public Boolean isValidate() {
 		
-		/*classroom.getBuilding().setBuildingName(buildingname);
-		classroom.getBuilding().setBuildingCompus(compus);
-		classroom.getBuilding().setBuildingDepartment(departmentname);*/
-		//building = buildingService.find(classroom.getBuilding().getBuildingName(), classroom.getBuilding().getBuildingCompus());
+		if(!(classroom.getClsHCorridorLocate() == null || classroom.getClsHCorridorLocate().isEmpty())) {
+			for(String s1 : classroom.getClsHCorridorLocate().split(";")) {
+				if(!s1.isEmpty()){
+					String[] s = s1.split(",");
+					int[] h = new int[2];
+					for(int i = 0; i < s.length; i++) {
+						if(!s[i].isEmpty()) {
+							h[i] = Integer.parseInt(s[i]);
+						}
+						else {
+							return false;
+						}
+					}
+					if(h[1] - h[0] < 1 || h[1] > classroom.getClsMaxRow() || h[0] < 1) 
+						return false;
+				}
+				else {
+					return false;
+				}
+			}
+		}
 		
-    	//classroom.setClsBuildingId(building.getBuildingId());
-		//classroom.setBuilding(building);
+		if(!(classroom.getClsVCorridorLocate() == null || classroom.getClsVCorridorLocate().isEmpty())) {
+			for(String s1 : classroom.getClsVCorridorLocate().split(";")) {
+				if(!s1.isEmpty()){
+					String[] s = s1.split(",");
+					int[] h = new int[2];
+					for(int i = 0; i < s.length; i++) {
+						if(!s[i].isEmpty()) {
+							h[i] = Integer.parseInt(s[i]);
+						}
+						else {
+							return false;
+						}
+					}
+					if(h[1] - h[0] < 1 || h[1] > classroom.getClsMaxCol() || h[0] < 1) 
+						return false;
+				}
+				else {
+					return false;
+				}
+			}
+		}
 		
-		classroomService.update(classroom);
-		result = JSONObject.fromObject("{\"success\":1}").toString();
-		return SUCCESS;
+		if (classroom.getClsFloor() <= 0 || classroom.getClsClassNum() < 0 || classroom.getClsExamNum() < 0 || 
+				classroom.getClsArea() <= 0 || classroom.getClsMaxCol() <= 0 || classroom.getClsMaxRow() <= 0)
+			return false;
+		if (classroom.getClsSeatNum() != 0 && classroom.getClsAvailableSeatNum() != 0 && 
+				classroom.getClsSeatNum() < classroom.getClsAvailableSeatNum())
+			return false;
+		
+		if(classroom.getClsClassNum() != 0 && classroom.getClsAvailableSeatNum() != 0 && 
+				classroom.getClsClassNum() > classroom.getClsAvailableSeatNum())
+			return false;
+		
+		if(classroom.getClsExamNum() != 0 && classroom.getClsAvailableSeatNum() != 0 && 
+				classroom.getClsExamNum() > classroom.getClsAvailableSeatNum())
+			return false;
+		
+		if ((!(classroom.getClsIsAmphi() >= 0 && classroom.getClsIsAmphi() <= 2)) || 
+				(!(classroom.getClsHasMicrophone() >= 0 && classroom.getClsHasMicrophone() <= 2)) || 
+				(!(classroom.getClsIsUsed() >= 0 && classroom.getClsIsUsed() <= 2))) {
+			return false;
+		}
+		
+		return true;
 	}
 }

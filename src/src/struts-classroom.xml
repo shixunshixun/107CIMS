@@ -7,17 +7,31 @@
         <action name="ClassroomSearch" class="ClassroomSearchAction">  
   
             <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
+            <result name="success" type="json">  
   
                 <!-- root的值对应要返回的值的属性 -->  
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            
+            <result name="hint" type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result> 
         </action>  
         <action name="ClassroomCreate" class="ClassroomCreateAction">  
   
             <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
+            <result name="success" type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+            
+            <result name="hint" type="json">  
   
                 <!-- root的值对应要返回的值的属性 -->  
                 <!-- 这里的result值即是 对应action中的 result -->  
@@ -37,7 +51,13 @@
         <action name="ClassroomUpdate" class="ClassroomUpdateAction">  
   
             <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
+            <result name="success" type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+            <result name="hint" type="json">  
   
                 <!-- root的值对应要返回的值的属性 -->  
                 <!-- 这里的result值即是 对应action中的 result -->  

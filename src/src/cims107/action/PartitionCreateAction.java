@@ -98,7 +98,7 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
     }
     
     public String execute() {
-    	//if (isValidate()) {
+    	if (isValidate()) {
 	    	List<Integer> whichdaylst = new ArrayList<Integer>();
 	    	
 	    	for(int i=0; i<whichday.length;i++){
@@ -121,16 +121,43 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
 	    	result = JSONObject.fromObject("{\"success\":1}").toString();
 	    	
 	    	return SUCCESS;
-    	//}
-    	//return ERROR;
+    	}
+    	result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
+    	return "hint";
     }
     
-    /*public Boolean isValidate() {
-    	if (maxavailableseat < minavailableseat || beginweek > endweek || 
-    			beginlession < 1 || endlession > 15 || beginlession > endlession)
+    public Boolean isValidate() {
+    	//还少个起始日期大于终止日期的判断
+    	if (partition.getPartitionYear().isEmpty() || partition.getPartitionTerm().isEmpty() || partition.getPartitionDepartment().isEmpty() || 
+				partition.getPartitionClassNum() == 0 || whichday.length == 0 || 
+				partition.getPartitionBeginLession() == 0 || partition.getPartitionEndLession() == 0) {
+			return false;
+		}
+    	
+    	if (partition.getPartitionBeginLession() < 1 || partition.getPartitionEndLession() > 15 || 
+    			partition.getPartitionBeginLession() > partition.getPartitionEndLession())
     		return false;
-    	if (begindate.after(enddate))
+    	
+    	if (partition.getPartitionBeginWeek() != 0 && partition.getPartitionEndWeek() != 0) {
+    		if (!partition.getPartitionBeginDate().isEmpty() || !partition.getPartitionEndDate().isEmpty())
+    			return false;
+    		if (partition.getPartitionBeginWeek() > partition.getPartitionEndWeek())
+    			return false;
+    		return true;
+    	}
+    	if (partition.getPartitionBeginWeek() == 0 && partition.getPartitionEndWeek() == 0) {
+    		if (!partition.getPartitionBeginDate().isEmpty() && !partition.getPartitionEndDate().isEmpty())
+    			return true;
     		return false;
+    	}
+    	if ((partition.getPartitionBeginWeek() == 0 && partition.getPartitionEndWeek() != 0) || 
+    			(partition.getPartitionBeginWeek() != 0 && partition.getPartitionEndWeek() == 0)) {
+    		return false;
+    	}
+    	if ((partition.getPartitionBeginDate().isEmpty() && !partition.getPartitionEndDate().isEmpty()) || 
+    			(!partition.getPartitionBeginDate().isEmpty() && partition.getPartitionEndDate().isEmpty())) {
+    		return false;
+    	}
     	return true;
-    }*/
+    }
 }

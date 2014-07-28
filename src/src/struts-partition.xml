@@ -43,7 +43,13 @@
         <action name="PartitionSearch" class="PartitionSearchAction">  
   
             <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
+            <result name="success" type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+            <result name="hint" type="json">  
   
                 <!-- root的值对应要返回的值的属性 -->  
                 <!-- 这里的result值即是 对应action中的 result -->  
@@ -63,7 +69,13 @@
         <action name="PartitionCreate" class="PartitionCreateAction">  
   
             <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
+            <result name="success" type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+            <result name="hint" type="json">  
   
                 <!-- root的值对应要返回的值的属性 -->  
                 <!-- 这里的result值即是 对应action中的 result -->  
@@ -103,7 +115,13 @@
         <action name="PartitionUpdate" class="PartitionUpdateAction">  
   
             <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
+            <result name="success" type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result> 
+             <result name="hint" type="json">  
   
                 <!-- root的值对应要返回的值的属性 -->  
                 <!-- 这里的result值即是 对应action中的 result -->  

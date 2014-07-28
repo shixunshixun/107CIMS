@@ -12,26 +12,6 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
 public class ClassroomCreateAction extends ActionSupport implements ModelDriven<Classroom>{
-	/*public String buildingname;
-	public String serialnumber;
-	public String compus;
-	public int floor;
-	public String type;
-	public String shape;
-	public int classnum;
-	public int examnum;
-	public int maxrow;
-	public int maxcol;
-	public String hcorridorlocate;
-	public String vcorridorlocate;
-	public int area;
-	public String location;
-	public int isamphi;
-	public int hasmicrophone;
-	public int isused;
-	public String usage;
-	public int seatnum;
-	public int availableseatnum;*/
 	
 	public String buildingname;
 	public String compus;
@@ -85,9 +65,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 	public String execute()
 	{
 		Building building = new Building();
-		
-		//classroom.getBuilding().setBuildingName(buildingname);
-		//classroom.getBuilding().setBuildingCompus(compus);
+
 		building = buildingService.find(buildingname, compus);
 		
 		if(building == null) {
@@ -103,49 +81,108 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 		    	
 		    	return SUCCESS;
 			}
-			return ERROR;
+			result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
+			return "hint";
 		}
 	}
 	
 	
 	public Boolean isValidate() {
 		
-		int commapos, hx=0, hy=0, vx=0, vy=0;
-		Boolean hflag = false, vflag = false;
-		String hcorridorlocatex, hcorridorlocatey, vcorridorlocatex, vcorridorlocatey;
-		
-		
-		for (int i = 0; i < classroom.getClsHCorridorLocate().length();i ++) {
-			if (classroom.getClsHCorridorLocate().charAt(i) == ',') {
-				hcorridorlocatex = classroom.getClsHCorridorLocate().substring(0, i);
-				hcorridorlocatey = classroom.getClsHCorridorLocate().substring(i+1);
-				hx = new Integer (hcorridorlocatex);
-				hy = new Integer (hcorridorlocatey);
-				hflag = true;
-			}
-		}
-		
-		for (int i = 0; i < classroom.getClsVCorridorLocate().length();i ++) {
-			if (classroom.getClsVCorridorLocate().charAt(i) == ',') {
-				vcorridorlocatex = classroom.getClsVCorridorLocate().substring(0, i);
-				vcorridorlocatey = classroom.getClsVCorridorLocate().substring(i+1);
-				vx = new Integer (vcorridorlocatex);
-				vy = new Integer (vcorridorlocatey);
-				vflag = true;
-			}
-		}
-		
-		if (!hflag || !vflag)
+		if (classroom.getClsType().isEmpty() || classroom.getClsSerialNumber().isEmpty() || classroom.getClsClassNum() == 0 || 
+				classroom.getClsUsage().isEmpty() || classroom.getClsSeatNum() == 0 || 
+				classroom.getClsAvailableSeatNum() == 0) {
 			return false;
+		}
 		
-		if (hflag && vflag) {
-			if ((hy-hx)!=1 || (vy-vx)!=1 || hy > classroom.getClsMaxRow() || vy > classroom.getClsMaxCol() || hx < 1 || vx < 1) {
-				return false;
+//		int commapos, hx=0, hy=0, vx=0, vy=0;
+//		Boolean hflag = false, vflag = false;
+//		String hcorridorlocatex, hcorridorlocatey, vcorridorlocatex, vcorridorlocatey;
+		
+		if(!(classroom.getClsHCorridorLocate() == null || classroom.getClsHCorridorLocate().isEmpty())) {
+			for(String s1 : classroom.getClsHCorridorLocate().split(";")) {
+				if(!s1.isEmpty()){
+					String[] s = s1.split(",");
+					int[] h = new int[2];
+					for(int i = 0; i < s.length; i++) {
+						if(!s[i].isEmpty()) {
+							h[i] = Integer.parseInt(s[i]);
+						}
+						else {
+							return false;
+						}
+					}
+					if(h[1] - h[0] < 1 || h[1] > classroom.getClsMaxRow() || h[0] < 1) 
+						return false;
+				}
+				else {
+					return false;
+				}
 			}
 		}
+		
+		if(!(classroom.getClsVCorridorLocate() == null || classroom.getClsVCorridorLocate().isEmpty())) {
+			for(String s1 : classroom.getClsVCorridorLocate().split(";")) {
+				if(!s1.isEmpty()){
+					String[] s = s1.split(",");
+					int[] h = new int[2];
+					for(int i = 0; i < s.length; i++) {
+						if(!s[i].isEmpty()) {
+							h[i] = Integer.parseInt(s[i]);
+						}
+						else {
+							return false;
+						}
+					}
+					if(h[1] - h[0] < 1 || h[1] > classroom.getClsMaxCol() || h[0] < 1) 
+						return false;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		
+//		for (int i = 0; i < classroom.getClsHCorridorLocate().length();i ++) {
+//			if (classroom.getClsHCorridorLocate().charAt(i) == ',') {
+//				hcorridorlocatex = classroom.getClsHCorridorLocate().substring(0, i);
+//				hcorridorlocatey = classroom.getClsHCorridorLocate().substring(i+1);
+//				hx = new Integer (hcorridorlocatex);
+//				hy = new Integer (hcorridorlocatey);
+//				hflag = true;
+//			}
+//		}
+//		
+//		for (int i = 0; i < classroom.getClsVCorridorLocate().length();i ++) {
+//			if (classroom.getClsVCorridorLocate().charAt(i) == ',') {
+//				vcorridorlocatex = classroom.getClsVCorridorLocate().substring(0, i);
+//				vcorridorlocatey = classroom.getClsVCorridorLocate().substring(i+1);
+//				vx = new Integer (vcorridorlocatex);
+//				vy = new Integer (vcorridorlocatey);
+//				vflag = true;
+//			}
+//		}
+//		
+//		
+//		
+//		if (!hflag || !vflag)
+//			return false;
+//		
+//		if (hflag && vflag) {
+//			if ((hy-hx)!=1 || (vy-vx)!=1 || hy > classroom.getClsMaxRow() || vy > classroom.getClsMaxCol() || hx < 1 || vx < 1) {
+//				return false;
+//			}
+//		}
 		
 		if (classroom.getClsSeatNum() < classroom.getClsAvailableSeatNum())
 			return false;
+		
+		if(classroom.getClsClassNum() > classroom.getClsAvailableSeatNum())
+			return false;
+		
+		if(classroom.getClsExamNum() > classroom.getClsAvailableSeatNum())
+			return false;
+		
 		return true;
 	}
 }

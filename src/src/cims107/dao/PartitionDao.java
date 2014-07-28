@@ -224,7 +224,7 @@ public class PartitionDao {
 		
 		for (int i = 0; i < partitionlst.size(); i ++) {
 			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
-			p.setPartitionIsUsed(0);
+			p.setPartitionIsUsed(2);
 			session.update(p);
 		}
 		

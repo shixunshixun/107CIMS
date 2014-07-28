@@ -137,7 +137,6 @@ public class ClassroomDao {
 		String hql = "FROM Classroom AS c WHERE c.clsSerialNumber = :serialnumber";
 		Query q = session.createQuery(hql);
 		
-		q.setInteger("clsbuildingid", clsbuildingid);
 		q.setString("serialnumber", serialnumber);
 		
 		List<Classroom> list = q.list();

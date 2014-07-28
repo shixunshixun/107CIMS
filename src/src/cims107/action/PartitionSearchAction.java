@@ -70,7 +70,7 @@ public class PartitionSearchAction extends ActionSupport implements ModelDriven<
     	if (isValidate()) {
     		
 	    	List<Partition> partitionlst = partitionService.find(partition.getPartitionYear(), compus, buildingname, partition.getPartitionTerm(), serialnumber, 
-	    			partition.getPartitionDepartment(), partition.getClassroom().getClsType(), maxavailableseat, minavailableseat, 
+	    			partition.getPartitionDepartment(), type, maxavailableseat, minavailableseat, 
 	    			maxclassnum, minclassnum, maxexamnum, minexamnum, 
 	    			partition.getPartitionBeginWeek(), partition.getPartitionEndWeek(), partition.getPartitionIsUsed());
 	    	
@@ -163,11 +163,20 @@ public class PartitionSearchAction extends ActionSupport implements ModelDriven<
 	    	}
 	    	return SUCCESS;
     	}
-    	return ERROR;
+    	result = JSONObject.fromObject("{\"hint\":\"Please check your search condition\"}").toString();
+    	return "hint";
     }
     
     public Boolean isValidate() {
-    	return (maxavailableseat >= minavailableseat && maxclassnum >= minclassnum 
-    			&& maxexamnum >= minexamnum && partition.getPartitionBeginWeek() <= partition.getPartitionEndWeek());
+    	
+    	if ((maxavailableseat != 0 && minavailableseat != 0 && minavailableseat > maxavailableseat) || 
+				(maxclassnum != 0 && minclassnum != 0 && minclassnum > maxclassnum) || 
+				(maxexamnum != 0 && minexamnum != 0 && minexamnum > maxexamnum) || 
+				(!(partition.getPartitionIsUsed() >= 0 && partition.getPartitionIsUsed() <= 2)) || 
+				(partition.getPartitionBeginWeek() != 0 && partition.getPartitionEndWeek() != 0 && 
+					partition.getPartitionBeginWeek() > partition.getPartitionEndWeek())) {
+			return false;
+		}
+		return true;
     }
 }

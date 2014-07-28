@@ -56,15 +56,6 @@ public class BuildingSearchAction extends ActionSupport implements ModelDriven<B
     	}
     	
     	return SUCCESS;
-    	/*if(buildinglst != null) {
-    		System.out.print(buildinglst.get(0).getBuildingCompus());
-    		ActionContext.getContext().getSession().put("buildinglst", buildinglst);
-    	   	return SUCCESS;
-    	}
-    	else {
-    		super.addActionError("no building found");
-    		return ERROR;
-    	}*/
     }
 
 	
@@ -83,6 +74,4 @@ public class BuildingSearchAction extends ActionSupport implements ModelDriven<B
 	public void setResult(String result) {
 		this.result = result;
 	}
-     
-    
 }

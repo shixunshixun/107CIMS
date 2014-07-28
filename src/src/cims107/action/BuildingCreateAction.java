@@ -39,7 +39,6 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
     {
     	if (isValidate()) {
 	    	if(buildingService.add(building)){
-	    		//ja.add(JSONObject.fromObject(1));
 	    		result = JSONObject.fromObject("{\"success\":1}").toString();
 	    	   	return SUCCESS;
 	    	}
@@ -48,7 +47,8 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
 	    		return ERROR;
 	    	}
     	}
-    	return ERROR;
+    	result = JSONObject.fromObject("{\"hint\":\"The input is invalid\"}").toString();
+    	return "hint";
     }  
    
     public String getResult() {

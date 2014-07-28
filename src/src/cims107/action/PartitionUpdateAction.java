@@ -57,14 +57,22 @@ public class PartitionUpdateAction extends ActionSupport implements ModelDriven<
     }
 
 	public String execute() {
-		//if(partitionService.update(partition.getPartitionYear(), partition.getPartitionTerm(), partition.getPartitionBeginWeek(), partition.getPartitionEndWeek(), partition.getPartitionDepartment())) {
-		if(partitionService.update(partition)) {	
-			result = JSONObject.fromObject("{\"success\":1}").toString();
-    		return SUCCESS;
-    	}
-    	else {
-    		super.addActionError("update failed");
-    		return ERROR;
-    	}
+		if (isValidate()) {
+			if(partitionService.update(partition)) {	
+				result = JSONObject.fromObject("{\"success\":1}").toString();
+	    		return SUCCESS;
+	    	}
+	    	else {
+	    		super.addActionError("update failed");
+	    		return ERROR;
+	    	}
+		}
+		result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
+		return "hint";
+	}
+	
+	public Boolean isValidate() {
+		return (!(partition.getPartitionBeginWeek() != 0 && partition.getPartitionEndWeek() != 0 && 
+				partition.getPartitionBeginWeek() > partition.getPartitionEndWeek()));
 	}
 }

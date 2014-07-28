@@ -16,7 +16,7 @@
         
         <action name="BuildingCreateAction" class="BuildingCreateAction">  
             <result name="success">buildingCreate.jsp</result> 
-            <result name="error">createResult.jsp</result>   
+            <result name="input">createResult.jsp</result>   
         </action>
         
         <action name="buildingDelete" class="BuildingDeleteAction">  
@@ -51,7 +51,14 @@
         <action name="BuildingCreate" class="BuildingCreateAction">  
   
             <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
+            <result name="success" type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+            
+            <result name="hint" type="json">  
   
                 <!-- root的值对应要返回的值的属性 -->  
                 <!-- 这里的result值即是 对应action中的 result -->  
@@ -71,7 +78,14 @@
         <action name="BuildingUpdate" class="BuildingUpdateAction">  
   
             <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
+            <result name="success" type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result> 
+            
+            <result name="hint" type="json">  
   
                 <!-- root的值对应要返回的值的属性 -->  
                 <!-- 这里的result值即是 对应action中的 result -->  
