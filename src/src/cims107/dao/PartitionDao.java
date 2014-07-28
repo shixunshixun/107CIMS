@@ -36,9 +36,9 @@ public class PartitionDao {
 		
 		Iterator<Partition> tempiter = list.iterator();
 		while (tempiter.hasNext()) {
-			String tempcompus = tempiter.next().getClassroom().getBuilding().getBuildingCompus();
-			String snumber = tempiter.next().getClassroom().getClsSerialNumber();
 			Partition testc = tempiter.next();
+			String tempcompus = testc.getClassroom().getBuilding().getBuildingCompus();
+			String snumber = testc.getClassroom().getClsSerialNumber();
 		}
 		
 		session.close();
@@ -58,21 +58,50 @@ public class PartitionDao {
 		DetachedCriteria dc = DetachedCriteria.forClass(Partition.class);
 		
 		if(!pyear.isEmpty())
-			dc.add(Restrictions.eq("pYear", pyear));
+			dc.add(Restrictions.eq("partitionYear", pyear));
 		if(!pterm.isEmpty())
-			dc.add(Restrictions.eq("pTerm", pterm));
+			dc.add(Restrictions.eq("partitionTerm", pterm));
 		if(!departmentname.isEmpty())
-			dc.add(Restrictions.eq("pDepartment", departmentname));
-		if (minclassnum > 0)
-			dc.add(Restrictions.between("pClassNum", minclassnum, maxclassnum));
-		if (minexamnum > 0)
-			dc.add(Restrictions.between("pExamNum", minexamnum, maxexamnum));
-		if (beginweek > 0)
-			dc.add(Restrictions.eq("pBeginWeek", beginweek));
-		if (endweek > 0)
-			dc.add(Restrictions.eqOrIsNull("pEndWeek", endweek));
+			dc.add(Restrictions.eq("partitionDepartment", departmentname));
+		if (maxclassnum != 0) {
+			if (minclassnum != 0)
+				dc.add(Restrictions.between("clsClassNum", minclassnum, maxclassnum));
+			else
+				dc.add(Restrictions.le("clsClassNum", new Integer(maxclassnum)));
+		}
+		if (maxclassnum == 0) {
+			if (minclassnum != 0)
+				dc.add(Restrictions.ge("clsClassNum", new Integer(minclassnum)));
+		}
+		
+		if (maxexamnum != 0) {
+			if (minexamnum != 0)
+				dc.add(Restrictions.between("clsExamNum", minexamnum, maxexamnum));
+			else
+				dc.add(Restrictions.le("clsExamNum", new Integer(maxexamnum)));
+		}
+		if (maxexamnum == 0) {
+			if (minexamnum != 0)
+				dc.add(Restrictions.ge("clsExamNum", new Integer(minexamnum)));
+		}
+		if (endweek != 0) {
+			if (beginweek != 0) {
+				dc.add(Restrictions.between("partitionBeginWeek", beginweek, endweek));
+				dc.add(Restrictions.between("partitionEndWeek", beginweek, endweek));
+			}
+			else {
+				dc.add(Restrictions.le("partitionBeginWeek", new Integer(endweek)));
+				dc.add(Restrictions.le("partitionEndWeek", new Integer(endweek)));
+			}
+		}
+		if (endweek == 0) {
+			if (beginweek != 0) {
+				dc.add(Restrictions.ge("partitionBeginWeek", new Integer(beginweek)));
+				dc.add(Restrictions.ge("partitionEndWeek", new Integer(beginweek)));
+			}
+		}
 		if (pisused == 1 || pisused == 2)
-			dc.add(Restrictions.eqOrIsNull("pIsUsed", pisused));
+			dc.add(Restrictions.eqOrIsNull("partitionIsUsed", pisused));
 		
 		Criteria c = dc.getExecutableCriteria(session);
 
@@ -82,48 +111,64 @@ public class PartitionDao {
 		
 		Iterator<Partition> tempiter = list.iterator();
 		while (tempiter.hasNext()) {
-			String tempcompus = tempiter.next().getClassroom().getBuilding().getBuildingCompus();
-			String snumber = tempiter.next().getClassroom().getClsSerialNumber();
 			Partition testc = tempiter.next();
+			String tempcompus = testc.getClassroom().getBuilding().getBuildingCompus();
+			String snumber = testc.getClassroom().getClsSerialNumber();
 		}
 		
 		while (iter.hasNext()) {
+			Partition temp = iter.next();
 			if(!type.isEmpty()) {
-				if(!iter.next().getClassroom().getClsType().equals(type)) {
+				if(!temp.getClassroom().getClsType().equals(type)) {
 					iter.remove();
 					continue;
 				}
 			}
 			if(!serialnumber.isEmpty()) {
-				if(!iter.next().getClassroom().getClsSerialNumber().equals(serialnumber)) {
+				if(!temp.getClassroom().getClsSerialNumber().equals(serialnumber)) {
 					iter.remove();
 					continue;
 				}
 			}
-			if(iter.next().getClassroom().getClsAvailableSeatNum() > maxavailableseat ||
-					iter.next().getClassroom().getClsAvailableSeatNum() < minavailableseat) {
-				iter.remove();
-				continue;
+			if (maxavailableseat != 0) {
+				if (minavailableseat == 0) {
+					if (temp.getClassroom().getClsAvailableSeatNum() > maxavailableseat)
+						iter.remove();
+				}
+				if (minavailableseat != 0) {
+					if(temp.getClassroom().getClsAvailableSeatNum() > maxavailableseat ||
+							temp.getClassroom().getClsAvailableSeatNum() < minavailableseat) {
+						iter.remove();
+						continue;
+					}
+				}
 			}
+			if (maxavailableseat == 0) {
+				if (minavailableseat != 0) {
+					if (temp.getClassroom().getClsAvailableSeatNum() < minavailableseat)
+						iter.remove();
+				}
+			}
+			
 			if(!buildingname.isEmpty()) {
-				if(!iter.next().getClassroom().getBuilding().getBuildingName().equals(buildingname)) {
+				if(!temp.getClassroom().getBuilding().getBuildingName().equals(buildingname)) {
 					iter.remove();
 					continue;
 				}
 			}
 			if(!compus.isEmpty()) {
-				if(!iter.next().getClassroom().getBuilding().equals(compus)) {
+				if(!temp.getClassroom().getBuilding().equals(compus)) {
 					iter.remove();
 					continue;
 				}
 			}
-			if (type.isEmpty() && serialnumber.isEmpty() && buildingname.isEmpty() && buildingname.isEmpty() 
-					&& compus.isEmpty() && iter.next().getClassroom().getClsAvailableSeatNum() >= minavailableseat && 
-					iter.next().getClassroom().getClsAvailableSeatNum() <= maxavailableseat) {
+			/*if (type.isEmpty() && serialnumber.isEmpty() && buildingname.isEmpty() && buildingname.isEmpty() 
+					&& compus.isEmpty() && temp.getClassroom().getClsAvailableSeatNum() >= minavailableseat && 
+							temp.getClassroom().getClsAvailableSeatNum() <= maxavailableseat) {
 				Partition temp = iter.next();
 			}
 			else
-				break;
+				break;*/
 		}
 		
 		session.close();

@@ -16,28 +16,8 @@ import cims107.service.ClassroomService;
 import cims107.service.PartitionService;
 
 public class PartitionCreateAction extends ActionSupport implements ModelDriven<Partition>{
-	/*public String pyear;
-	public String buildingname;
-	public String compus;
-	public String pterm;
-	public String serialnumber;
-	public String pdepartmentname;
-	public String type;
-	public int maxavailableseat;
-	public int minavailableseat;
-	public int pclassnum;
-	public int pexamnum;
-	public int beginweek;
-	public int endweek;
-	public String begindate;
-	public String enddate;
-	public int beginlession;
-	public int endlession;
-	public int pisused;*/
 	
 	public String[] whichday; 
-	public int maxavailableseat;
-	public int minavailableseat;
 	public String buildingname;
 	public String compus;
 	public String serialnumber;
@@ -125,12 +105,7 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
 	    		whichdaylst.add(new Integer (whichday[i]));
 	    	}
 	    	
-	    	Partition partition = new Partition();
 	    	Building building = new Building();
-	    	
-	    	//partition.getClassroom().setClsSerialNumber(serialnumber);
-	    	//partition.getClassroom().getBuilding().setBuildingName(buildingname);
-	    	//partition.getClassroom().getBuilding().setBuildingCompus(compus);
 	    	
 			building = buildingService.find(buildingname, compus);
 			Classroom classroom = new Classroom();

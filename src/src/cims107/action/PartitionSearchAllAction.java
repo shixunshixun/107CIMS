@@ -79,6 +79,7 @@ public class PartitionSearchAllAction extends ActionSupport{
 	    				c.setClsType(b.getClsType());
 	    				c.setClsUsage(b.getClsUsage());
 	    				c.setClsVCorridorLocate(b.getClsVCorridorLocate());
+	    				c.setBuilding(b.getBuilding());
 	    				c.setPartitions(null);
 	    				b.setPartitions(null);
 	    				//System.out.println(JSONObject.fromObject(b).toString());

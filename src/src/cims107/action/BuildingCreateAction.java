@@ -13,7 +13,6 @@ import com.opensymphony.xwork2.ModelDriven;
 
 public class BuildingCreateAction extends ActionSupport implements ModelDriven<Building>{
 	
-	
     private Building building;
     private String result;
     private BuildingService buildingService; 
@@ -25,7 +24,6 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
     	}
     	return building;
     }
-    
 
 	public BuildingCreateAction()  
     {  
@@ -38,16 +36,19 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
     }  
       
     public String execute()  
-    {    	
-    	if(buildingService.add(building)){
-    		//ja.add(JSONObject.fromObject(1));
-    		result = JSONObject.fromObject("{\"success\":1}").toString();
-    	   	return SUCCESS;
+    {
+    	if (isValidate()) {
+	    	if(buildingService.add(building)){
+	    		//ja.add(JSONObject.fromObject(1));
+	    		result = JSONObject.fromObject("{\"success\":1}").toString();
+	    	   	return SUCCESS;
+	    	}
+	    	else{
+	    		super.addActionError("update failed");
+	    		return ERROR;
+	    	}
     	}
-    	else{
-    		super.addActionError("update failed");
-    		return ERROR;
-    	}
+    	return ERROR;
     }  
    
     public String getResult() {
@@ -64,5 +65,13 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
 
 	public void setBuilding(Building building) {
 		this.building = building;
+	}
+	
+	public Boolean isValidate() {
+		if (!building.getBuildingCompus().isEmpty() && !building.getBuildingDepartment().isEmpty() && 
+				!building.getBuildingName().isEmpty() && building.getBuildingFloorNum() > 0) {
+			return true;
+		}
+		return false;
 	}
 }

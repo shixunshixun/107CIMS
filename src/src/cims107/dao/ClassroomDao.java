@@ -57,10 +57,26 @@ public class ClassroomDao {
 		if (isused == 2 || isused == 1) {
 			dc.add(Restrictions.eq("clsIsUsed",isused));
 		}
-		if (minClassNum > 0)
-			dc.add(Restrictions.between("clsClassNum", minClassNum, maxClassNum));
-		if (minExamNum > 0)
-			dc.add(Restrictions.between("clsExamNum", minExamNum, maxExamNum));
+		if (maxClassNum != 0) {
+			if (minClassNum != 0)
+				dc.add(Restrictions.between("clsClassNum", minClassNum, maxClassNum));
+			else
+				dc.add(Restrictions.le("clsClassNum", new Integer(maxClassNum)));
+		}
+		if (maxClassNum == 0) {
+			if (minClassNum != 0)
+				dc.add(Restrictions.ge("clsClassNum", new Integer(minClassNum)));
+		}
+		if (maxExamNum != 0) {
+			if (minExamNum != 0)
+				dc.add(Restrictions.between("clsExamNum", minExamNum, maxExamNum));
+			else
+				dc.add(Restrictions.le("clsExamNum", new Integer(maxExamNum)));
+		}
+		if (maxExamNum == 0) {
+			if (minExamNum != 0)
+				dc.add(Restrictions.ge("clsExamNum", new Integer(minExamNum)));
+		}
 		
 		Criteria c = dc.getExecutableCriteria(session);
 		
@@ -70,25 +86,26 @@ public class ClassroomDao {
 		//Hibernate.initialize();
 		Iterator<Classroom> tempiter = list.iterator();
 		while (tempiter.hasNext()) {
-			String tempcompus = tempiter.next().getBuilding().getBuildingCompus();
-			Classroom testc = tempiter.next();
+			Classroom temp = tempiter.next();
+			String tempcompus = temp.getBuilding().getBuildingCompus();
 		}
 		//返回的classroom对象中是数据表中数据，没有building对象属性，要通过clsbuildingid来访问compus和buildingname
 		while (iter.hasNext()) {
+			Classroom tempclassroom = iter.next();
 			if (!compus.isEmpty()) {
-				if (!iter.next().getBuilding().getBuildingCompus().equals(compus)) {
+				if (!tempclassroom.getBuilding().getBuildingCompus().equals(compus)) {
 					iter.remove();
 					continue;
 				}
 			}
 			if (!departmentname.isEmpty()) {
-				if (!iter.next().getBuilding().getBuildingDepartment().equals(departmentname)) {
+				if (!tempclassroom.getBuilding().getBuildingDepartment().equals(departmentname)) {
 					iter.remove();
 					continue;
 				}
 			}
 			if (!buildingname.isEmpty()) {
-				if (!iter.next().getBuilding().getBuildingName().equals(buildingname)) {
+				if (!tempclassroom.getBuilding().getBuildingName().equals(buildingname)) {
 					iter.remove();
 				}
 			}
@@ -117,15 +134,24 @@ public class ClassroomDao {
 	
 	public Classroom find(int clsbuildingid, String serialnumber) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Classroom AS c WHERE c.clsBuildingId = :clsbuildingid AND c.clsSerialNumber = :serialnumber";
+		String hql = "FROM Classroom AS c WHERE c.clsSerialNumber = :serialnumber";
 		Query q = session.createQuery(hql);
 		
 		q.setInteger("clsbuildingid", clsbuildingid);
 		q.setString("serialnumber", serialnumber);
 		
 		List<Classroom> list = q.list();
+		Iterator<Classroom> iter = list.iterator();
+		
+		while (iter.hasNext()) {
+			if (iter.next().getBuilding().getBuildingId() != clsbuildingid)
+				iter.remove();
+		}
 		session.close();
+		
 		//锟斤拷取buildingId
+		if (list.size()==0)
+			return null;
 		return list.get(0);
 	}
 	

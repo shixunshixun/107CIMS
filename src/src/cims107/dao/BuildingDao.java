@@ -118,14 +118,6 @@ public class BuildingDao {
 			session.delete(b);
 		}
 		
-		/*
-		for (Iterator iter = buildingidlst.iterator(); iter.hasNext();) {
-			//Building temp = (Building)(iter.next());
-			Building b = (Building) session.get(Building.class, iter.next());
-			session.delete(b);
-		}*/
-		
-		
 		tx.commit();
 		session.close();
 		

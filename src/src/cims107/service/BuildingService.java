@@ -50,6 +50,8 @@ public class BuildingService {
     }
     
     public boolean delete(List<Integer> buildingidlst) {
-    	return buildingDao.delete(buildingidlst);
+    	if (buildingidlst != null)
+    		return buildingDao.delete(buildingidlst);
+    	return false;
     }
 }

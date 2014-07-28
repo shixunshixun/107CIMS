@@ -101,7 +101,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 		    	classroomService.add(classroom);
 		    	result = JSONObject.fromObject("{\"success\":1}").toString();
 		    	
-		    	return "ADDSUCCESS";
+		    	return SUCCESS;
 			}
 			return ERROR;
 		}
