@@ -95,10 +95,6 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 			return false;
 		}
 		
-//		int commapos, hx=0, hy=0, vx=0, vy=0;
-//		Boolean hflag = false, vflag = false;
-//		String hcorridorlocatex, hcorridorlocatey, vcorridorlocatex, vcorridorlocatey;
-		
 		if(!(classroom.getClsHCorridorLocate() == null || classroom.getClsHCorridorLocate().isEmpty())) {
 			for(String s1 : classroom.getClsHCorridorLocate().split(";")) {
 				if(!s1.isEmpty()){
@@ -112,7 +108,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 							return false;
 						}
 					}
-					if(h[1] - h[0] < 1 || h[1] > classroom.getClsMaxRow() || h[0] < 1) 
+					if(h[1] - h[0] < 1 || (h[1] > classroom.getClsMaxRow() && classroom.getClsMaxCol() > 0) || h[0] < 1) 
 						return false;
 				}
 				else {
@@ -134,7 +130,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 							return false;
 						}
 					}
-					if(h[1] - h[0] < 1 || h[1] > classroom.getClsMaxCol() || h[0] < 1) 
+					if(h[1] - h[0] < 1 || (h[1] > classroom.getClsMaxCol() && classroom.getClsMaxCol() > 0) || h[0] < 1) 
 						return false;
 				}
 				else {
@@ -142,45 +138,17 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 				}
 			}
 		}
+		if (classroom.getClsMaxCol() < 0 || classroom.getClsMaxRow() < 0) {
+			return false;
+		}
 		
-//		for (int i = 0; i < classroom.getClsHCorridorLocate().length();i ++) {
-//			if (classroom.getClsHCorridorLocate().charAt(i) == ',') {
-//				hcorridorlocatex = classroom.getClsHCorridorLocate().substring(0, i);
-//				hcorridorlocatey = classroom.getClsHCorridorLocate().substring(i+1);
-//				hx = new Integer (hcorridorlocatex);
-//				hy = new Integer (hcorridorlocatey);
-//				hflag = true;
-//			}
-//		}
-//		
-//		for (int i = 0; i < classroom.getClsVCorridorLocate().length();i ++) {
-//			if (classroom.getClsVCorridorLocate().charAt(i) == ',') {
-//				vcorridorlocatex = classroom.getClsVCorridorLocate().substring(0, i);
-//				vcorridorlocatey = classroom.getClsVCorridorLocate().substring(i+1);
-//				vx = new Integer (vcorridorlocatex);
-//				vy = new Integer (vcorridorlocatey);
-//				vflag = true;
-//			}
-//		}
-//		
-//		
-//		
-//		if (!hflag || !vflag)
-//			return false;
-//		
-//		if (hflag && vflag) {
-//			if ((hy-hx)!=1 || (vy-vx)!=1 || hy > classroom.getClsMaxRow() || vy > classroom.getClsMaxCol() || hx < 1 || vx < 1) {
-//				return false;
-//			}
-//		}
-		
-		if (classroom.getClsSeatNum() < classroom.getClsAvailableSeatNum())
+		if (classroom.getClsSeatNum() < classroom.getClsAvailableSeatNum() || classroom.getClsSeatNum() < 0)
 			return false;
 		
-		if(classroom.getClsClassNum() > classroom.getClsAvailableSeatNum())
+		if(classroom.getClsClassNum() > classroom.getClsAvailableSeatNum() || classroom.getClsClassNum() < 0)
 			return false;
 		
-		if(classroom.getClsExamNum() > classroom.getClsAvailableSeatNum())
+		if(classroom.getClsExamNum() > classroom.getClsAvailableSeatNum() || classroom.getClsExamNum() < 0)
 			return false;
 		
 		return true;

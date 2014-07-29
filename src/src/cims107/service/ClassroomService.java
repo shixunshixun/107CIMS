@@ -46,6 +46,10 @@ public class ClassroomService {
     	return classroomDao.find(clsbuildingid, serialnumber);
     }
     
+    public List<Classroom> find() {
+    	return classroomDao.find();
+    }
+    
     public void add(Classroom classroom) {
     	classroomDao.add(classroom);
     }

@@ -20,6 +20,11 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
         <property name="partitionService" ref="partitionService" />      
     </bean>  
     
+    <bean id="PartitionSearchDistributableClsAction" class="cims107.action.PartitionSearchDistributableClsAction" scope="prototype">  
+        <property name="partitionService" ref="partitionService" />  
+        <property name="classroomService" ref="classroomService" />  
+    </bean> 
+    
     
     <bean id="PartitionCreateAction" class="cims107.action.PartitionCreateAction" scope="prototype">  
         <property name="partitionService" ref="partitionService" />  

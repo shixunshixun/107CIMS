@@ -131,6 +131,26 @@ public class ClassroomDao {
 		
 		return c;
 	}
+	public List<Classroom> find() {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Classroom";
+		Query q = session.createQuery(hql);
+		
+		List<Classroom> list = q.list();
+		
+		Iterator<Classroom> tempiter = list.iterator();
+		while (tempiter.hasNext()) {
+			Classroom testc = tempiter.next();
+			String tempcompus = testc.getBuilding().getBuildingCompus();
+		}
+		
+		session.close();
+		//ªÒ»°buildingId
+		if (list.size()==0)
+			return null;
+		else
+			return list;
+	}
 	
 	public Classroom find(int clsbuildingid, String serialnumber) {
 		Session session = sessionFactory.openSession();
