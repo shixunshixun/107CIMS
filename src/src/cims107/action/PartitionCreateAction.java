@@ -129,7 +129,7 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
     public Boolean isValidate() {
     	//还少个起始日期大于终止日期的判断
     	if (partition.getPartitionYear().isEmpty() || partition.getPartitionTerm().isEmpty() || partition.getPartitionDepartment().isEmpty() || 
-				partition.getPartitionClassNum() == 0 || whichday.length == 0 || 
+				partition.getPartitionClassNum() <= 0 || whichday.length == 0 || 
 				partition.getPartitionBeginLession() == 0 || partition.getPartitionEndLession() == 0) {
 			return false;
 		}
@@ -146,8 +146,12 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
     		return true;
     	}
     	if (partition.getPartitionBeginWeek() == 0 && partition.getPartitionEndWeek() == 0) {
-    		if (!partition.getPartitionBeginDate().isEmpty() && !partition.getPartitionEndDate().isEmpty())
-    			return true;
+    		if (!partition.getPartitionBeginDate().isEmpty() && !partition.getPartitionEndDate().isEmpty()) {
+    			int result = partition.getPartitionBeginDate().compareTo(partition.getPartitionEndDate());
+    			if (result < 0)
+    				return true;
+    			return false;
+    		}
     		return false;
     	}
     	if ((partition.getPartitionBeginWeek() == 0 && partition.getPartitionEndWeek() != 0) || 

@@ -60,13 +60,16 @@ public class BuildingUpdateAction extends ActionSupport implements ModelDriven<B
 	    		return ERROR;
 	    	}
 		}
-		result = JSONObject.fromObject("{\"hint\":\"Floor number must be an integer!\"}").toString();
+		result = JSONObject.fromObject("{\"hint\":\"Please check your input!\"}").toString();
 		return "hint";
     }
 	
 	public Boolean isValidate() {
-		if (!(building.getBuildingFloorNum() >= 0 || building.getBuildingFloorNum() < 0))
-			return false;
-		return true;
+		
+		if (!building.getBuildingCompus().isEmpty() && !building.getBuildingDepartment().isEmpty() && 
+				!building.getBuildingName().isEmpty() && building.getBuildingFloorNum() > 0) {
+			return true;
+		}
+		return false;
 	}
 }

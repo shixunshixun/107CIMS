@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"  
+    "http://struts.apache.org/dtds/struts-2.1.dtd">  
+<struts>  
+    <package name="authority" extends="struts-default">  
+      
+        <!-- 定义一个拦截器 -->  
+        <interceptors>  
+            <interceptor name="authority"  
+                class="cims107.interceptor.LoginInterceptor">  
+            </interceptor>  
+            <!-- 拦截器栈 -->  
+            <interceptor-stack name="mydefault">  
+                <interceptor-ref name="defaultStack" />  
+                <interceptor-ref name="authority" />  
+            </interceptor-stack>  
+        </interceptors>  
+  
+        <!-- 定义全局Result -->  
+        <global-results>  
+            <!-- 当返回login视图名时，转入/login.jsp页面 -->  
+            <result name="login">/login.jsp</result>  
+        </global-results>  
+          
+        <action name="login" class="cims107.action.LoginAction">  
+            <result name="success">/welcome.jsp</result>  
+            <result name="error">/login.jsp</result>  
+            <result name="input">/login.jsp</result>  
+        </action>   
+          
+    </package>  
+</struts>

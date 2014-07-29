@@ -11,13 +11,6 @@ import com.opensymphony.xwork2.ModelDriven;
 
 public class PartitionUpdateAction extends ActionSupport implements ModelDriven<Partition>{
 	
-	/*public String pyear;
-	public String pterm;
-	public int beginweek;
-	public int endweek;
-	public String pdepartmentname;*/
-	
-	//pid与partition中id可能重复？
 	private String result;
 	private Partition partition;
 	private PartitionService partitionService;
@@ -72,6 +65,11 @@ public class PartitionUpdateAction extends ActionSupport implements ModelDriven<
 	}
 	
 	public Boolean isValidate() {
+		if (partition.getPartitionYear().isEmpty() || partition.getPartitionTerm().isEmpty() || 
+				partition.getPartitionDepartment().isEmpty()) {
+			return false;
+		}
+		
 		return (!(partition.getPartitionBeginWeek() != 0 && partition.getPartitionEndWeek() != 0 && 
 				partition.getPartitionBeginWeek() > partition.getPartitionEndWeek()));
 	}

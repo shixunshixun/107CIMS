@@ -1,17 +1,20 @@
 package cims107.action;  
   
 import java.util.Locale;
+import java.util.Map;
 
+import cims107.model.Building;
+import cims107.model.User;
 import cims107.service.UserService;  
 
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;  
+import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.util.LocalizedTextUtil;
   
-public class LoginAction extends ActionSupport {  
+public class LoginAction extends ActionSupport implements ModelDriven<User>{  
   
-        public String username;  
-        public String password;  
+        private User user;
         private UserService userService;  
           
         public LoginAction()  
@@ -19,38 +22,36 @@ public class LoginAction extends ActionSupport {
             System.out.println("initialize LoginAction......");  
         }
         
+        @Override
+        public User getModel() {
+        	if(user == null) {
+        		user = new User();
+        	}
+        	return user;
+        }
+        
         public void setUserService(UserService userService)  
         {  
             this.userService = userService;  
         }  
+        private boolean isValid(String value) {     
+            return !((value == null || value.length() == 0));     
+        }
           
         public String execute()  
         {  
-            if (true == this.userService.isLogin(username, password))  
-            {  
-                ActionContext.getContext().getSession().put("username", username);  
-                return SUCCESS;  
-            }else{  
-                super.addActionError(super.getText("loginfailed"));  
-                return ERROR;  
-            }  
+        	if (isValid(user.getUserName()))     
+                return INPUT;     
+        
+            if (isValid(user.getUserPassword()))     
+                return INPUT;
+            
+            if (userService.isLogin(user)) {
+            	ActionContext.getContext().getSession().put("user", user.getUserName());
+            	return SUCCESS;
+            }
+            return ERROR;
         }  
         
-        private String readRec(String key) {
-        	return LocalizedTextUtil.findDefaultText(key, new Locale("zh_CN"));
-        }
-          
-        public void validate()  
-        {  
-            if ((null == username) || (0==username.length()))  
-            {  
-                super.addActionError(LocalizedTextUtil.findDefaultText("warning.empty",new Locale(readRec("username"))));  
-            }  
-              
-            if ((null == password) || (0 == password.length()))  
-            {  
-                super.addActionError(LocalizedTextUtil.findDefaultText("warning.empty",new Locale(readRec("password"))));  
-                  
-            }  
-        }  
+        
 }  

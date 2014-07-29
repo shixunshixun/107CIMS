@@ -2,6 +2,9 @@ package cims107.service;
 
 import java.util.*;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import cims107.dao.PartitionDao;
 import cims107.model.Partition;
 
@@ -25,10 +28,55 @@ public class PartitionService {
 			int maxclassnum, int minclassnum, int maxexamnum, int minexamnum, 
 			int beginweek, int endweek, int pisused) {
 		
-		return partitionDao.find(pyear, compus, buildingname, pterm, serialnumber, 
-    			departmentname, type, maxavailableseat, minavailableseat, 
-    			maxclassnum, minclassnum, maxexamnum, minexamnum, 
-    			beginweek, endweek, pisused);
+		DetachedCriteria dc = DetachedCriteria.forClass(Partition.class);
+		
+		if(!pyear.isEmpty())
+			dc.add(Restrictions.eq("partitionYear", pyear));
+		if(!pterm.isEmpty())
+			dc.add(Restrictions.eq("partitionTerm", pterm));
+		if(!departmentname.isEmpty())
+			dc.add(Restrictions.eq("partitionDepartment", departmentname));
+		if (maxclassnum != 0) {
+			if (minclassnum != 0)
+				dc.add(Restrictions.between("clsClassNum", minclassnum, maxclassnum));
+			else
+				dc.add(Restrictions.le("clsClassNum", new Integer(maxclassnum)));
+		}
+		if (maxclassnum == 0) {
+			if (minclassnum != 0)
+				dc.add(Restrictions.ge("clsClassNum", new Integer(minclassnum)));
+		}
+		
+		if (maxexamnum != 0) {
+			if (minexamnum != 0)
+				dc.add(Restrictions.between("clsExamNum", minexamnum, maxexamnum));
+			else
+				dc.add(Restrictions.le("clsExamNum", new Integer(maxexamnum)));
+		}
+		if (maxexamnum == 0) {
+			if (minexamnum != 0)
+				dc.add(Restrictions.ge("clsExamNum", new Integer(minexamnum)));
+		}
+		if (endweek != 0) {
+			if (beginweek != 0) {
+				dc.add(Restrictions.between("partitionBeginWeek", beginweek, endweek));
+				dc.add(Restrictions.between("partitionEndWeek", beginweek, endweek));
+			}
+			else {
+				dc.add(Restrictions.le("partitionBeginWeek", new Integer(endweek)));
+				dc.add(Restrictions.le("partitionEndWeek", new Integer(endweek)));
+			}
+		}
+		if (endweek == 0) {
+			if (beginweek != 0) {
+				dc.add(Restrictions.ge("partitionBeginWeek", new Integer(beginweek)));
+				dc.add(Restrictions.ge("partitionEndWeek", new Integer(beginweek)));
+			}
+		}
+		if (pisused == 1 || pisused == 2)
+			dc.add(Restrictions.eqOrIsNull("partitionIsUsed", pisused));
+		
+		return partitionDao.find(compus, buildingname, serialnumber, type, maxavailableseat, minavailableseat, dc);
 	}
 	
 	public void add(Partition partition) {

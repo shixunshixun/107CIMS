@@ -74,8 +74,14 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 		return "hint";
 	}
 	
-public Boolean isValidate() {
+	public Boolean isValidate() {
 		
+		if (classroom.getClsType().isEmpty() || classroom.getClsSerialNumber().isEmpty() || classroom.getClsClassNum() == 0 || 
+				classroom.getClsUsage().isEmpty() || classroom.getClsSeatNum() == 0 || 
+				classroom.getClsAvailableSeatNum() == 0) {
+			return false;
+		}
+			
 		if(!(classroom.getClsHCorridorLocate() == null || classroom.getClsHCorridorLocate().isEmpty())) {
 			for(String s1 : classroom.getClsHCorridorLocate().split(";")) {
 				if(!s1.isEmpty()){

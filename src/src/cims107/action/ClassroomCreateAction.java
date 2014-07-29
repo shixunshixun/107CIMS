@@ -88,7 +88,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 	
 	
 	public Boolean isValidate() {
-		
+		//教室所在楼层小于等于教学楼楼层
 		if (classroom.getClsType().isEmpty() || classroom.getClsSerialNumber().isEmpty() || classroom.getClsClassNum() == 0 || 
 				classroom.getClsUsage().isEmpty() || classroom.getClsSeatNum() == 0 || 
 				classroom.getClsAvailableSeatNum() == 0) {

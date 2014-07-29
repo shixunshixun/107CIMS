@@ -5,6 +5,9 @@ import cims107.dao.BuildingDao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import cims107.model.Building;
 
 public class BuildingService {
@@ -19,7 +22,25 @@ public class BuildingService {
     }
     
     public List<Building> find(String buildingname, String departmentname, String simplename, String compus) {
-    	return buildingDao.find(buildingname, departmentname, simplename, compus);
+    	
+    	DetachedCriteria dc = DetachedCriteria.forClass(Building.class);
+		
+		if (!buildingname.isEmpty()) {
+			dc.add(Restrictions.eq("buildingName",buildingname));
+		}
+	
+		if (!departmentname.isEmpty()) {	
+			dc.add(Restrictions.eq("buildingDepartment", departmentname));	
+		}
+	
+		if (!simplename.isEmpty()) {	
+			dc.add(Restrictions.eq("buildingSimpleName", simplename));	
+		}
+		
+		if (!compus.isEmpty()) {
+			dc.add(Restrictions.eq("buildingCompus", compus));	
+		}
+		return buildingDao.find(dc);
     }
     
     //根据一个id链表查找building链表

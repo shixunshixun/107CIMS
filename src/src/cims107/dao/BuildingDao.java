@@ -17,25 +17,8 @@ public class BuildingDao {
 	
 	private SessionFactory sessionFactory;
 
-	public List<Building> find(String buildingname, String departmentname, String simplename, String compus) {
+	public List<Building> find(DetachedCriteria dc) {
 		Session session = sessionFactory.openSession();
-		DetachedCriteria dc = DetachedCriteria.forClass(Building.class);
-		
-		if (!buildingname.isEmpty()) {
-			dc.add(Restrictions.eq("buildingName",buildingname));
-		}
-	
-		if (!departmentname.isEmpty()) {	
-			dc.add(Restrictions.eq("buildingDepartment", departmentname));	
-		}
-	
-		if (!simplename.isEmpty()) {	
-			dc.add(Restrictions.eq("buildingSimpleName", simplename));	
-		}
-		
-		if (!compus.isEmpty()) {
-			dc.add(Restrictions.eq("buildingCompus", compus));	
-		}
 	   
 		Criteria c = dc.getExecutableCriteria(session);
 	

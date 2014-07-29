@@ -49,62 +49,11 @@ public class PartitionDao {
 			return list;
 	}
 	
-	public List<Partition> find(String pyear, String compus, String buildingname, String pterm, String serialnumber, 
-			String departmentname, String type, int maxavailableseat, int minavailableseat, 
-			int maxclassnum, int minclassnum, int maxexamnum, int minexamnum, 
-			int beginweek, int endweek, int pisused) {
+	public List<Partition> find(String compus, String buildingname,  String serialnumber, 
+			String type, int maxavailableseat, int minavailableseat, DetachedCriteria dc) {
 		
 		Session session = sessionFactory.openSession();
-		DetachedCriteria dc = DetachedCriteria.forClass(Partition.class);
-		
-		if(!pyear.isEmpty())
-			dc.add(Restrictions.eq("partitionYear", pyear));
-		if(!pterm.isEmpty())
-			dc.add(Restrictions.eq("partitionTerm", pterm));
-		if(!departmentname.isEmpty())
-			dc.add(Restrictions.eq("partitionDepartment", departmentname));
-		if (maxclassnum != 0) {
-			if (minclassnum != 0)
-				dc.add(Restrictions.between("clsClassNum", minclassnum, maxclassnum));
-			else
-				dc.add(Restrictions.le("clsClassNum", new Integer(maxclassnum)));
-		}
-		if (maxclassnum == 0) {
-			if (minclassnum != 0)
-				dc.add(Restrictions.ge("clsClassNum", new Integer(minclassnum)));
-		}
-		
-		if (maxexamnum != 0) {
-			if (minexamnum != 0)
-				dc.add(Restrictions.between("clsExamNum", minexamnum, maxexamnum));
-			else
-				dc.add(Restrictions.le("clsExamNum", new Integer(maxexamnum)));
-		}
-		if (maxexamnum == 0) {
-			if (minexamnum != 0)
-				dc.add(Restrictions.ge("clsExamNum", new Integer(minexamnum)));
-		}
-		if (endweek != 0) {
-			if (beginweek != 0) {
-				dc.add(Restrictions.between("partitionBeginWeek", beginweek, endweek));
-				dc.add(Restrictions.between("partitionEndWeek", beginweek, endweek));
-			}
-			else {
-				dc.add(Restrictions.le("partitionBeginWeek", new Integer(endweek)));
-				dc.add(Restrictions.le("partitionEndWeek", new Integer(endweek)));
-			}
-		}
-		if (endweek == 0) {
-			if (beginweek != 0) {
-				dc.add(Restrictions.ge("partitionBeginWeek", new Integer(beginweek)));
-				dc.add(Restrictions.ge("partitionEndWeek", new Integer(beginweek)));
-			}
-		}
-		if (pisused == 1 || pisused == 2)
-			dc.add(Restrictions.eqOrIsNull("partitionIsUsed", pisused));
-		
 		Criteria c = dc.getExecutableCriteria(session);
-
 		
 		List<Partition> list = c.list();
 		Iterator<Partition> iter = list.iterator();
@@ -162,13 +111,6 @@ public class PartitionDao {
 					continue;
 				}
 			}
-			/*if (type.isEmpty() && serialnumber.isEmpty() && buildingname.isEmpty() && buildingname.isEmpty() 
-					&& compus.isEmpty() && temp.getClassroom().getClsAvailableSeatNum() >= minavailableseat && 
-							temp.getClassroom().getClsAvailableSeatNum() <= maxavailableseat) {
-				Partition temp = iter.next();
-			}
-			else
-				break;*/
 		}
 		
 		session.close();

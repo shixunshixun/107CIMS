@@ -11,4 +11,5 @@
     <include file="struts-building.xml"></include>   
     <include file="struts-classroom.xml"></include> 
     <include file="struts-partition.xml"></include>
+    <include file="struts-user.xml"></include>
 </struts>  

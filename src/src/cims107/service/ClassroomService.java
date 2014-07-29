@@ -3,6 +3,9 @@ package cims107.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import cims107.dao.ClassroomDao;
 import cims107.model.Classroom;
 
@@ -22,10 +25,60 @@ public class ClassroomService {
 			int area, int minExamNum, int maxExamNum, String location, 
 			int isamphi, String shape, int hasmicrophone, String usage, int isused) {
     	
-    	return classroomDao.find(compus, departmentname, type, buildingname, 
-				floor, serialnumber, minClassNum, maxClassNum, 
-				area, minExamNum, maxExamNum, location, 
-				isamphi, shape, hasmicrophone, usage, isused);
+    	DetachedCriteria dc = DetachedCriteria.forClass(Classroom.class);
+		
+		if (!type.isEmpty()) {
+			dc.add(Restrictions.eq("clsType",type));
+		}
+		if (floor > 0) {
+			dc.add(Restrictions.eq("clsFloor",floor));
+		}
+		if (!serialnumber.isEmpty()) {
+			dc.add(Restrictions.eq("clsSerialNumber",serialnumber));
+		}
+		if (area > 0) {
+			dc.add(Restrictions.eq("clsArea",area));
+		}
+		if (!location.isEmpty()) {
+			dc.add(Restrictions.eq("clsLocation",location));
+		}
+		if (isamphi == 2 || isamphi == 1) {
+			dc.add(Restrictions.eq("clsIsAmphi",isamphi));
+		}
+		if (!shape.isEmpty()) {
+			dc.add(Restrictions.eq("clsShape",shape));
+		}
+		if (hasmicrophone == 2 || hasmicrophone == 1) {
+			dc.add(Restrictions.eq("clsHasMicrophone",hasmicrophone));
+		}
+		if (!usage.isEmpty()) {
+			dc.add(Restrictions.eq("clsUsage",usage));
+		}
+		if (isused == 2 || isused == 1) {
+			dc.add(Restrictions.eq("clsIsUsed",isused));
+		}
+		if (maxClassNum != 0) {
+			if (minClassNum != 0)
+				dc.add(Restrictions.between("clsClassNum", minClassNum, maxClassNum));
+			else
+				dc.add(Restrictions.le("clsClassNum", new Integer(maxClassNum)));
+		}
+		if (maxClassNum == 0) {
+			if (minClassNum != 0)
+				dc.add(Restrictions.ge("clsClassNum", new Integer(minClassNum)));
+		}
+		if (maxExamNum != 0) {
+			if (minExamNum != 0)
+				dc.add(Restrictions.between("clsExamNum", minExamNum, maxExamNum));
+			else
+				dc.add(Restrictions.le("clsExamNum", new Integer(maxExamNum)));
+		}
+		if (maxExamNum == 0) {
+			if (minExamNum != 0)
+				dc.add(Restrictions.ge("clsExamNum", new Integer(minExamNum)));
+		}
+    	
+    	return classroomDao.find(compus, departmentname, buildingname, dc);
     }
     
     public List<Classroom> find(List<Integer> classroomIdlst) {
