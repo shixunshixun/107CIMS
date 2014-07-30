@@ -5,6 +5,30 @@
 <struts> 
 
 <package name="ajax-partition" extends="json-default">  
+		<interceptors>  
+            <interceptor name="authority"  
+                class="cims107.interceptor.LoginInterceptor">  
+            </interceptor>  
+            
+            <interceptor name="isadministrator"  
+                class="cims107.interceptor.IsAdminInterceptor">  
+            </interceptor>  
+            <!-- 拦截器栈 -->  
+            <interceptor-stack name="mydefault">  
+            	<interceptor-ref name="isadministrator" /> 
+            	<interceptor-ref name="authority" />
+                <interceptor-ref name="defaultStack" />                  
+            </interceptor-stack>  
+        </interceptors>  
+  
+        <!-- 定义全局Result -->  
+        <global-results>  
+            <!-- 当返回login视图名时，转入/login.jsp页面 -->  
+            <result name="login">/Login.jsp</result>  
+            <!-- ajax与struts标签做对应转换 -->
+            <result name="buildingsearch">/error.json</result> 
+        </global-results> 
+
         <action name="PartitionSearch" class="PartitionSearchAction">  
   
             <!-- 返回类型为json 在sjon-default中定义 -->  
@@ -20,6 +44,7 @@
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            <interceptor-ref name="mydefault" />
         </action>  
         <action name="PartitionSearchDistributableCls" class="PartitionSearchDistributableClsAction">  
   
@@ -36,6 +61,7 @@
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            <interceptor-ref name="mydefault" />
         </action>  
         <action name="PartitionSearchAll" class="PartitionSearchAllAction">  
   
@@ -46,6 +72,7 @@
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            <interceptor-ref name="mydefault" />
         </action>
         <action name="PartitionCreate" class="PartitionCreateAction">  
   
@@ -62,6 +89,7 @@
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            <interceptor-ref name="mydefault" />
         </action> 
         <action name="PartitionDelete" class="PartitionDeleteAction">  
   
@@ -72,6 +100,7 @@
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            <interceptor-ref name="mydefault" />
         </action> 
         <action name="PartitionEnbale" class="PartitionEnableAction">  
   
@@ -82,6 +111,7 @@
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            <interceptor-ref name="mydefault" />
         </action>
         <action name="PartitionDisable" class="PartitionDisableAction">  
   
@@ -92,6 +122,7 @@
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            <interceptor-ref name="mydefault" />
         </action>
         <action name="PartitionUpdate" class="PartitionUpdateAction">  
   
@@ -107,7 +138,8 @@
                 <!-- root的值对应要返回的值的属性 -->  
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
-            </result>  
+            </result> 
+            <interceptor-ref name="mydefault" /> 
         </action>
     </package>  
 </struts>  

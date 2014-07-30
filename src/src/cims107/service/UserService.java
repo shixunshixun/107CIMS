@@ -9,6 +9,10 @@ public class UserService {
     public boolean isLogin(User user) {  
         return isLogin(user.getUserName(),user.getUserPassword());  
     }  
+    
+    public User find(User user) {
+    	return userDao.find(user);
+    }
   
     public UserDao getUserDao() {  
         return userDao;  

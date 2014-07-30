@@ -40,15 +40,17 @@ public class LoginAction extends ActionSupport implements ModelDriven<User>{
           
         public String execute()  
         {  
-        	if (isValid(user.getUserName()))     
+        	if (!isValid(user.getUserName()))     
                 return INPUT;     
         
-            if (isValid(user.getUserPassword()))     
+            if (!isValid(user.getUserPassword()))     
                 return INPUT;
             
-            if (userService.isLogin(user)) {
+            User u = new User();
+            u = userService.find(user);
+            if (u != null) {
             	//if (user.isUserIsAdmin())
-            	ActionContext.getContext().getSession().put("isadmin", user.isUserIsAdmin());
+            	ActionContext.getContext().getSession().put("isadmin", u.isUserIsAdmin());
             	ActionContext.getContext().getSession().put("islogin", "true");
             	return SUCCESS;
             }

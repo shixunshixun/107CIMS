@@ -4,8 +4,38 @@
      "http://struts.apache.org/dtds/struts-2.0.dtd">   
 <struts>   
     <package name="ajax" extends="json-default">  
-        <action name="BuildingSearch" class="BuildingSearchAction">  
+    	<interceptors>  
+            <interceptor name="authority"  
+                class="cims107.interceptor.LoginInterceptor">  
+            </interceptor>  
+            
+            <interceptor name="isadministrator"  
+                class="cims107.interceptor.IsAdminInterceptor">  
+            </interceptor>  
+            <!-- 拦截器栈 -->  
+            <interceptor-stack name="mydefault">  
+            	<interceptor-ref name="isadministrator" /> 
+            	<interceptor-ref name="authority" />
+                <interceptor-ref name="defaultStack" />                  
+            </interceptor-stack>  
+            <interceptor-stack name="searchstack">  
+            	<interceptor-ref name="authority" />
+                <interceptor-ref name="defaultStack" />                  
+        </interceptor-stack>  
+        </interceptors>  
   
+        <!-- 定义全局Result -->  
+        <global-results>  
+            <!-- 当返回login视图名时，转入/login.jsp页面 -->  
+            <result name="login">/Login.jsp</result>  
+            <!-- ajax与struts标签做对应转换 -->
+            <result name="buildingsearch">/error.json</result> 
+        </global-results>  
+    
+    	
+            
+        <action name="BuildingSearch" class="BuildingSearchAction">  
+  	
             <!-- 返回类型为json 在sjon-default中定义 -->  
             <result name="success" type="json">  
   
@@ -13,6 +43,7 @@
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            <interceptor-ref name="searchstack" />
         </action>  
         <action name="BuildingCreate" class="BuildingCreateAction">  
   
@@ -41,6 +72,7 @@
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            <interceptor-ref name="mydefault" />
         </action> 
         <action name="BuildingUpdate" class="BuildingUpdateAction">  
   
@@ -58,6 +90,7 @@
                 <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
+            <interceptor-ref name="mydefault" />
         </action>
     </package>  
     

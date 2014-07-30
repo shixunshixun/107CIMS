@@ -16,9 +16,9 @@
             </interceptor>  
             <!-- 拦截器栈 -->  
             <interceptor-stack name="mydefault">  
-                <interceptor-ref name="defaultStack" />  
-                <interceptor-ref name="authority" /> 
-                <interceptor-ref name="isadministrator" /> 
+            	<interceptor-ref name="isadministrator" /> 
+            	<interceptor-ref name="authority" />
+                <interceptor-ref name="defaultStack" />                  
             </interceptor-stack>  
         </interceptors>  
   
@@ -31,10 +31,12 @@
         </global-results>   
           
         <action name="login" class="cims107.action.LoginAction">  
-            <result name="success">/welcome.jsp</result>  
-            <result name="error">/login.jsp</result>  
-            <result name="input">/login.jsp</result>  
+            <result name="success">/main.jsp</result>  
+            <result name="error">/Login.jsp</result>  
+            <result name="input">/Login.jsp</result>  
         </action>   
+        
+        <action name="logout" class="cims107.action.LogOutAction"></action>   
           
     </package>  
 </struts>
