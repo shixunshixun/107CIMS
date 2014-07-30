@@ -138,15 +138,19 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
     			partition.getPartitionBeginLession() > partition.getPartitionEndLession())
     		return false;
     	
-    	if (partition.getPartitionBeginWeek() != 0 && partition.getPartitionEndWeek() != 0) {
-    		if (!partition.getPartitionBeginDate().isEmpty() || !partition.getPartitionEndDate().isEmpty())
-    			return false;
-    		if (partition.getPartitionBeginWeek() > partition.getPartitionEndWeek())
-    			return false;
-    		return true;
+    	if (partition.getPartitionBeginDate() != null && partition.getPartitionEndDate() != null) {
+	    	if (partition.getPartitionBeginWeek() != 0 && partition.getPartitionEndWeek() != 0) {
+	    		if (!partition.getPartitionBeginDate().isEmpty() || !partition.getPartitionEndDate().isEmpty())
+	    			return false;
+	    		if (partition.getPartitionBeginWeek() > partition.getPartitionEndWeek() || 
+	    				partition.getPartitionBeginWeek() < 1 || partition.getPartitionEndWeek() > 18)
+	    			return false;
+	    		return true;
+	    	}
     	}
     	if (partition.getPartitionBeginWeek() == 0 && partition.getPartitionEndWeek() == 0) {
-    		if (!partition.getPartitionBeginDate().isEmpty() && !partition.getPartitionEndDate().isEmpty()) {
+    		if (partition.getPartitionBeginDate() != null && !partition.getPartitionBeginDate().isEmpty() && 
+    				 partition.getPartitionEndDate() != null && !partition.getPartitionEndDate().isEmpty()) {
     			int result = partition.getPartitionBeginDate().compareTo(partition.getPartitionEndDate());
     			if (result < 0)
     				return true;
@@ -158,9 +162,11 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
     			(partition.getPartitionBeginWeek() != 0 && partition.getPartitionEndWeek() == 0)) {
     		return false;
     	}
-    	if ((partition.getPartitionBeginDate().isEmpty() && !partition.getPartitionEndDate().isEmpty()) || 
-    			(!partition.getPartitionBeginDate().isEmpty() && partition.getPartitionEndDate().isEmpty())) {
-    		return false;
+    	if (partition.getPartitionBeginDate() != null && partition.getPartitionEndDate() != null) {
+	    	if ((partition.getPartitionBeginDate().isEmpty() && !partition.getPartitionEndDate().isEmpty()) || 
+	    			(!partition.getPartitionBeginDate().isEmpty() && partition.getPartitionEndDate().isEmpty())) {
+	    		return false;
+	    	}
     	}
     	return true;
     }

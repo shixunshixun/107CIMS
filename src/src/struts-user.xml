@@ -26,6 +26,7 @@
         <global-results>  
             <!-- 当返回login视图名时，转入/login.jsp页面 -->  
             <result name="login">/Login.jsp</result>  
+            <!-- ajax与struts标签做对应转换 -->
             <result name="buildingsearch">/buildingSearch.jsp</result> 
         </global-results>   
           

@@ -174,7 +174,8 @@ public class PartitionSearchAction extends ActionSupport implements ModelDriven<
 				(maxexamnum != 0 && minexamnum != 0 && minexamnum > maxexamnum) || 
 				(!(partition.getPartitionIsUsed() >= 0 && partition.getPartitionIsUsed() <= 2)) || 
 				(partition.getPartitionBeginWeek() != 0 && partition.getPartitionEndWeek() != 0 && 
-					partition.getPartitionBeginWeek() > partition.getPartitionEndWeek())) {
+					partition.getPartitionBeginWeek() > partition.getPartitionEndWeek()) || 
+    				partition.getPartitionBeginWeek() < 0 || partition.getPartitionEndWeek() > 18) {
 			return false;
 		}
 		return true;
