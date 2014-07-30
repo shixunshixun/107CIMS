@@ -10,18 +10,24 @@
             <interceptor name="authority"  
                 class="cims107.interceptor.LoginInterceptor">  
             </interceptor>  
+            
+            <interceptor name="isadministrator"  
+                class="cims107.interceptor.IsAdminInterceptor">  
+            </interceptor>  
             <!-- 拦截器栈 -->  
             <interceptor-stack name="mydefault">  
                 <interceptor-ref name="defaultStack" />  
-                <interceptor-ref name="authority" />  
+                <interceptor-ref name="authority" /> 
+                <interceptor-ref name="isadministrator" /> 
             </interceptor-stack>  
         </interceptors>  
   
         <!-- 定义全局Result -->  
         <global-results>  
             <!-- 当返回login视图名时，转入/login.jsp页面 -->  
-            <result name="login">/login.jsp</result>  
-        </global-results>  
+            <result name="login">/Login.jsp</result>  
+            <result name="buildingsearch">/buildingSearch.jsp</result> 
+        </global-results>   
           
         <action name="login" class="cims107.action.LoginAction">  
             <result name="success">/welcome.jsp</result>  

@@ -2,42 +2,7 @@
 <!DOCTYPE struts PUBLIC   
      "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
      "http://struts.apache.org/dtds/struts-2.0.dtd">   
-<struts>   
-<!--     <package name="struts2-partition" extends="struts-default">   -->
-        
-<!--         <action name="PartitionSearchAction" class="PartitionSearchAction">   -->
-<!--             <result name="success">partitionSearch.jsp</result>  -->
-<!--             <result name="error">searchResult.jsp</result>    -->
-<!--         </action> -->
-        
-<!--         <action name="PartitionSearchAll" class="PartitionSearchAllAction">   -->
-<!--             <result name="success">partitionSearch.jsp</result>  -->
-<!--             <result name="error">searchResult.jsp</result>    -->
-<!--         </action> -->
-        
-<!--         <action name="PartitionCreateAction" class="PartitionCreateAction">   -->
-<!--             <result name="success">partitionCreate.jsp</result>  -->
-<!--             <result name="error">createResult.jsp</result>    -->
-<!--         </action> -->
-        
-<!--         <action name="partitionDelete" class="PartitionDeleteAction">   -->
-<!--             <result name="success">deleteResult.jsp</result>  -->
-<!--             <result name="error">deleteResult.jsp</result>    -->
-<!--         </action> -->
-        
-<!--         <action name="partitionUpdate" class="PartitionUpdateAction">   -->
-<!--             <result name="success">updateResult.jsp</result>  -->
-<!--             <result name="error">updateResult.jsp</result>    -->
-<!--         </action> -->
-        
-<!--         <action name="partitionExport" class="PartitionExportAction">   -->
-<!--             <result name="success">exportResult.jsp</result>    -->
-<!--         </action> -->
-        
-<!--         <action name="partitionImport" class="PartitionImportAction">   -->
-<!--             <result name="success">importResult.jsp</result>    -->
-<!--         </action> -->
-<!--     </package>     -->
+<struts> 
 
 <package name="ajax-partition" extends="json-default">  
         <action name="PartitionSearch" class="PartitionSearchAction">  

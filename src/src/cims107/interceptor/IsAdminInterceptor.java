@@ -7,21 +7,21 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
-public class LoginInterceptor extends AbstractInterceptor {
+public class IsAdminInterceptor extends AbstractInterceptor {
 	@Override  
     public String intercept(ActionInvocation invocation) throws Exception {  
   
         // 取得请求相关的ActionContext实例  
         ActionContext ctx = invocation.getInvocationContext();  
         Map session = ctx.getSession();  
-        String user = (String) session.get("islogin");
+        Boolean user = (Boolean) session.get("isadmin");
   
-        if (user != null && user.equals("true")) {  
-            System.out.println("test1");  
+        if (user) {  
+            System.out.println("test2");  
             return invocation.invoke();  
         }  
   
-        ctx.put("tip", "你还没有登录");  
-        return Action.LOGIN;  
+        ctx.put("tip", "你不是管理员");  
+        return "buildingsearch";  
     }
 }

@@ -119,7 +119,7 @@ public class ClassroomImportAction extends ActionSupport{
 	            classroom.setClsUsage(ros.getCell(17).getStringCellValue());
 	            classroom.setClsSeatNum((int)ros.getCell(18).getNumericCellValue());
 	            classroom.setClsAvailableSeatNum((int)ros.getCell(19).getNumericCellValue());
-	            classroom.setClsBuildingId(building.getBuildingId());
+	            classroom.setBuilding(building);
 	            
 	            classroomlst.add(classroom);
 	            //excelWorkSheet.getData().add(building);  

@@ -124,7 +124,7 @@ public class ClassroomSearchAction extends ActionSupport implements ModelDriven<
 	
 	public Boolean isValidate() {
 		//return (maxClassNum >= minClassNum) && (maxExamNum >= minExamNum) && (minClassNum > 0) && (minExamNum > 0);
-		if (classroom.getClsFloor() <= 0 || classroom.getClsArea() <= 0 || 
+		if (classroom.getClsFloor() < 0 || classroom.getClsArea() < 0 || 
 				(maxClassNum != 0 && minClassNum != 0 && minClassNum > maxClassNum) || 
 				(maxExamNum != 0 && minExamNum != 0 && minExamNum > maxExamNum) || 
 				(!(classroom.getClsIsAmphi() >= 0 && classroom.getClsIsAmphi() <= 2)) || 

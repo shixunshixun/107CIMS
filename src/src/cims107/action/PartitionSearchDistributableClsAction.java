@@ -40,14 +40,16 @@ public class PartitionSearchDistributableClsAction extends ActionSupport impleme
     	}
     	return partition;
     }
-	
-	public ClassroomService getClassroomservice() {
+
+	public ClassroomService getClassroomService() {
 		return classroomService;
 	}
 
-	public void setClassroomservice(ClassroomService classroomservice) {
-		this.classroomService = classroomservice;
+	public void setClassroomService(ClassroomService classroomService) {
+		this.classroomService = classroomService;
 	}
+
+
 
 	public String getResult() {
 		return result;
@@ -95,6 +97,7 @@ public class PartitionSearchDistributableClsAction extends ActionSupport impleme
 	    			Partition tempp = piter.next();
 	    			if (tempc.getClsId() == tempp.getClassroom().getClsId()) {
 	    				citer.remove();
+	    				break;
 	    			}
 	    		}
 	    	}

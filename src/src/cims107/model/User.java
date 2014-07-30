@@ -29,4 +29,5 @@ public class User {
 	public void setUserIsAdmin(boolean userIsAdmin) {
 		this.userIsAdmin = userIsAdmin;
 	}
+	
 }

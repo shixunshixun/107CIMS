@@ -23,6 +23,8 @@ public class ClassroomExportAction extends ActionSupport{
 	
     private ClassroomService classroomService;  
     BuildingService buildingService;
+    private String filename;
+	private String format = "xls";
       
     public BuildingService getBuildingService() {
 		return buildingService;
@@ -30,6 +32,23 @@ public class ClassroomExportAction extends ActionSupport{
 
 	public void setBuildingService(BuildingService buildingService) {
 		this.buildingService = buildingService;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+		this.filename = "导出数据.xls";
 	}
 
 	public ClassroomExportAction()  
@@ -40,6 +59,9 @@ public class ClassroomExportAction extends ActionSupport{
     public void setClassService(ClassroomService classroomService)  
     {  
         this.classroomService = classroomService;  
+    }
+    public void setServletResponse(HttpServletResponse response) {  
+        this.response = response;  
     }
 
 	public String[] getClsid() {
@@ -92,7 +114,7 @@ public class ClassroomExportAction extends ActionSupport{
 				Building building = new Building();
             	row = sheet.createRow(i+1);
 
-            	building = buildingService.find(searchResult.get(i).getClsBuildingId());
+            	building = searchResult.get(i).getBuilding();
             	
     			row.createCell(0).setCellValue(building.getBuildingName());
     			row.createCell(1).setCellValue(building.getBuildingCompus());
@@ -122,7 +144,7 @@ public class ClassroomExportAction extends ActionSupport{
 			//直接返回Excel，暂时未测试
 			response.setContentType("application/octet-stream;charset=iso-8859-1");  
             response.setHeader("Content-Disposition", "attachment;filename="  
-                    +java.net.URLEncoder.encode("导出信息.xls", "UTF-8"));
+                    +java.net.URLEncoder.encode(this.filename, "UTF-8"));
             response.addHeader("Pargam", "no-cache");  
             response.addHeader("Cache-Control", "no-cache");  
             response.getOutputStream().flush();
