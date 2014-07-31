@@ -289,7 +289,7 @@ a:focus {
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 940px;
+  width: 1200px;
 }
 
 .span12 {
@@ -1071,6 +1071,8 @@ textarea {
 label {
   display: inline-block;
   margin-bottom: 5px;
+  width:12%;
+  text-align:center;
 }
 
 select,
@@ -1106,7 +1108,7 @@ input[type="color"],
 input,
 textarea,
 .uneditable-input {
-  width: 100px;
+  width: 10%;
 }
 
 textarea {
@@ -1196,7 +1198,7 @@ input[type="file"] {
 }
 
 select {
-  width: 100px;
+  width: 11.5%;
   background-color: #ffffff;
   border: 1px solid #cccccc;
 }
@@ -6164,4 +6166,48 @@ a.badge:focus {
 
 .affix {
   position: fixed;
+}
+
+#spsh{
+	display:none;
+}
+
+#displaylist{
+	display:block;
+}
+
+.modal label{
+	width:20%;
+}
+
+.modal input{
+	width:17%;
+}
+
+.modal select{
+	width:20%;
+}
+
+.modal table input{
+	width:100px;
+}
+
+.modal table select{
+	width:114px;
+}
+
+.modal input[type="radio"]{
+	width:16px;
+	margin-bottom:10px;	
+}
+
+.week{
+	display:block;
+}
+.week label{
+	width:auto;
+}
+
+.week input{
+	width:auto;
 }

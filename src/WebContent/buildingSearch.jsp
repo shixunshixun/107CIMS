@@ -25,22 +25,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	
 </head>
 
-<body>
-	<div class="container" style="height:500px;">
+<body onload="setletter()">
+	<div style="height:500px;">
 		<form id="searchform" name="buildingForm">
-        <div>
-        	<label>教学楼名称</label>
+        <div style="margin-left:2%;">
+        	<label><font class="fiveword">教学楼名</font>称</label>
         	<input type="text" name="buildingName">
-        	<label>教学楼简称</label>
+        	<label><font class="fiveword">教学楼简</font>称</label>
         	<input type="text" name="buildingSimpleName">
-        	<label>校区</label>
+        	<label><font class="twoword">校</font>区</label>
         	<select name="buildingCompus">
         		<option></option>
           		<option>东校区</option>
           		<option>南校区</option>
           		<option>北校区</option>
         	</select>
-        	<label>单位</label>
+        	<label><font class="twoword">单</font>位</label>
         	<select name="buildingDepartment">
         		<option></option>
           		<option>教务处</option>
@@ -64,19 +64,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       			<div class="modal-body">
       				<ul>
 						<li>
-						<label>教学楼名称：</label>
-						<input type="text" name="buildingName">
+						<label><font class="fiveword">教学楼名</font>称</label>
+						<font color="red">*</font>
+						<input type="text" name="buildingName" id="newbuildingname">
 						</li>
 						<li>
-						<label>教学楼简称：</label>
+						<label><font class="fiveword">教学楼简</font>称</label>
+						&nbsp;
 						<input type="text" name="buildingSimpleName">
 						</li>
 						<li>
-						<label>楼&nbsp;&nbsp;&nbsp;层&nbsp;&nbsp;&nbsp;数&nbsp;：</label>
-						<input type="text" name="buildingFloorNum">
+						<label><font class="threeword">楼层</font>数</label>
+						<font color="red">*</font>
+						<input type="text" name="buildingFloorNum" id="newfloor">
 						</li>
 						<li>
-						<label>校区：</label>
+						<label><font class="twoword">校</font>区</label>
+						<font color="red">*</font>
 						<select name="buildingCompus" id="compus">
 							<option>东校区</option>
 							<option>南校区</option>
@@ -84,7 +88,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</select>
 						</li>
 						<li>
-						<label>单&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位：</label>
+						<label><font class="twoword">单</font>位</label>
+						<font color="red">*</font>
 						<select name="buildingDepartment" id="departmentname">
 							<option>教务处</option>
 							<option>教务处</option>
@@ -94,7 +99,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			</ul>
       			</div>
       			<div class="modal-footer">
-        			<button id="new" type="button" class="btn btn-primary">确定</button>
+        			<button id="new" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
       			</div>
       			</form>
       		</div>
@@ -106,29 +111,58 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			<h4>修改教学楼</h4>
       			</div>
       			<div class="modal-body">
-        			<input type="text" id="updatebuildingname" name="buildingName" style="height:30px" onclick="focus()">
-        			<input type="text" id="updatebuildingsimplename" name="buildingSimpleName" style="height:30px" onclick="focus()">
-        			<input type="text" id="updatebuildingfloor" name="buildingFloorNum" style="height:30px" onclick="focus()">
-        			<input type="hidden" id="updatebuildingid" name="buildingId" >
-        			<select name="buildingCompus" id="updatebuildingcompus">
-          				<option>东校区</option>
-          				<option>南校区</option>
-          				<option>北校区</option>
-        			</select>
-        			<select name="buildingDepartment" id="updatebuildingdepartmentn">
-          				<option>教务处</option>
-          				<option>教务处</option>
-          				<option>教务处</option>
-        			</select>
+				<ul id="updateul">
+						<li>
+						<label><font class="fiveword">教学楼名</font>称</label>
+						<font color="red">*</font>
+						<input type="text" id="updatebuildingname" name="buildingName">
+						</li>
+						<li>
+						<label><font class="fiveword">教学楼简</font>称</label>
+						&nbsp;
+						<input type="text" id="updatebuildingsimplename" name="buildingSimpleName">
+						</li>
+						<li>
+						<label><font class="threeword">楼层</font>数</label>
+						<font color="red">*</font>
+						<input type="text" id="updatebuildingfloor" name="buildingFloorNum">
+						</li>
+						<li>
+						<label><font class="twoword">校</font>区</label>
+						<font color="red">*</font>
+						<input type="hidden" id="updatebuildingid" name="buildingId" >
+						<select name="buildingCompus" id="updatebuildingcompus">
+							<option>东校区</option>
+							<option>南校区</option>
+							<option>北校区</option>
+						</select>
+						</li>
+						<li>
+						<label><font class="twoword">单</font>位</label>
+						<font color="red">*</font>
+						<select name="buildingDepartment" id="updatebuildingdepartmentn">
+							<option>教务处</option>
+							<option>教务处</option>
+							<option>教务处</option>
+						</select>
+						</li>
+        			</ul>
       			</div>
       			<div class="modal-footer">
-        			<button id="update" type="button" class="btn btn-primary">确定</button>
+        			<button id="update" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
       			</div>
       			</form>
       		</div>
     	</div>
     </div>
     <script type="text/javascript">
+	    function setletter(){
+			$("font").filter('.twoword').css("letter-spacing",document.body.scrollWidth/25); 
+			$("font").filter('.threeword').css("letter-spacing",document.body.scrollWidth/40); 
+			$("font").filter('.fourword').css("letter-spacing",document.body.scrollWidth/80); 
+			$("font").filter('.fiveword').css("letter-spacing",document.body.scrollWidth/130); 
+			$("font").filter('.sixword').css("letter-spacing",document.body.scrollWidth/300); 
+		}
     	function updatebuilding(i,name,simplename,compus,department,floor) {
     		$("#updatebuildingid").val(i);
     		$("#updatebuildingname").val(name);
@@ -148,17 +182,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					url:"/cims107/BuildingSearch",
 					async:false,
-					data: $("#searchform").serialize()
+					data: $("#searchform").serialize(),
+					dataType:"json"
 						}).done(
 					function(data){
 						if (data.length!=0)
 						{
 							var building = jQuery.parseJSON(data)
-							console.log(data);
-							
 							$.each(building,function(i,building){
 								str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"buildingid\" value="
-										+building.buildingId+"></td><td>"+String(building.buildingName)+"</td><td>"
+										+building.buildingId+"></td><td>"+building.buildingName+"</td><td>"
 										+building.buildingSimpleName+"</td><td>"+building.buildingDepartment+"</td><td>"
 										+building.buildingCompus+"</td><td>"+building.buildingFloorNum+
 										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatebuilding("+building.buildingId+",'"+building.buildingName+"','"+building.buildingSimpleName+"','"+building.buildingCompus+"','"+building.buildingDepartment+"',"+building.buildingFloorNum+")\">修改</button></td></tr>");					        
@@ -167,24 +200,52 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							document.getElementById('result').innerHTML=str;
 							//document.getElementById('result').innerHTML=<button href="#del" style="height:30px" data-toggle="modal" class="btn btn-primary">删除</button>;
 						}	
+						else
+							document.getElementById('result').innerHTML=null;
 					}	
 				);
 				
 			});
 		
 		$("#new").click(
-				function() {
-					$.ajax({
-						url:"/cims107/BuildingCreate",
-						async:false,
-						data: $("#createform").serialize(),
-						success: function(result) 
-            			{
-							alert("添加成功！");
-            			}}
-					);
-					
-				});
+			function() {
+//				var pass = true; 
+//				var ul = document.getElementById("newul");
+// 				var lis = ul.getElementsByTagName('li');
+// 				$("lis:contains('*')").find("input").each(function(){ 
+// 					if($(this).val() == "") { 
+// 						text = $(this).parent().text(); 
+// 						alert(text+"是必填项"); 
+// 						this.focus(); 
+// 						pass = false; 
+// 						return false;
+// 					} 
+// 				});
+				if($("#newbuildingname").val() == ""){  
+			    	alert("请填写教学楼名称!");  
+			    	return false;  
+			    }  
+			    if($("#newfloor").val() == ""){ 
+			    	alert("请填写楼层数!");  
+			        return false;  
+			    }
+			    var reg = new RegExp("^[0-9]*$");
+				if (!reg.test($("#newfloor").val())){
+					alert("不合法的楼层数！")
+					return false;
+				}
+				$.ajax({
+					url:"/cims107/BuildingCreate",
+					async:false,
+					data: $("#createform").serialize(),
+					dataType:"json",
+					success: function(result) 
+            		{
+						var successmsg = jQuery.parseJSON(result)
+						alert(successmsg.success);
+            		}}
+				);		
+		});
 		$("#del").click(
 				function() {
 					if (confirm("您确认要删除所选信息吗？")){
@@ -192,6 +253,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							url:"/cims107/BuildingDelete",
 							async:false,
 							data:$("#deleteform").serialize(),
+							dataType:"json",
 							success: function(result) 
             				{
 								alert("删除成功！");
@@ -207,18 +269,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						
 					//	$(this).parent().html("<a href=javascript:  class=save>保存</a>")
 					//$("#update").load("#updatediv");
-					console.log($("#updateform").serialize());
-					$.ajax({
-						url:"/cims107/BuildingUpdate",
-						async:false,
-						data: $("#updateform").serialize(),
-						success: function(result) 
-            			{
-							alert("修改成功！");
-            			}}
-					);
-					
-				});
+// 				var ul = document.getElementById("updateul");
+// 				var lis = ul.getElementsByTagName('li');
+// 				$("lis:contains('*')").find("input").each(function(){ 
+// 					if($(this).val() == "") { 
+// 						text = $(this).parent().text(); 
+// 						alert(text+"是必填项"); 
+// 						this.focus(); 
+// 						pass = false; 
+// 						return false;
+// 					} 
+// 				});
+				if($("#updatebuildingname").val() == ""){  
+			    	alert("请填写教学楼名称!");  
+			    	return false;  
+			    }  
+			    if($("#updatebuildingfloor").val() == ""){ 
+			    	alert("请填写楼层数!");  
+			        return false;  
+			    } 
+			    var reg = new RegExp("^[0-9]*$");
+				if (!reg.test($("#newfloor").val())){
+					alert("不合法的楼层数！")
+					return false;
+				}
+				$.ajax({
+					url:"/cims107/BuildingUpdate",
+					async:false,
+					data: $("#updateform").serialize(),
+					dataType:"json",
+					success: function(result) 
+            		{
+						alert("修改成功！");
+            		}}
+				);
+			});
 	</script>
 </body>
 </html>
