@@ -100,6 +100,12 @@ public class PartitionUpdateAction extends ActionSupport implements ModelDriven<
 	    		return false;
 	    	}
     	}
+    	if (partition.getPartitionBeginDate() == null && partition.getPartitionEndDate() == null) {
+    		if (partition.getPartitionBeginWeek() > partition.getPartitionEndWeek() || 
+    				partition.getPartitionBeginWeek() < 1 || partition.getPartitionEndWeek() > 18)
+    			return false;
+    		return true;
+    	}
     	return true;
 	}
 }

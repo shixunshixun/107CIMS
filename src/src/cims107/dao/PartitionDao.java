@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -12,12 +13,15 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import cims107.model.Building;
 import cims107.model.Classroom;
 import cims107.model.Partition;
 
 public class PartitionDao {
 	private SessionFactory sessionFactory;
+	private static Logger log = Logger.getLogger(PartitionDao.class); 
 	
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
@@ -126,6 +130,8 @@ public class PartitionDao {
 		session.save(partition);
 		tx.commit();
 		session.close();
+		log.info(ActionContext.getContext().getSession().get("username").toString() + 
+				" create partition " + partition.getPartitionId());
 	}
 	
 	public Boolean update(Partition partition) {
@@ -137,11 +143,15 @@ public class PartitionDao {
 		p.setPartitionTerm(partition.getPartitionTerm());
 		p.setPartitionBeginWeek(partition.getPartitionBeginWeek());
 		p.setPartitionEndWeek(partition.getPartitionEndWeek());
+		p.setPartitionBeginDate(partition.getPartitionBeginDate());
+		p.setPartitionEndDate(partition.getPartitionEndDate());
 		p.setPartitionDepartment(partition.getPartitionDepartment());
 		
 		session.update(p); 
 		tx.commit();
 		session.close();
+		log.info(ActionContext.getContext().getSession().get("username").toString() + 
+				" update partition " + partition.getPartitionId());
 		
 		return true;
 	}
@@ -152,8 +162,14 @@ public class PartitionDao {
 		
 		for (int i = 0; i < partitionlst.size(); i ++) {
 			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
+			String t = p.getClassroom().getBuilding().getBuildingCompus() + ", " + 
+					p.getClassroom().getBuilding().getBuildingName() + ", " +
+					p.getClassroom().getClsSerialNumber() + ", " +
+					p.getPartitionYear() + ", " + p.getPartitionTerm();
 			p.setPartitionIsUsed(1);
 			session.update(p);
+			log.info(ActionContext.getContext().getSession().get("username").toString() + 
+					" delete partition (" + t + ")");
 		}
 		
 		tx.commit();

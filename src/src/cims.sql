@@ -83,6 +83,12 @@ unique key (departmentId),
 unique key (departmentName)
 ) DEFAULT CHARSET=gbk;
 
+CREATE TABLE cims_record(
+recordId int(8) not null  primary key auto_increment,
+recordTimestamp TIMESTAMP,
+recordMessage varchar(100)
+) DEFAULT CHARSET=gbk;
+
 insert into cims_user values('', 'sysu1', 'sysu1', '0');
 insert into cims_user values('', 'sysu2', 'sysu2', '');	
 insert into cims_user values('', 'admin', 'admin', '1');

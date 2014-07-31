@@ -3,6 +3,7 @@ package cims107.dao;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -11,11 +12,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import com.opensymphony.xwork2.ActionContext;
+
+import cims107.action.BuildingCreateAction;
 import cims107.model.Building;
 
 public class BuildingDao {
 	
 	private SessionFactory sessionFactory;
+	private static Logger log = Logger.getLogger(BuildingDao.class); 
 
 	public List<Building> find(DetachedCriteria dc) {
 		Session session = sessionFactory.openSession();
@@ -70,6 +75,8 @@ public class BuildingDao {
 		session.save(building);
 		tx.commit();
 		session.close();
+		log.info(ActionContext.getContext().getSession().get("username").toString() + 
+				" create building " + building.getBuildingId());
 		return true;
 	}
 	
@@ -86,8 +93,12 @@ public class BuildingDao {
     	b.setBuildingFloorNum(building.getBuildingFloorNum());
     	
 		session.update(b); 
+		
 		tx.commit();
 		session.close();
+		
+		log.info(ActionContext.getContext().getSession().get("username").toString() + 
+				" update building " + building.getBuildingId());
 		
 		return true;
 	}
@@ -99,6 +110,8 @@ public class BuildingDao {
 		for (int i = 0; i < buildingidlst.size(); i ++) {
 			Building b = (Building) session.get(Building.class, buildingidlst.get(i));
 			session.delete(b);
+			log.info(ActionContext.getContext().getSession().get("username").toString() + 
+					" delete building (" + b.getBuildingCompus() + ", " + b.getBuildingName() + ")");
 		}
 		
 		tx.commit();

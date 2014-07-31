@@ -29,6 +29,9 @@ public class DepartmentDao {
 		
 		List<Department> list = q.list();
 		session.close();
+		
+		if (list == null)
+			return null;
 		return list.get(0);
 	}
 }

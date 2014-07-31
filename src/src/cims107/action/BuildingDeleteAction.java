@@ -6,6 +6,8 @@ import cims107.service.BuildingService;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -14,7 +16,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class BuildingDeleteAction extends ActionSupport{
 	
 	public String[] buildingid;
-	private String result;
+	private String result;  
 	
     private BuildingService buildingService;  
       

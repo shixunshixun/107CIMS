@@ -1,10 +1,13 @@
 package cims107.action;
 
+import org.apache.log4j.Logger;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import cims107.model.Building;
 import cims107.service.BuildingService;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -12,7 +15,7 @@ public class BuildingUpdateAction extends ActionSupport implements ModelDriven<B
 	
 	private Building building;
     private String result;    
-    private BuildingService buildingService;  
+    private BuildingService buildingService;   
       
     @Override
     public Building getModel() {

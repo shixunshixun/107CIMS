@@ -5,9 +5,12 @@ import cims107.service.BuildingService;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -15,7 +18,7 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
 	
     private Building building;
     private String result;
-    private BuildingService buildingService; 
+    private BuildingService buildingService;
     
     @Override
     public Building getModel() {

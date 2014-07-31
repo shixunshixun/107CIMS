@@ -2,6 +2,7 @@ package cims107.dao;
 
 import java.util.*;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -11,12 +12,15 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import cims107.model.Building;
 import cims107.model.Classroom;
 import cims107.model.Partition;
 
 public class ClassroomDao {
 	private SessionFactory sessionFactory;
+	private static Logger log = Logger.getLogger(ClassroomDao.class); 
 
 	public List<Classroom> find(String compus, String departmentname, String buildingname, DetachedCriteria dc) {
 		
@@ -123,6 +127,8 @@ public class ClassroomDao {
 		session.save(classroom);
 		tx.commit();
 		session.close();
+		log.info(ActionContext.getContext().getSession().get("username").toString() + 
+				" create classroom " + classroom.getClsId());
 	}
 	
 	public void update(Classroom classroom) {
@@ -154,6 +160,8 @@ public class ClassroomDao {
 		session.update(c); 
 		tx.commit();
 		session.close();
+		log.info(ActionContext.getContext().getSession().get("username").toString() + 
+				" update classroom " + classroom.getClsId());
 	}
 	
 	public Boolean delete(List<Integer> clsidlst) {
@@ -162,7 +170,11 @@ public class ClassroomDao {
 		
 		for (int i = 0; i < clsidlst.size(); i ++) {
 			Classroom b = (Classroom) session.get(Classroom.class, clsidlst.get(i));
+			String t = b.getBuilding().getBuildingCompus() + ", " + 
+					b.getBuilding().getBuildingName() + ", " + b.getClsSerialNumber();
 			session.delete(b);
+			log.info(ActionContext.getContext().getSession().get("username").toString() + 
+					" delete classroom (" + t + ")");
 		}
 		
 		tx.commit();
