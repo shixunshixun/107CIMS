@@ -76,10 +76,15 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 				
 		    	//classroom.setClsBuildingId(building.getBuildingId());
 				classroom.setBuilding(building);
-		    	classroomService.add(classroom);
-		    	result = JSONObject.fromObject("{\"success\":1}").toString();
-		    	
-		    	return SUCCESS;
+				try {
+			    	classroomService.add(classroom);
+			    	result = JSONObject.fromObject("{\"success\":1}").toString();
+			    	return SUCCESS;
+				}
+				catch (Exception e) {
+					result = JSONObject.fromObject("{\"error\":\"ÐÂÔöÊ§°Ü\"}").toString();
+			    	return SUCCESS;
+				}
 			}
 			result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
 			return "hint";
@@ -108,7 +113,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 							return false;
 						}
 					}
-					if(h[1] - h[0] < 1 || (h[1] > classroom.getClsMaxRow() && classroom.getClsMaxCol() > 0) || h[0] < 1) 
+					if(h[1] - h[0] == 1 || (h[1] > classroom.getClsMaxRow() && classroom.getClsMaxCol() > 0) || h[0] < 1) 
 						return false;
 				}
 				else {
@@ -130,7 +135,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 							return false;
 						}
 					}
-					if(h[1] - h[0] < 1 || (h[1] > classroom.getClsMaxCol() && classroom.getClsMaxCol() > 0) || h[0] < 1) 
+					if(h[1] - h[0] == 1 || (h[1] > classroom.getClsMaxCol() && classroom.getClsMaxCol() > 0) || h[0] < 1) 
 						return false;
 				}
 				else {

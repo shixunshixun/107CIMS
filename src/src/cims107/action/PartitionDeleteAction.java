@@ -47,13 +47,19 @@ public class PartitionDeleteAction extends ActionSupport{
     		partitionidlst.add(new Integer (partitionid[i]));
     	}
     	
-    	if(partitionService.delete(partitionidlst)){
-    		result = JSONObject.fromObject("{\"success\":1}").toString();
-    		return SUCCESS;
+    	try {
+	    	if(partitionService.delete(partitionidlst)){
+	    		result = JSONObject.fromObject("{\"success\":1}").toString();
+	    		return SUCCESS;
+	    	}
+	    	else {
+	    		//super.addActionError("delete failed");
+	    		return ERROR;
+	    	}
     	}
-    	else {
-    		super.addActionError("delete failed");
-    		return ERROR;
+    	catch(Exception e) {
+    		result = JSONObject.fromObject("{\"error\":\"É¾³ýÊ§°Ü\"}").toString();
+    		return SUCCESS;
     	}
     }
 }

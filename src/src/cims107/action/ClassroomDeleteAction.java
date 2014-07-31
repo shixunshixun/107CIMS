@@ -41,13 +41,19 @@ public class ClassroomDeleteAction extends ActionSupport{
     		clsidlst.add(new Integer (clsid[i]));
     	}
     	
-    	if(classroomService.delete(clsidlst)){
-    		result = JSONObject.fromObject("{\"success\":1}").toString();
-    		return SUCCESS;
+    	try {
+	    	if(classroomService.delete(clsidlst)){
+	    		result = JSONObject.fromObject("{\"success\":1}").toString();
+	    		return SUCCESS;
+	    	}
+	    	else {
+	    		//super.addActionError("delete failed");
+	    		return ERROR;
+	    	}
     	}
-    	else {
-    		super.addActionError("delete failed");
-    		return ERROR;
+    	catch(Exception e) {
+    		result = JSONObject.fromObject("{\"error\":\"É¾³ýÊ§°Ü\"}").toString();
+    		return SUCCESS;
     	}
 	}
 }

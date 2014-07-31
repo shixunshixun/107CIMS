@@ -14,10 +14,10 @@ public class IsAdminInterceptor extends AbstractInterceptor {
         // 取得请求相关的ActionContext实例  
         ActionContext ctx = invocation.getInvocationContext();  
         Map session = ctx.getSession();  
-        Boolean user = (Boolean) session.get("isadmin");
+        Boolean isadmin = (Boolean) session.get("isadmin");
   
-        if (user) {  
-            System.out.println("test2");  
+        if (isadmin) {  
+            //System.out.println("test2");  
             return invocation.invoke();  
         }  
   

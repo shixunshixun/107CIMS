@@ -126,33 +126,53 @@ public class PartitionDao {
 	
 	public void add(Partition partition) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		session.save(partition);
-		tx.commit();
-		session.close();
-		log.info(ActionContext.getContext().getSession().get("username").toString() + 
-				" create partition " + partition.getPartitionId());
+		Transaction tx = null;
+		
+		try {
+			tx = session.beginTransaction();
+			session.save(partition);
+			tx.commit();
+			log.info(ActionContext.getContext().getSession().get("username").toString() + 
+					" create partition " + partition.getPartitionId());
+		}
+		catch(Exception e) {
+			if(tx != null)	tx.rollback();
+			throw e;
+		}
+		finally {
+			session.close();
+		}
 	}
 	
 	public Boolean update(Partition partition) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		Partition p = (Partition) session.get(Partition.class, partition.getPartitionId());
+		Transaction tx = null;
 		
-		p.setPartitionYear(partition.getPartitionYear());
-		p.setPartitionTerm(partition.getPartitionTerm());
-		p.setPartitionBeginWeek(partition.getPartitionBeginWeek());
-		p.setPartitionEndWeek(partition.getPartitionEndWeek());
-		p.setPartitionBeginDate(partition.getPartitionBeginDate());
-		p.setPartitionEndDate(partition.getPartitionEndDate());
-		p.setPartitionDepartment(partition.getPartitionDepartment());
-		
-		session.update(p); 
-		tx.commit();
-		session.close();
-		log.info(ActionContext.getContext().getSession().get("username").toString() + 
-				" update partition " + partition.getPartitionId());
-		
+		try {
+			tx = session.beginTransaction();
+			Partition p = (Partition) session.get(Partition.class, partition.getPartitionId());
+			
+			p.setPartitionYear(partition.getPartitionYear());
+			p.setPartitionTerm(partition.getPartitionTerm());
+			p.setPartitionBeginWeek(partition.getPartitionBeginWeek());
+			p.setPartitionEndWeek(partition.getPartitionEndWeek());
+			p.setPartitionBeginDate(partition.getPartitionBeginDate());
+			p.setPartitionEndDate(partition.getPartitionEndDate());
+			p.setPartitionDepartment(partition.getPartitionDepartment());
+			
+			session.update(p); 
+			tx.commit();
+			log.info(ActionContext.getContext().getSession().get("username").toString() + 
+					" update partition " + partition.getPartitionId());
+		}
+		catch(Exception e) {
+			if(tx != null)	tx.rollback();
+			throw e;
+		}
+		finally {
+			session.close();
+		}
+
 		return true;
 	}
 	
@@ -162,14 +182,8 @@ public class PartitionDao {
 		
 		for (int i = 0; i < partitionlst.size(); i ++) {
 			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
-			String t = p.getClassroom().getBuilding().getBuildingCompus() + ", " + 
-					p.getClassroom().getBuilding().getBuildingName() + ", " +
-					p.getClassroom().getClsSerialNumber() + ", " +
-					p.getPartitionYear() + ", " + p.getPartitionTerm();
 			p.setPartitionIsUsed(1);
 			session.update(p);
-			log.info(ActionContext.getContext().getSession().get("username").toString() + 
-					" delete partition (" + t + ")");
 		}
 		
 		tx.commit();
@@ -194,14 +208,28 @@ public class PartitionDao {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		
-		for (int i = 0; i < partitionlst.size(); i ++) {
-			Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
-			session.delete(p);
+		try {
+			tx = session.beginTransaction();
+			for (int i = 0; i < partitionlst.size(); i ++) {
+				Partition p = (Partition) session.get(Partition.class, partitionlst.get(i));
+				String t = p.getClassroom().getBuilding().getBuildingCompus() + ", " + 
+						p.getClassroom().getBuilding().getBuildingName() + ", " +
+						p.getClassroom().getClsSerialNumber() + ", " +
+						p.getPartitionYear() + ", " + p.getPartitionTerm();
+				session.delete(p);
+				log.info(ActionContext.getContext().getSession().get("username").toString() + 
+						" delete partition (" + t + ")");
+			}
+	
+			tx.commit();
 		}
-		
-		
-		tx.commit();
-		session.close();
+		catch(Exception e) {
+			if(tx != null)	tx.rollback();
+			throw e;
+		}
+		finally {
+			session.close();
+		}
 		
 		return true;
 	}

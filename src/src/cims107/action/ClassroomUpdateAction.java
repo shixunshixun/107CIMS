@@ -66,9 +66,15 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 	
 	public String execute() {
 		if (isValidate()) {
-			classroomService.update(classroom);
-			result = JSONObject.fromObject("{\"success\":1}").toString();
-			return SUCCESS;
+			try {
+				classroomService.update(classroom);
+				result = JSONObject.fromObject("{\"success\":1}").toString();
+				return SUCCESS;
+			}
+			catch(Exception e) {
+				result = JSONObject.fromObject("{\"error\":\"¸üÐÂÊ§°Ü\"}").toString();
+				return SUCCESS;
+			}
 		}
 		result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
 		return "hint";
@@ -95,7 +101,7 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 							return false;
 						}
 					}
-					if(h[1] - h[0] < 1 || h[1] > classroom.getClsMaxRow() || h[0] < 1) 
+					if(h[1] - h[0] == 1 || h[1] > classroom.getClsMaxRow() || h[0] < 1) 
 						return false;
 				}
 				else {
@@ -117,7 +123,7 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 							return false;
 						}
 					}
-					if(h[1] - h[0] < 1 || h[1] > classroom.getClsMaxCol() || h[0] < 1) 
+					if(h[1] - h[0] == 1 || h[1] > classroom.getClsMaxCol() || h[0] < 1) 
 						return false;
 				}
 				else {

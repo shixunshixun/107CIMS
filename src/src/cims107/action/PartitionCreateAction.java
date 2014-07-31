@@ -107,20 +107,26 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
 	    	
 	    	Building building = new Building();
 	    	
-			building = buildingService.find(buildingname, compus);
-			Classroom classroom = new Classroom();
-			classroom = classroomService.find(building.getBuildingId(), serialnumber);
-	    	
-	    	
-	    	partition.setPartitionWhichDay(list2WhichdayString(whichdaylst));
-	    	
-	    	partition.setClassroom(classroom);
-	    	partition.getClassroom().setBuilding(building);
-	    	
-	    	partitionService.add(partition);
-	    	result = JSONObject.fromObject("{\"success\":1}").toString();
-	    	
-	    	return SUCCESS;
+	    	try {
+				building = buildingService.find(buildingname, compus);
+				Classroom classroom = new Classroom();
+				classroom = classroomService.find(building.getBuildingId(), serialnumber);
+		    	
+		    	
+		    	partition.setPartitionWhichDay(list2WhichdayString(whichdaylst));
+		    	
+		    	partition.setClassroom(classroom);
+		    	partition.getClassroom().setBuilding(building);
+		    	
+		    	partitionService.add(partition);
+		    	result = JSONObject.fromObject("{\"success\":1}").toString();
+		    	
+		    	return SUCCESS;
+	    	}
+	    	catch (Exception e) {
+	    		result = JSONObject.fromObject("{\"error\":\"ÐÂÔöÊ§°Ü\"}").toString();
+		    	return SUCCESS;
+	    	}
     	}
     	result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
     	return "hint";

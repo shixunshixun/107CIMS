@@ -54,14 +54,20 @@ public class BuildingUpdateAction extends ActionSupport implements ModelDriven<B
 	public String execute()  
     {  
 		if (isValidate()) {
-	    	if(buildingService.update(building)) {
-	    		result = JSONObject.fromObject("{\"success\":1}").toString();
+			try {
+		    	if(buildingService.update(building)) {
+		    		result = JSONObject.fromObject("{\"success\":1}").toString();
+		    		return SUCCESS;
+		    	}
+		    	else {
+		    		//super.addActionError("update failed");
+		    		return ERROR;
+		    	}
+			}
+			catch(Exception e) {
+				result = JSONObject.fromObject("{\"error\":\"¸üÐÂÊ§°Ü\"}").toString();
 	    		return SUCCESS;
-	    	}
-	    	else {
-	    		super.addActionError("update failed");
-	    		return ERROR;
-	    	}
+			}
 		}
 		result = JSONObject.fromObject("{\"hint\":\"Please check your input!\"}").toString();
 		return "hint";

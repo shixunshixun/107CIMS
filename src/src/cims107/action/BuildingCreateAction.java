@@ -41,14 +41,20 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
     public String execute()  
     {
     	if (isValidate()) {
-	    	if(buildingService.add(building)){
-	    		result = JSONObject.fromObject("{\"success\":1}").toString();
+    		try {
+		    	if(buildingService.add(building)){
+		    		result = JSONObject.fromObject("{\"success\":1}").toString();
+		    	   	return SUCCESS;
+		    	}
+		    	else{
+		    		//super.addActionError("update failed");
+		    		return ERROR;
+		    	}
+    		}
+    		catch(Exception e) {
+    			result = JSONObject.fromObject("{\"error\":\"ÐÂÔöÊ§°Ü\"}").toString();
 	    	   	return SUCCESS;
-	    	}
-	    	else{
-	    		super.addActionError("update failed");
-	    		return ERROR;
-	    	}
+    		}
     	}
     	result = JSONObject.fromObject("{\"hint\":\"The input is invalid\"}").toString();
     	return "hint";

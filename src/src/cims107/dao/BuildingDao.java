@@ -71,51 +71,80 @@ public class BuildingDao {
 	//����ѧ¥�����Ƿ�����
 	public boolean add(Building building) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		session.save(building);
-		tx.commit();
-		session.close();
-		log.info(ActionContext.getContext().getSession().get("username").toString() + 
-				" create building " + building.getBuildingId());
+		Transaction tx = null;
+		
+		try{
+			tx = session.beginTransaction();
+			session.save(building);
+			tx.commit();
+			log.info(ActionContext.getContext().getSession().get("username").toString() + 
+					" create building " + building.getBuildingId());
+		}
+		catch(Exception e) {
+			if(tx != null)	tx.rollback();
+			throw e;
+		}
+		finally {
+			session.close();
+		}
+		
 		return true;
 	}
 	
 	public boolean update(Building building) {
 		
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		Building b = (Building) session.get(Building.class, building.getBuildingId());
+		Transaction tx = null;
 		
-		b.setBuildingName(building.getBuildingName());
-    	b.setBuildingDepartment(building.getBuildingDepartment());
-    	b.setBuildingSimpleName(building.getBuildingSimpleName());
-    	b.setBuildingCompus(building.getBuildingCompus());
-    	b.setBuildingFloorNum(building.getBuildingFloorNum());
-    	
-		session.update(b); 
-		
-		tx.commit();
-		session.close();
-		
-		log.info(ActionContext.getContext().getSession().get("username").toString() + 
-				" update building " + building.getBuildingId());
+		try{
+			tx = session.beginTransaction();
+			Building b = (Building) session.get(Building.class, building.getBuildingId());
+			
+			b.setBuildingName(building.getBuildingName());
+	    	b.setBuildingDepartment(building.getBuildingDepartment());
+	    	b.setBuildingSimpleName(building.getBuildingSimpleName());
+	    	b.setBuildingCompus(building.getBuildingCompus());
+	    	b.setBuildingFloorNum(building.getBuildingFloorNum());
+	    	
+			session.update(b); 
+			
+			tx.commit();
+			log.info(ActionContext.getContext().getSession().get("username").toString() + 
+					" update building " + building.getBuildingId());
+		}
+		catch(Exception e) {
+			if(tx != null)	tx.rollback();
+			throw e;
+		}
+		finally {
+			session.close();
+		}
 		
 		return true;
 	}
 	
 	public boolean delete(List<Integer> buildingidlst) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Transaction tx = null;
 		
-		for (int i = 0; i < buildingidlst.size(); i ++) {
-			Building b = (Building) session.get(Building.class, buildingidlst.get(i));
-			session.delete(b);
-			log.info(ActionContext.getContext().getSession().get("username").toString() + 
-					" delete building (" + b.getBuildingCompus() + ", " + b.getBuildingName() + ")");
+		try {
+			tx = session.beginTransaction();
+			for (int i = 0; i < buildingidlst.size(); i ++) {
+				Building b = (Building) session.get(Building.class, buildingidlst.get(i));
+				session.delete(b);
+				log.info(ActionContext.getContext().getSession().get("username").toString() + 
+						" delete building (" + b.getBuildingCompus() + ", " + b.getBuildingName() + ")");
+			}
+			
+			tx.commit();
 		}
-		
-		tx.commit();
-		session.close();
+		catch(Exception e) {
+			if(tx != null)	tx.rollback();
+			throw e;
+		}
+		finally {
+			session.close();
+		}
 		
 		return true;
 	}

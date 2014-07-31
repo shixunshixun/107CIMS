@@ -123,62 +123,90 @@ public class ClassroomDao {
 	//����ѧ¥�����Ƿ�����
 	public void add(Classroom classroom) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		session.save(classroom);
-		tx.commit();
-		session.close();
-		log.info(ActionContext.getContext().getSession().get("username").toString() + 
-				" create classroom " + classroom.getClsId());
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			session.save(classroom);
+			tx.commit();
+			log.info(ActionContext.getContext().getSession().get("username").toString() + 
+					" create classroom " + classroom.getClsId());
+		}
+		catch(Exception e) {
+			if(tx != null)	tx.rollback();
+			throw e;
+		}
+		finally {
+			session.close();
+		}
 	}
 	
 	public void update(Classroom classroom) {
 		
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		Classroom c = (Classroom) session.get(Classroom.class, classroom.getClsId());
+		Transaction tx = null;
 		
-		c.setClsSerialNumber(classroom.getClsSerialNumber());
-    	c.setClsFloor(classroom.getClsFloor());
-    	c.setClsType(classroom.getClsType());
-    	c.setClsShape(classroom.getClsShape());
-    	c.setClsClassNum(classroom.getClsClassNum());
-    	c.setClsExamNum(classroom.getClsExamNum());
-    	c.setClsMaxRow(classroom.getClsMaxRow());
-    	c.setClsMaxCol(classroom.getClsMaxCol());
-    	c.setClsHCorridorLocate(classroom.getClsHCorridorLocate());
-    	c.setClsVCorridorLocate(classroom.getClsVCorridorLocate());
-    	c.setClsArea(classroom.getClsArea());
-    	c.setClsLocation(classroom.getClsLocation());
-    	c.setClsIsAmphi(classroom.getClsIsAmphi());
-    	c.setClsHasMicrophone(classroom.getClsHasMicrophone());
-    	c.setClsIsUsed(classroom.getClsIsUsed());
-    	c.setClsUsage(classroom.getClsUsage());
-    	c.setClsSeatNum(classroom.getClsSeatNum());
-    	c.setClsAvailableSeatNum(classroom.getClsAvailableSeatNum());
-    	//c.setBuilding(classroom.getBuilding());
-    	
-		session.update(c); 
-		tx.commit();
-		session.close();
-		log.info(ActionContext.getContext().getSession().get("username").toString() + 
-				" update classroom " + classroom.getClsId());
+		try {
+			tx = session.beginTransaction();
+			Classroom c = (Classroom) session.get(Classroom.class, classroom.getClsId());
+			
+			c.setClsSerialNumber(classroom.getClsSerialNumber());
+	    	c.setClsFloor(classroom.getClsFloor());
+	    	c.setClsType(classroom.getClsType());
+	    	c.setClsShape(classroom.getClsShape());
+	    	c.setClsClassNum(classroom.getClsClassNum());
+	    	c.setClsExamNum(classroom.getClsExamNum());
+	    	c.setClsMaxRow(classroom.getClsMaxRow());
+	    	c.setClsMaxCol(classroom.getClsMaxCol());
+	    	c.setClsHCorridorLocate(classroom.getClsHCorridorLocate());
+	    	c.setClsVCorridorLocate(classroom.getClsVCorridorLocate());
+	    	c.setClsArea(classroom.getClsArea());
+	    	c.setClsLocation(classroom.getClsLocation());
+	    	c.setClsIsAmphi(classroom.getClsIsAmphi());
+	    	c.setClsHasMicrophone(classroom.getClsHasMicrophone());
+	    	c.setClsIsUsed(classroom.getClsIsUsed());
+	    	c.setClsUsage(classroom.getClsUsage());
+	    	c.setClsSeatNum(classroom.getClsSeatNum());
+	    	c.setClsAvailableSeatNum(classroom.getClsAvailableSeatNum());
+	    	//c.setBuilding(classroom.getBuilding());
+	    	
+			session.update(c); 
+			tx.commit();
+			log.info(ActionContext.getContext().getSession().get("username").toString() + 
+					" update classroom " + classroom.getClsId());
+		}
+		catch(Exception e) {
+			if(tx != null)	tx.rollback();
+			throw e;
+		}
+		finally {
+			session.close();
+		}
 	}
 	
 	public Boolean delete(List<Integer> clsidlst) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Transaction tx = null;
 		
-		for (int i = 0; i < clsidlst.size(); i ++) {
-			Classroom b = (Classroom) session.get(Classroom.class, clsidlst.get(i));
-			String t = b.getBuilding().getBuildingCompus() + ", " + 
-					b.getBuilding().getBuildingName() + ", " + b.getClsSerialNumber();
-			session.delete(b);
-			log.info(ActionContext.getContext().getSession().get("username").toString() + 
-					" delete classroom (" + t + ")");
+		try {
+			tx = session.beginTransaction();
+			for (int i = 0; i < clsidlst.size(); i ++) {
+				Classroom b = (Classroom) session.get(Classroom.class, clsidlst.get(i));
+				String t = b.getBuilding().getBuildingCompus() + ", " + 
+						b.getBuilding().getBuildingName() + ", " + b.getClsSerialNumber();
+				session.delete(b);
+				log.info(ActionContext.getContext().getSession().get("username").toString() + 
+						" delete classroom (" + t + ")");
+			}
+			
+			tx.commit();
 		}
-		
-		tx.commit();
-		session.close();
+		catch(Exception e) {
+			if(tx != null)	tx.rollback();
+			throw e;
+		}
+		finally {
+			session.close();
+		}
 		
 		return true;
 	}

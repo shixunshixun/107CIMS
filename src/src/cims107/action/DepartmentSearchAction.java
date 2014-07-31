@@ -27,7 +27,15 @@ public class DepartmentSearchAction extends ActionSupport implements ModelDriven
     	}
     	return department;
     }
+	
+	
 
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
 	public void setDepartmentService(DepartmentService departmentService)  
     {  
         this.departmentService = departmentService;  

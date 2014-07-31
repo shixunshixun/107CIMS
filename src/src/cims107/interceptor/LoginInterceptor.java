@@ -14,10 +14,10 @@ public class LoginInterceptor extends AbstractInterceptor {
         // 取得请求相关的ActionContext实例  
         ActionContext ctx = invocation.getInvocationContext();  
         Map session = ctx.getSession();  
-        String user = (String) session.get("islogin");
+        String islogin = (String) session.get("islogin");
   
-        if (user != null && user.equals("true")) {  
-            System.out.println("test1");  
+        if (islogin != null && islogin.equals("true")) {  
+            //System.out.println("test1");  
             return invocation.invoke();  
         }  
   
