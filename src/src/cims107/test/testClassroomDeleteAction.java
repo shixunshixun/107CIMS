@@ -28,9 +28,9 @@ public class testClassroomDeleteAction extends AbstractModelAndViewTests{
 
 	
 	@Test
-	public void testExectue() {
+	public void testExecute1() {
 		try{
-			System.out.println("The exectue method for ClassroomDeleteAction is to be tested....");
+			System.out.println(" ClassroomDeleteAction:Ö÷³¡¾°");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
@@ -49,6 +49,35 @@ public class testClassroomDeleteAction extends AbstractModelAndViewTests{
 	    	EasyMock.replay(service);
 	    	
 	    	assertEquals( "success" , action.execute() );
+		
+		}catch( Exception e ){
+			e.printStackTrace();
+		}	
+
+	}
+	
+	@Test
+	public void testExecute2() {
+		try{
+			System.out.println(" ClassroomDeleteAction:É¾³ý²Ù×÷·µ»Ø´íÎó");
+			
+			MockHttpServletRequest request = new MockHttpServletRequest();
+			MockHttpSession session = new MockHttpSession();
+			request.setSession(session);
+			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
+			
+		    action = new ClassroomDeleteAction();
+		    service = EasyMock.createMock(ClassroomService.class);
+		    action.setClassroomService(service);
+		    
+		    String[] clsid = {"1","2"};
+		    action.setClsid(clsid);
+
+		    
+	    	EasyMock.expect(service.delete(EasyMock.anyObject())).andReturn(false);
+	    	EasyMock.replay(service);
+	    	
+	    	assertEquals( "error" , action.execute() );
 		
 		}catch( Exception e ){
 			e.printStackTrace();

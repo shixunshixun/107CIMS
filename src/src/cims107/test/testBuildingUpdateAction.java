@@ -3,6 +3,7 @@ package cims107.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import cims107.action.BuildingCreateAction;
 import cims107.action.BuildingUpdateAction;
 import cims107.dao.BuildingDao;
 import cims107.model.*;
@@ -31,23 +32,24 @@ public class testBuildingUpdateAction extends AbstractModelAndViewTests{
 	
 	public testBuildingUpdateAction(){
 		TBuilding = new Building();
-		TBuilding.setBuildingCompus("TCompus");
-		TBuilding.setBuildingDepartment("TDepartment");
-		TBuilding.setBuildingFloorNum(1);
-		TBuilding.setBuildingId(0);
-		TBuilding.setBuildingName("TBuilding");
-		TBuilding.setBuildingSimpleName("TB");
 	}
 	
 	@Test
 	public void testExecute1() {
 		try{
-			System.out.println("The execute method for BuildingUpdateAction is to be tested....");
+			System.out.println("BuildingUpdateAction:主场景");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
 			request.setSession(session);
 			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
+			
+			TBuilding.setBuildingCompus("TCompus");
+			TBuilding.setBuildingDepartment("TDepartment");
+			TBuilding.setBuildingFloorNum(1);
+			TBuilding.setBuildingId(0);
+			TBuilding.setBuildingName("TBuilding");
+			TBuilding.setBuildingSimpleName("TB");
 			
 		    action = new BuildingUpdateAction();
 		    service = EasyMock.createMock(BuildingService.class);
@@ -68,26 +70,172 @@ public class testBuildingUpdateAction extends AbstractModelAndViewTests{
 	@Test
 	public void testExecute2() {
 		try{
-			System.out.println("The execute method for BuildingUpdateAction is to be tested....");
+			System.out.println("BuildingUpdateAction:修改楼层数小于等于0");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
 			request.setSession(session);
 			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
 			
+			TBuilding.setBuildingCompus("TCompus");
+			TBuilding.setBuildingDepartment("TDepartment");
+			TBuilding.setBuildingFloorNum(0);
+			TBuilding.setBuildingId(0);
+			TBuilding.setBuildingName("TBuilding");
+			TBuilding.setBuildingSimpleName("TB");
+			
 		    action = new BuildingUpdateAction();
 		    service = EasyMock.createMock(BuildingService.class);
 		    action.setBuildingService(service);
+		    action.setBuilding(TBuilding);
 	    	
 	    	EasyMock.expect(service.update(EasyMock.anyObject())).andReturn(false);
 	    	EasyMock.replay(service);
 	    	
-	    	assertEquals( "error" , action.execute() );
+	    	assertEquals( "hint" , action.execute() );
 		
 		}catch( Exception e ){
 			e.printStackTrace();
 		}	
 
 	}
+	
+	@Test
+	public void testExecute3() {
+		try{
+			System.out.println("BuildingUpdateAction:修改教学楼校区为空");
+			
+			MockHttpServletRequest request = new MockHttpServletRequest();
+			MockHttpSession session = new MockHttpSession();
+			request.setSession(session);
+			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
+			
+			TBuilding.setBuildingCompus("");
+			TBuilding.setBuildingDepartment("TDepartment");
+			TBuilding.setBuildingFloorNum(1);
+			TBuilding.setBuildingId(0);
+			TBuilding.setBuildingName("TBuilding");
+			TBuilding.setBuildingSimpleName("TB");
+			
+		    action = new BuildingUpdateAction();
+		    service = EasyMock.createMock(BuildingService.class);
+		    action.setBuildingService(service);
+		    action.setBuilding(TBuilding);
+	    	
+	    	EasyMock.expect(service.update(EasyMock.anyObject())).andReturn(false);
+	    	EasyMock.replay(service);
+	    	
+	    	assertEquals( "hint" , action.execute() );
+		
+		}catch( Exception e ){
+			e.printStackTrace();
+		}	
+
+	}
+	
+	
+	@Test
+	public void testExecute4() {
+		try{
+			System.out.println("BuildingUpdateAction:修改教学楼名字为空");
+			
+			MockHttpServletRequest request = new MockHttpServletRequest();
+			MockHttpSession session = new MockHttpSession();
+			request.setSession(session);
+			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
+		    
+		    //数据定义
+			TBuilding.setBuildingCompus("TCompus");
+			TBuilding.setBuildingDepartment("TDepartment");
+			TBuilding.setBuildingFloorNum(1);
+			TBuilding.setBuildingId(0);
+			TBuilding.setBuildingName("");
+			TBuilding.setBuildingSimpleName("TB");
+			
+		    action = new BuildingUpdateAction();
+		    service = EasyMock.createMock(BuildingService.class);
+		    action.setBuildingService(service);
+	    	action.setBuilding(TBuilding);
+	    	
+	    	//EasyMock.expect(service.add(EasyMock.anyObject())).andReturn(false);
+	    	//EasyMock.replay(service);
+	    	assertEquals( "hint" , action.execute() );
+	    	
+	    	
+		}catch( Exception e ){
+			e.printStackTrace();
+		}	
+
+	}
+	
+	@Test
+	public void testExecute5() {
+		try{
+			System.out.println("BuildingUpdateAction:修改教学楼名字以及校区为空");
+			
+			MockHttpServletRequest request = new MockHttpServletRequest();
+			MockHttpSession session = new MockHttpSession();
+			request.setSession(session);
+			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
+		    
+		    //数据定义
+			TBuilding.setBuildingCompus("");
+			TBuilding.setBuildingDepartment("TDepartment");
+			TBuilding.setBuildingFloorNum(1);
+			TBuilding.setBuildingId(0);
+			TBuilding.setBuildingName("");
+			TBuilding.setBuildingSimpleName("TB");
+			
+		    action = new BuildingUpdateAction();
+		    service = EasyMock.createMock(BuildingService.class);
+		    action.setBuildingService(service);
+	    	action.setBuilding(TBuilding);
+	    	
+	    	//EasyMock.expect(service.add(EasyMock.anyObject())).andReturn(false);
+	    	//EasyMock.replay(service);
+	    	assertEquals( "hint" , action.execute() );
+	    	
+	    	
+		}catch( Exception e ){
+			e.printStackTrace();
+		}	
+
+	}
+	
+	@Test
+	public void testExecute6() {
+		try{
+			System.out.println("BuildingUpdateAction:修改的格式正确但数据库无法插入数据");
+			
+			MockHttpServletRequest request = new MockHttpServletRequest();
+			MockHttpSession session = new MockHttpSession();
+			request.setSession(session);
+			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
+			
+			//数据指定
+			TBuilding.setBuildingCompus("TCompus");
+			TBuilding.setBuildingDepartment("TDepartment");
+			TBuilding.setBuildingFloorNum(1);
+			TBuilding.setBuildingId(0);
+			TBuilding.setBuildingName("TBuilding");
+			TBuilding.setBuildingSimpleName("TB");
+			
+		    action = new BuildingUpdateAction();
+		    service = EasyMock.createMock(BuildingService.class);
+		    action.setBuildingService(service);
+	    	action.setBuilding(TBuilding);
+	    	
+	    	EasyMock.expect(service.add(EasyMock.anyObject())).andReturn(false);
+	    	EasyMock.replay(service);
+	    	assertEquals( "error" , action.execute() );
+	    	
+	    	
+		}catch( Exception e ){
+			e.printStackTrace();
+		}	
+
+	}
+	
+	
 }
 

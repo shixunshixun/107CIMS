@@ -18,7 +18,7 @@ import org.springframework.web.servlet.HandlerMapping;
 import com.opensymphony.xwork2.ActionProxy;
 import com.opensymphony.xwork2.ActionContext;  
 import com.opensymphony.xwork2.ActionSupport;
-/*
+
 public class testBuildingDeleteAction extends AbstractModelAndViewTests{
 	public static BuildingService service;
 	public BuildingDeleteAction action;
@@ -27,7 +27,7 @@ public class testBuildingDeleteAction extends AbstractModelAndViewTests{
 	@Test
 	public void testExecute1() {
 		try{
-			System.out.println("The execute method for BuildingDeleteAction is to be tested....");
+			System.out.println("BuildingDeleteAction:Ö÷³¡¾°");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
@@ -57,7 +57,7 @@ public class testBuildingDeleteAction extends AbstractModelAndViewTests{
 	@Test
 	public void testExecute2() {
 		try{
-			System.out.println("The execute method for BuildingDeleteAction is to be tested....");
+			System.out.println("BuildingDeleteAction:É¾³ý·µ»ØÊ§°Ü");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
@@ -68,7 +68,7 @@ public class testBuildingDeleteAction extends AbstractModelAndViewTests{
 		    service = EasyMock.createMock(BuildingService.class);
 		    action.setBuildingService(service);
 
-		    String[] buildingid = {"2" , "1" };
+		    String[] buildingid = {};
 		    action.setBuildingid(buildingid);
 	    	
 	    	EasyMock.expect(service.delete(EasyMock.anyObject())).andReturn(false);
@@ -84,4 +84,4 @@ public class testBuildingDeleteAction extends AbstractModelAndViewTests{
 
 
 }
-*/
+

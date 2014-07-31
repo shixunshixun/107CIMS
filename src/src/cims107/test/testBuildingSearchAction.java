@@ -1,5 +1,5 @@
 package cims107.test;
-/*
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,9 +29,9 @@ public class testBuildingSearchAction extends AbstractModelAndViewTests{
 
 	
 	@Test
-	public void testExectue() {
+	public void testExecute1() {
 		try{
-			System.out.println("The exectue method for BuildingSearchAction is to be tested....");
+			System.out.println("BuildingSearchAction:主场景");
 			
 			MockHttpServletRequest request = new MockHttpServletRequest();
 			MockHttpSession session = new MockHttpSession();
@@ -68,7 +68,48 @@ public class testBuildingSearchAction extends AbstractModelAndViewTests{
 		}	
 
 	}
+	
+	@Test
+	public void testExecute2() {
+		try{
+			System.out.println("BuildingSearchAction:返回空的数据列表");
+			
+			MockHttpServletRequest request = new MockHttpServletRequest();
+			MockHttpSession session = new MockHttpSession();
+			request.setSession(session);
+			request.setAttribute(HandlerMapping.INTROSPECT_TYPE_LEVEL_MAPPING, true);
+			
+		    action = new BuildingSearchAction();
+		    service = EasyMock.createMock(BuildingService.class);
+		    action.setBuildingService(service);
+	    	//List<Building> searchResult = new ArrayList<Building>();
+	    	
+	    	Building building1 = new Building();
+	    	building1.setBuildingCompus("TestingBuildingCompus");
+	    	building1.setBuildingDepartment("TestingBuildingDepartment");
+	    	building1.setBuildingFloorNum(2);
+	    	building1.setBuildingId(1);
+	    	building1.setBuildingName("TestingBuilding1");
+	    	building1.setBuildingSimpleName("TB1");
+	    	
+	    	//searchResult.add(building1);
+		    
+	    	action.setBuilding(building1);
+	    	
+	    	EasyMock.expect(service.find(EasyMock.anyString(),
+	    			EasyMock.anyString(),
+	    			EasyMock.anyString(),
+	    			EasyMock.anyString())).andReturn(null);
+	    	EasyMock.replay(service);
+	    	
+	    	assertEquals( "success" , action.execute() );
+		
+		}catch( Exception e ){
+			e.printStackTrace();
+		}	
 
-}*/
+	}
+
+}
 
 
