@@ -10,14 +10,14 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class PartitionDisableAction extends ActionSupport{
 	private PartitionService partitionService;
-	private String result;
+	private JSONObject result;
 	public String[] partitionid;
-	
-	public String getResult() {
+
+	public JSONObject getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONObject result) {
 		this.result = result;
 	}
 
@@ -47,7 +47,7 @@ public class PartitionDisableAction extends ActionSupport{
     	}
     	
     	partitionService.disableUpdate(partitionidlst);
-    	result = JSONObject.fromObject("{\"success\":1}").toString();
+    	result = JSONObject.fromObject("{\"success\":1}");
 		
 		return SUCCESS;
 	}

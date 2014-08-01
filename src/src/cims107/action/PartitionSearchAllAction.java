@@ -16,14 +16,13 @@ import cims107.service.PartitionService;
 
 public class PartitionSearchAllAction extends ActionSupport{
 	private PartitionService partitionService;
-	private String result;
-	
+	private JSONArray result;
 
-	public String getResult() {
+	public JSONArray getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONArray result) {
 		this.result = result;
 	}
 
@@ -134,10 +133,10 @@ public class PartitionSearchAllAction extends ActionSupport{
 	    		
 	    		ja.add(JSONObject.fromObject(p, jc1));
 	    	}
-	    	result = ja.toString();
+	    	result = ja;
     	}
     	else {
-    		result = "";
+    		result = null;
     	}
     	
     	return SUCCESS;

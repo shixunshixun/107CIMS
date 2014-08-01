@@ -17,7 +17,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 	public String compus;
 	
 	private Classroom classroom;
-    private String result;
+    private JSONObject result;
 	private ClassroomService classroomService;
 	BuildingService buildingService;
 	public BuildingService getBuildingService() {
@@ -44,11 +44,11 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 		this.classroom = classroom;
 	}
 
-	public String getResult() {
+	public JSONObject getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONObject result) {
 		this.result = result;
 	}
 
@@ -78,15 +78,15 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 				classroom.setBuilding(building);
 				try {
 			    	classroomService.add(classroom);
-			    	result = JSONObject.fromObject("{\"success\":1}").toString();
+			    	result = JSONObject.fromObject("{\"success\":1}");
 			    	return SUCCESS;
 				}
 				catch (Exception e) {
-					result = JSONObject.fromObject("{\"error\":\"新增失败\"}").toString();
+					result = JSONObject.fromObject("{\"error\":\"新增失败\"}");
 			    	return SUCCESS;
 				}
 			}
-			result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
+			result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}");
 			return "hint";
 		}
 	}
@@ -113,7 +113,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 							return false;
 						}
 					}
-					if(h[1] - h[0] == 1 || (h[1] > classroom.getClsMaxRow() && classroom.getClsMaxCol() > 0) || h[0] < 1) 
+					if(h[1] - h[0] != 1 || (h[1] > classroom.getClsMaxRow() && classroom.getClsMaxCol() > 0) || h[0] < 1) 
 						return false;
 				}
 				else {
@@ -135,7 +135,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 							return false;
 						}
 					}
-					if(h[1] - h[0] == 1 || (h[1] > classroom.getClsMaxCol() && classroom.getClsMaxCol() > 0) || h[0] < 1) 
+					if(h[1] - h[0] != 1 || (h[1] > classroom.getClsMaxCol() && classroom.getClsMaxCol() > 0) || h[0] < 1) 
 						return false;
 				}
 				else {

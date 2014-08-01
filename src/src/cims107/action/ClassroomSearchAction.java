@@ -16,7 +16,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 public class ClassroomSearchAction extends ActionSupport implements ModelDriven<Classroom>{
 	private Classroom classroom;
-    private String result;
+    private JSONArray result;
 	public int maxClassNum;
 	public int minClassNum;
 	public int maxExamNum;
@@ -42,11 +42,12 @@ public class ClassroomSearchAction extends ActionSupport implements ModelDriven<
 		this.classroom = classroom;
 	}
 
-	public String getResult() {
+
+	public JSONArray getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONArray result) {
 		this.result = result;
 	}
 
@@ -110,15 +111,17 @@ public class ClassroomSearchAction extends ActionSupport implements ModelDriven<
 		    		//c.getBuilding().setClassrooms(null);
 		    		ja.add(JSONObject.fromObject(c, jc));
 		    	}
-		    	result = ja.toString();
+		    	result = ja;
 	    	}
 	    	else {
-	    		result = "";
+	    		result = null;
 	    	}
 	    	
 	    	return SUCCESS;
 		}
-		result = JSONObject.fromObject("{\"hint\":\"Please check your search condition\"}").toString();
+		JSONArray ja = new JSONArray();
+		ja.add(JSONObject.fromObject("{\"hint\":\"Please check your search condition\"}"));
+		result = ja;
 		return "hint";
 	}
 	

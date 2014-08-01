@@ -17,7 +17,7 @@ import com.opensymphony.xwork2.ModelDriven;
 public class BuildingCreateAction extends ActionSupport implements ModelDriven<Building>{
 	
     private Building building;
-    private String result;
+    private JSONObject result;
     private BuildingService buildingService;
     
     @Override
@@ -43,7 +43,7 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
     	if (isValidate()) {
     		try {
 		    	if(buildingService.add(building)){
-		    		result = JSONObject.fromObject("{\"success\":1}").toString();
+		    		result = JSONObject.fromObject("{\"success\":1}");
 		    	   	return SUCCESS;
 		    	}
 		    	else{
@@ -52,19 +52,19 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
 		    	}
     		}
     		catch(Exception e) {
-    			result = JSONObject.fromObject("{\"error\":\"新增失败\"}").toString();
+    			result = JSONObject.fromObject("{\"error\":\"新增失败\"}");
 	    	   	return SUCCESS;
     		}
     	}
-    	result = JSONObject.fromObject("{\"hint\":\"The input is invalid\"}").toString();
+    	result = JSONObject.fromObject("{\"hint\":\"The input is invalid\"}");
     	return "hint";
-    }  
-   
-    public String getResult() {
+    } 
+
+	public JSONObject getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONObject result) {
 		this.result = result;
 	}
 

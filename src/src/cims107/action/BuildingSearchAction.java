@@ -15,7 +15,7 @@ import cims107.model.Building;
 public class BuildingSearchAction extends ActionSupport implements ModelDriven<Building>{
 	
 	private Building building;
-	private String result;   
+	private JSONArray result;   
     private BuildingService buildingService;  
       
     @Override
@@ -49,10 +49,10 @@ public class BuildingSearchAction extends ActionSupport implements ModelDriven<B
 	    		b.setClassrooms(null);
 	    		ja.add(JSONObject.fromObject(b));
 	    	}
-	    	result = ja.toString();
+	    	result = ja;
     	}
     	else {
-    		result = "";
+    		result = null;
     	}
     	
     	return SUCCESS;
@@ -67,11 +67,12 @@ public class BuildingSearchAction extends ActionSupport implements ModelDriven<B
 		this.building = building;
 	}
 
-	public String getResult() {
+	public JSONArray getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONArray result) {
 		this.result = result;
 	}
+
 }

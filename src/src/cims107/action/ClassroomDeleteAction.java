@@ -11,7 +11,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class ClassroomDeleteAction extends ActionSupport{
 	public String[] clsid;
-	private String result;
+	private JSONObject result;
 	
 	private ClassroomService classroomService;
 	
@@ -33,6 +33,15 @@ public class ClassroomDeleteAction extends ActionSupport{
 		this.clsid = clsid;
 	}
 	
+	
+	public JSONObject getResult() {
+		return result;
+	}
+
+	public void setResult(JSONObject result) {
+		this.result = result;
+	}
+
 	public String execute() {
 		List<Integer> clsidlst = new ArrayList<Integer>();
     	
@@ -43,7 +52,7 @@ public class ClassroomDeleteAction extends ActionSupport{
     	
     	try {
 	    	if(classroomService.delete(clsidlst)){
-	    		result = JSONObject.fromObject("{\"success\":1}").toString();
+	    		result = JSONObject.fromObject("{\"success\":1}");
 	    		return SUCCESS;
 	    	}
 	    	else {
@@ -52,7 +61,7 @@ public class ClassroomDeleteAction extends ActionSupport{
 	    	}
     	}
     	catch(Exception e) {
-    		result = JSONObject.fromObject("{\"error\":\"É¾³ýÊ§°Ü\"}").toString();
+    		result = JSONObject.fromObject("{\"error\":\"É¾³ýÊ§°Ü\"}");
     		return SUCCESS;
     	}
 	}

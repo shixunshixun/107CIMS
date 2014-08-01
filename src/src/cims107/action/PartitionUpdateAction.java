@@ -11,7 +11,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 public class PartitionUpdateAction extends ActionSupport implements ModelDriven<Partition>{
 	
-	private String result;
+	private JSONObject result;
 	private Partition partition;
 	private PartitionService partitionService;
 	
@@ -22,12 +22,12 @@ public class PartitionUpdateAction extends ActionSupport implements ModelDriven<
     	}
     	return partition;
     }
-	
-	public String getResult() {
+
+	public JSONObject getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONObject result) {
 		this.result = result;
 	}
 
@@ -53,7 +53,7 @@ public class PartitionUpdateAction extends ActionSupport implements ModelDriven<
 		if (isValidate()) {
 			try {
 				if(partitionService.update(partition)) {	
-					result = JSONObject.fromObject("{\"success\":1}").toString();
+					result = JSONObject.fromObject("{\"success\":1}");
 		    		return SUCCESS;
 		    	}
 		    	else {
@@ -62,11 +62,11 @@ public class PartitionUpdateAction extends ActionSupport implements ModelDriven<
 		    	}
 			}
 			catch (Exception e) {
-				result = JSONObject.fromObject("{\"error\":\"更新失败\"}").toString();
+				result = JSONObject.fromObject("{\"error\":\"更新失败\"}");
 	    		return SUCCESS;
 			}
 		}
-		result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
+		result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}");
 		return "hint";
 	}
 	

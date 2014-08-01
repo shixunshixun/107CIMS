@@ -14,7 +14,7 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 	private ClassroomService classroomService;
 	BuildingService buildingService;
 	private Classroom classroom;
-    private String result;
+    private JSONObject result;
     
     @Override
     public Classroom getModel() {
@@ -32,11 +32,11 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 		this.classroom = classroom;
 	}
 
-	public String getResult() {
+	public JSONObject getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONObject result) {
 		this.result = result;
 	}
 
@@ -68,15 +68,15 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 		if (isValidate()) {
 			try {
 				classroomService.update(classroom);
-				result = JSONObject.fromObject("{\"success\":1}").toString();
+				result = JSONObject.fromObject("{\"success\":1}");
 				return SUCCESS;
 			}
 			catch(Exception e) {
-				result = JSONObject.fromObject("{\"error\":\"更新失败\"}").toString();
+				result = JSONObject.fromObject("{\"error\":\"更新失败\"}");
 				return SUCCESS;
 			}
 		}
-		result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
+		result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}");
 		return "hint";
 	}
 	
@@ -101,7 +101,7 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 							return false;
 						}
 					}
-					if(h[1] - h[0] == 1 || h[1] > classroom.getClsMaxRow() || h[0] < 1) 
+					if(h[1] - h[0] != 1 || h[1] > classroom.getClsMaxRow() || h[0] < 1) 
 						return false;
 				}
 				else {
@@ -123,7 +123,7 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 							return false;
 						}
 					}
-					if(h[1] - h[0] == 1 || h[1] > classroom.getClsMaxCol() || h[0] < 1) 
+					if(h[1] - h[0] != 1 || h[1] > classroom.getClsMaxCol() || h[0] < 1) 
 						return false;
 				}
 				else {

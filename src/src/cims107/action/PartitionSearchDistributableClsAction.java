@@ -18,7 +18,7 @@ import com.opensymphony.xwork2.ModelDriven;
 public class PartitionSearchDistributableClsAction extends ActionSupport implements ModelDriven<Partition>{
 	
 	private PartitionService partitionService;
-	private String result;
+	private JSONArray result;
 	private Partition partition;
 	private ClassroomService classroomService;
 	
@@ -49,13 +49,11 @@ public class PartitionSearchDistributableClsAction extends ActionSupport impleme
 		this.classroomService = classroomService;
 	}
 
-
-
-	public String getResult() {
+	public JSONArray getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONArray result) {
 		this.result = result;
 	}
 
@@ -139,14 +137,16 @@ public class PartitionSearchDistributableClsAction extends ActionSupport impleme
 		    		//c.getBuilding().setClassrooms(null);
 		    		ja.add(JSONObject.fromObject(c, jc));
 		    	}
-		    	result = ja.toString();
+		    	result = ja;
 	    	}
 	    	else {
-	    		result = "";
+	    		result = null;
 	    	}
 	    	return SUCCESS;
     	}
-    	result = JSONObject.fromObject("{\"hint\":\"Please check your search condition\"}").toString();
+    	JSONArray ja = new JSONArray();
+    	ja.add(JSONObject.fromObject("{\"hint\":\"Please check your search condition\"}"));
+    	result = ja;
     	return "hint";
     }
     

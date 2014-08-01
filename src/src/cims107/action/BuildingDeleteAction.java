@@ -16,7 +16,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class BuildingDeleteAction extends ActionSupport{
 	
 	public String[] buildingid;
-	private String result;  
+	private JSONObject result;  
 	
     private BuildingService buildingService;  
       
@@ -28,13 +28,13 @@ public class BuildingDeleteAction extends ActionSupport{
     public void setBuildingService(BuildingService buildingService)  
     {  
         this.buildingService = buildingService;  
-    }      
-    
-    public String getResult() {
+    }   
+
+	public JSONObject getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONObject result) {
 		this.result = result;
 	}
 
@@ -59,7 +59,7 @@ public class BuildingDeleteAction extends ActionSupport{
     	try {
 	    	if(buildingService.delete(buildingidlst)){
 	    		//ja.add(JSONObject.fromObject(1));
-	    		result = JSONObject.fromObject("{\"success\":1}").toString();
+	    		result = JSONObject.fromObject("{\"success\":1}");
 	    		return SUCCESS;
 	    	}
 	    	else {
@@ -68,7 +68,7 @@ public class BuildingDeleteAction extends ActionSupport{
 	    	}
     	}
     	catch(Exception e) {
-    		result = JSONObject.fromObject("{\"error\":\"É¾³ýÊ§°Ü\"}").toString();
+    		result = JSONObject.fromObject("{\"error\":\"É¾³ýÊ§°Ü\"}");
     		return SUCCESS;
     	}
     }

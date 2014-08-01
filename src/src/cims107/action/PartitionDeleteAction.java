@@ -12,13 +12,13 @@ import cims107.service.PartitionService;
 public class PartitionDeleteAction extends ActionSupport{
 	private PartitionService partitionService;
 	public String[] partitionid;
-	private String result;
-	
-	public String getResult() {
+	private JSONObject result;
+
+	public JSONObject getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONObject result) {
 		this.result = result;
 	}
 
@@ -49,7 +49,7 @@ public class PartitionDeleteAction extends ActionSupport{
     	
     	try {
 	    	if(partitionService.delete(partitionidlst)){
-	    		result = JSONObject.fromObject("{\"success\":1}").toString();
+	    		result = JSONObject.fromObject("{\"success\":1}");
 	    		return SUCCESS;
 	    	}
 	    	else {
@@ -58,7 +58,7 @@ public class PartitionDeleteAction extends ActionSupport{
 	    	}
     	}
     	catch(Exception e) {
-    		result = JSONObject.fromObject("{\"error\":\"É¾³ýÊ§°Ü\"}").toString();
+    		result = JSONObject.fromObject("{\"error\":\"É¾³ýÊ§°Ü\"}");
     		return SUCCESS;
     	}
     }

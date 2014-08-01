@@ -22,7 +22,7 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
 	public String compus;
 	public String serialnumber;
 	
-	private String result;
+	private JSONObject result;
 	private Partition partition;
 	private PartitionService partitionService;
 	BuildingService buildingService;
@@ -35,12 +35,12 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
     	}
     	return partition;
     }
-	
-	public String getResult() {
+
+	public JSONObject getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONObject result) {
 		this.result = result;
 	}
 
@@ -119,16 +119,16 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
 		    	partition.getClassroom().setBuilding(building);
 		    	
 		    	partitionService.add(partition);
-		    	result = JSONObject.fromObject("{\"success\":1}").toString();
+		    	result = JSONObject.fromObject("{\"success\":1}");
 		    	
 		    	return SUCCESS;
 	    	}
 	    	catch (Exception e) {
-	    		result = JSONObject.fromObject("{\"error\":\"新增失败\"}").toString();
+	    		result = JSONObject.fromObject("{\"error\":\"新增失败\"}");
 		    	return SUCCESS;
 	    	}
     	}
-    	result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}").toString();
+    	result = JSONObject.fromObject("{\"hint\":\"Please check your input\"}");
     	return "hint";
     }
     

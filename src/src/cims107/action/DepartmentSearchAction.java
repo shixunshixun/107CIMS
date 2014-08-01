@@ -14,7 +14,7 @@ public class DepartmentSearchAction extends ActionSupport implements ModelDriven
 	private DepartmentService departmentService;
 	
 	private Department department;
-	private String result;
+	private JSONArray result;
 	
 	public DepartmentSearchAction()  
     {  
@@ -28,12 +28,10 @@ public class DepartmentSearchAction extends ActionSupport implements ModelDriven
     	return department;
     }
 	
-	
-
-	public String getResult() {
+	public JSONArray getResult() {
 		return result;
 	}
-	public void setResult(String result) {
+	public void setResult(JSONArray result) {
 		this.result = result;
 	}
 	public void setDepartmentService(DepartmentService departmentService)  
@@ -48,10 +46,10 @@ public class DepartmentSearchAction extends ActionSupport implements ModelDriven
     	d = departmentService.find(department.getDepartmentId());
     	if (d != null) {
     		ja.add(JSONObject.fromObject(d));
-    		result = ja.toString();
+    		result = ja;
     	}
     	else
-    		result = "";
+    		result = null;
     	return SUCCESS;
     }
 }

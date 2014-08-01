@@ -9,15 +9,15 @@ import cims107.service.PartitionService;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class PartitionEnableAction extends ActionSupport{
-	private String result;
+	private JSONObject result;
 	private PartitionService partitionService;
 	public String[] partitionid;
-	
-	public String getResult() {
+
+	public JSONObject getResult() {
 		return result;
 	}
 
-	public void setResult(String result) {
+	public void setResult(JSONObject result) {
 		this.result = result;
 	}
 
@@ -47,7 +47,7 @@ public class PartitionEnableAction extends ActionSupport{
     	}
     	
     	partitionService.enabeUpdate(partitionidlst);
-    	result = JSONObject.fromObject("{\"success\":1}").toString();
+    	result = JSONObject.fromObject("{\"success\":1}");
 		
 		return SUCCESS;
 	}
