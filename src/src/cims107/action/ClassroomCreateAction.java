@@ -7,6 +7,7 @@ import cims107.model.Building;
 import cims107.model.Classroom;
 import cims107.service.BuildingService;
 import cims107.service.ClassroomService;
+import cims107.service.SeatManageService;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -19,6 +20,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 	private Classroom classroom;
     private JSONObject result;
 	private ClassroomService classroomService;
+	private SeatManageService seatmanageService;
 	BuildingService buildingService;
 	public BuildingService getBuildingService() {
 		return buildingService;
@@ -36,6 +38,14 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 		this.buildingService = buildingService;
 	}
 	
+	public SeatManageService getSeatmanageService() {
+		return seatmanageService;
+	}
+
+	public void setSeatmanageService(SeatManageService seatmanageService) {
+		this.seatmanageService = seatmanageService;
+	}
+
 	public Classroom getClassroom() {
 		return classroom;
 	}
@@ -78,6 +88,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 				classroom.setBuilding(building);
 				try {
 			    	classroomService.add(classroom);
+			    	seatmanageService.add(classroom.getClsId(), classroom.getClsMaxRow(), classroom.getClsMaxCol());
 			    	result = JSONObject.fromObject("{\"success\":1}");
 			    	return SUCCESS;
 				}

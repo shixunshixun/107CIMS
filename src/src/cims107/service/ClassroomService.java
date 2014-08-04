@@ -103,6 +103,10 @@ public class ClassroomService {
     	return classroomDao.find();
     }
     
+    public Classroom find(int clsid) {
+    	return classroomDao.find(clsid);
+    }
+    
     public void add(Classroom classroom) {
     	classroomDao.add(classroom);
     }

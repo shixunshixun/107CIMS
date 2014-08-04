@@ -93,6 +93,13 @@
 			</key>
 			<one-to-many class="cims107.model.Partition"/>
 		</set>
+		
+		<set name="seats" cascade="all">
+			<key>
+			<column name="seatClsId" length="8"/>
+			</key>
+			<one-to-many class="cims107.model.Seat"/>
+		</set>
         
     </class>
 </hibernate-mapping>

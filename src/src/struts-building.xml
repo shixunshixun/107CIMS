@@ -31,9 +31,7 @@
             <!-- ajax与struts标签做对应转换 -->
             <result name="buildingsearch">/error.json</result> 
         </global-results>  
-    
-    	
-            
+        
         <action name="BuildingSearch" class="BuildingSearchAction">  
   	
             <!-- 返回类型为json 在sjon-default中定义 -->  
@@ -74,6 +72,18 @@
             </result>  
             <interceptor-ref name="mydefault" />
         </action> 
+        <action name="BuildingImport" class="BuildingImportAction">  
+  
+            <!-- 返回类型为json 在sjon-default中定义 -->  
+            <result type="json">  
+  
+                <!-- root的值对应要返回的值的属性 -->  
+                <!-- 这里的result值即是 对应action中的 result -->  
+                <param name="root">result</param>  
+            </result>  
+            <interceptor-ref name="mydefault" />
+        </action> 
+        
         <action name="BuildingUpdate" class="BuildingUpdateAction">  
   
             <!-- 返回类型为json 在sjon-default中定义 -->  

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.sf.json.JSONObject;
+
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -26,6 +28,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class ClassroomImportAction extends ActionSupport{
 	private File excelFile;
     private String excelFileFileName;
+    private JSONObject result;
     
     private ClassroomService classroomService;  
     BuildingService buildingService;
@@ -48,7 +51,15 @@ public class ClassroomImportAction extends ActionSupport{
         this.classroomService = classroomService;  
     }  
      
-    public File getExcelFile() {  
+    public JSONObject getResult() {
+		return result;
+	}
+
+	public void setResult(JSONObject result) {
+		this.result = result;
+	}
+
+	public File getExcelFile() {  
         return excelFile;  
     }  
   
@@ -77,7 +88,7 @@ public class ClassroomImportAction extends ActionSupport{
     public String execute() throws FileNotFoundException,IOException 
     {
     	try {
-	    	Workbook book = createWorkBook(new FileInputStream(excelFile));  
+	    	Workbook book = createWorkBook(new FileInputStream(excelFileFileName));  
 	        //book.getNumberOfSheets();  判断Excel文件有多少个sheet  
 	        Sheet sheet =  book.getSheetAt(0);  
 	        List<Classroom> classroomlst = new ArrayList<Classroom>();
@@ -130,10 +141,13 @@ public class ClassroomImportAction extends ActionSupport{
 	        	Classroom c = classroomlst.get(i);
 	        	classroomService.add(c);
 	        }
+	        result = JSONObject.fromObject("{\"success\":1}");
         
     	}catch (FileNotFoundException e) {
         	// TODO Auto-generated catch block
         	e.printStackTrace();
+        	result = JSONObject.fromObject("{\"error\":\"教室导入失败\"}");
+        	return SUCCESS;
         }
         
         return SUCCESS;

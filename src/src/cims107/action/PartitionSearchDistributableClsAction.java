@@ -86,20 +86,21 @@ public class PartitionSearchDistributableClsAction extends ActionSupport impleme
 	    			maxclassnum, minclassnum, maxexamnum, minexamnum, 
 	    			partition.getPartitionBeginWeek(), partition.getPartitionEndWeek(), partition.getPartitionIsUsed());
 	    	
-	    	Iterator<Classroom> citer = classroomlst.iterator();
-	    	Iterator<Partition> piter = partitionlst.iterator();
 	    	
-	    	while (citer.hasNext()) {
-	    		Classroom tempc = citer.next();
-	    		while (piter.hasNext()) {
-	    			Partition tempp = piter.next();
-	    			if (tempc.getClsId() == tempp.getClassroom().getClsId()) {
-	    				citer.remove();
-	    				break;
-	    			}
-	    		}
-	    	}
 	    	if(classroomlst != null) {
+	    		Iterator<Classroom> citer = classroomlst.iterator();
+		    	Iterator<Partition> piter = partitionlst.iterator();
+		    	
+		    	while (citer.hasNext()) {
+		    		Classroom tempc = citer.next();
+		    		while (piter.hasNext()) {
+		    			Partition tempp = piter.next();
+		    			if (tempc.getClsId() == tempp.getClassroom().getClsId()) {
+		    				citer.remove();
+		    				break;
+		    			}
+		    		}
+		    	}
 				JSONArray ja = new JSONArray();
 		    	JsonConfig jc = new JsonConfig();
 		    	jc.registerJsonValueProcessor(Building.class, new JsonValueProcessor() {

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>  
+<!DOCTYPE hibernate-mapping PUBLIC   
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">  
+<hibernate-mapping>  
+	<!-- catalog指定数据库  -->
+    <class name="cims107.model.Seat" table="cims_seat" catalog="test">
+    
+        <id name="seatClsId" type="java.lang.Integer">
+            <column name="seatClsId" />
+            <generator class="native" />
+        </id>
+        
+        <property name="seatMaxRow" type="java.lang.Integer">
+            <column name="seatMaxRow" length="8" />
+        </property>
+        
+        <property name="seatMaxCol" type="java.lang.Integer">
+            <column name="seatMaxCol" length="8" />
+        </property>
+        
+        <property name="seatProperty" type="java.lang.Boolean">
+            <column name="seatProperty" length="1" />
+        </property>
+        
+        <many-to-one name="classroom" class="cims107.model.Classroom">
+			<column name="seatClsId" length="8" />
+		</many-to-one>
+        
+    </class>
+</hibernate-mapping>

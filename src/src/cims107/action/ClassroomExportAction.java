@@ -1,5 +1,6 @@
 package cims107.action;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +83,15 @@ public class ClassroomExportAction extends ActionSupport{
     	
     	searchResult = classroomService.find(clsidlst);
     	//buildingService.find(searchResult.get(0).getClsBuildingId());
-    	
+    	try {
+	    	response.setContentType("application/octet-stream;charset=iso-8859-1");  
+	        response.setHeader("Content-Disposition", "attachment;filename="  
+	                +java.net.URLEncoder.encode(this.filename, "UTF-8"));
+	        response.addHeader("Pargam", "no-cache");  
+	        response.addHeader("Cache-Control", "no-cache");  
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		try {
 			Workbook book = new HSSFWorkbook();
 			Sheet sheet = book.createSheet("导出信息");
@@ -139,14 +148,14 @@ public class ClassroomExportAction extends ActionSupport{
     			row.createCell(20).setCellValue(searchResult.get(i).getClsAvailableSeatNum());
         	}
 			
-			book.write(response.getOutputStream());
+			try {
+				book.write(response.getOutputStream());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 			
 			//直接返回Excel，暂时未测试
-			response.setContentType("application/octet-stream;charset=iso-8859-1");  
-            response.setHeader("Content-Disposition", "attachment;filename="  
-                    +java.net.URLEncoder.encode(this.filename, "UTF-8"));
-            response.addHeader("Pargam", "no-cache");  
-            response.addHeader("Cache-Control", "no-cache");  
+			
             response.getOutputStream().flush();
             response.getOutputStream().close();
         } catch (Exception e) {

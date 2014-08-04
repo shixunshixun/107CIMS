@@ -25,6 +25,13 @@ public class Classroom {
 	private String clsHCorridorLocate;
 	private Building building;
 	private Set<Partition> partitions;
+	private Set<Seat> seats;
+	public Set<Seat> getSeats() {
+		return seats;
+	}
+	public void setSeats(Set<Seat> seats) {
+		this.seats = seats;
+	}
 	public Set<Partition> getPartitions() {
 		return partitions;
 	}

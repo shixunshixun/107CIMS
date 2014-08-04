@@ -19,6 +19,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     <bean id="ClassroomCreateAction" class="cims107.action.ClassroomCreateAction" scope="prototype">  
         <property name="classroomService" ref="classroomService" />  
          <property name="buildingService" ref="buildingService" />
+         <property name="seatmanageService" ref="seatmanageService" />
     </bean> 
     
     <bean id="ClassroomDeleteAction" class="cims107.action.ClassroomDeleteAction" scope="prototype">  

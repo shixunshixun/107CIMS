@@ -82,6 +82,16 @@ public class BuildingExportAction extends ActionSupport implements ServletRespon
     	}
     	searchResult = buildingService.find(buildingidlst);
     	
+    	try {
+	    	response.setContentType("application/octet-stream;charset=iso-8859-1");  
+	        response.setHeader("Content-Disposition", "attachment;filename="  
+	                +java.net.URLEncoder.encode(this.filename, "UTF-8"));
+	        response.addHeader("Pargam", "no-cache");  
+	        response.addHeader("Cache-Control", "no-cache"); 
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+        
 		try {
 			Workbook book = new HSSFWorkbook();
 			Sheet sheet = book.createSheet("导出信息");
@@ -102,15 +112,14 @@ public class BuildingExportAction extends ActionSupport implements ServletRespon
     			row.createCell(3).setCellValue(searchResult.get(i).getBuildingDepartment());
     			row.createCell(4).setCellValue(searchResult.get(i).getBuildingFloorNum());
         	}
-			
-			book.write(response.getOutputStream());
+			try {
+				book.write(response.getOutputStream());
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 			
 			//直接返回Excel，暂时未测试
-			response.setContentType("application/octet-stream;charset=iso-8859-1");  
-            response.setHeader("Content-Disposition", "attachment;filename="  
-                    +java.net.URLEncoder.encode(this.filename, "UTF-8"));
-            response.addHeader("Pargam", "no-cache");  
-            response.addHeader("Cache-Control", "no-cache");  
+			 
             response.getOutputStream().flush();
             response.getOutputStream().close();
         } catch (Exception e) {
