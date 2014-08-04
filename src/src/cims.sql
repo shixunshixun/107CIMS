@@ -69,6 +69,7 @@ foreign key (pClsId) references cims_cls(clsId)
 ) DEFAULT CHARSET=gbk;
 
 CREATE TABLE cims_seat(
+seatId int(8) not null primary key auto_increment,
 seatClsId int(8) not null,
 seatRow int(8) not null,
 seatCol int(8) not null,

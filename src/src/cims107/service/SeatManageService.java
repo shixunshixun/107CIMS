@@ -30,11 +30,11 @@ public class SeatManageService {
 		seatmanageDao.updateSeatState(s, state);
 	}
     
-    public void add(int clsid, int maxrow, int maxcol) {
+    public void add(Classroom cls, int maxrow, int maxcol) {
     	if (maxrow != 0 && maxcol != 0)
-    		seatmanageDao.add(clsid, maxrow, maxcol);
+    		seatmanageDao.add(cls, maxrow, maxcol);
     	else
-    		seatmanageDao.add(clsid, 8, 8);
+    		seatmanageDao.add(cls, 8, 8);
     }
     public void delete(int clsid) {
     	seatmanageDao.delete(clsid);

@@ -61,7 +61,15 @@ public class ClassroomExportAction extends ActionSupport{
     {  
         this.classroomService = classroomService;  
     }
-    public void setServletResponse(HttpServletResponse response) {  
+    public ClassroomService getClassroomService() {
+		return classroomService;
+	}
+
+	public void setClassroomService(ClassroomService classroomService) {
+		this.classroomService = classroomService;
+	}
+
+	public void setServletResponse(HttpServletResponse response) {  
         this.response = response;  
     }
 

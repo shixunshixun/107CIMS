@@ -119,7 +119,7 @@ public class PartitionSearchDistributableClsAction extends ActionSupport impleme
 		    				b.setClassrooms(null);
 		    				//System.out.println(JSONObject.fromObject(b).toString());
 		    				//System.out.println(b.getBuildingCompus());
-		    				return JSONObject.fromObject(c).toString();
+		    				return JSONObject.fromObject(c);
 		    			}
 		    			return value;
 		    		}

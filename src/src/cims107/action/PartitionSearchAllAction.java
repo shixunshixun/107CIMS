@@ -101,7 +101,7 @@ public class PartitionSearchAllAction extends ActionSupport{
 	    		    				d.setClassrooms(null);
 	    		    				//System.out.println(JSONObject.fromObject(b).toString());
 	    		    				//System.out.println(b.getBuildingCompus());
-	    		    				return JSONObject.fromObject(e).toString();
+	    		    				return JSONObject.fromObject(e);
 	    		    			}
 	    		    			return value;
 	    		    		}
@@ -113,7 +113,7 @@ public class PartitionSearchAllAction extends ActionSupport{
 	    		            }  
 	    		    	});
 	    		    	
-	    				return JSONObject.fromObject(c, jc).toString();
+	    				return JSONObject.fromObject(c, jc);
 	    			}
 	    			return value;
 	    		}

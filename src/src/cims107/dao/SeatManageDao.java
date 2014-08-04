@@ -49,14 +49,14 @@ public class SeatManageDao {
 		try{
 			tx = session.beginTransaction();		
 			
-			Seat mys = (Seat) session.get(Seat.class, s.getSeatClsId());
+			Seat mys = (Seat) session.get(Seat.class, s.getSeatId());
 			
 			mys.setSeatProperty(state);
 			session.update(mys);
 			
 			tx.commit();
 			log.info(ActionContext.getContext().getSession().get("username").toString() + 
-					" update seat table of classroom " + s.getSeatClsId());
+					" update seat table of classroom " + s.getClassroom().getClsId());
 		}
 		catch(Exception e) {
 			if(tx != null)	tx.rollback();
@@ -66,7 +66,7 @@ public class SeatManageDao {
 			session.close();
 		}
 	}
-	public void add(int clsid, int maxrow, int maxcol) {
+	public void add(Classroom cls, int maxrow, int maxcol) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
 		
@@ -76,9 +76,9 @@ public class SeatManageDao {
 			for (int i = 1; i <= maxrow; i ++) {
 				for (int j = 1; j <= maxcol; j ++) {
 					Seat s = new Seat();
-					s.setSeatClsId(clsid);
 					s.setSeatRow(i);
 					s.setSeatCol(i);
+					s.setClassroom(cls);
 					s.setSeatProperty(true);
 					
 					session.save(s);
@@ -87,7 +87,7 @@ public class SeatManageDao {
 			
 			tx.commit();
 			log.info(ActionContext.getContext().getSession().get("username").toString() + 
-					" create seattable of classroom  " + clsid);
+					" create seattable of classroom  " + cls.getClsId());
 		}
 		catch(Exception e) {
 			if(tx != null)	tx.rollback();

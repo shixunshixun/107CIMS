@@ -88,7 +88,7 @@ public class ClassroomCreateAction extends ActionSupport implements ModelDriven<
 				classroom.setBuilding(building);
 				try {
 			    	classroomService.add(classroom);
-			    	seatmanageService.add(classroom.getClsId(), classroom.getClsMaxRow(), classroom.getClsMaxCol());
+			    	seatmanageService.add(classroom, classroom.getClsMaxRow(), classroom.getClsMaxCol());
 			    	result = JSONObject.fromObject("{\"success\":1}");
 			    	return SUCCESS;
 				}

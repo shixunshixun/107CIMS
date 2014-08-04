@@ -6,8 +6,8 @@
 	<!-- catalog指定数据库  -->
     <class name="cims107.model.Seat" table="cims_seat" catalog="test">
     
-        <id name="seatClsId" type="java.lang.Integer">
-            <column name="seatClsId" />
+        <id name="seatId" type="java.lang.Integer">
+            <column name="seatId" />
             <generator class="native" />
         </id>
         

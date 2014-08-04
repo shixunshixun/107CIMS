@@ -1,16 +1,16 @@
 package cims107.model;
 
 public class Seat {
-	private int seatClsId;
+	private int seatId;
 	private int seatRow;
 	private int seatCol;
 	private boolean seatProperty;
 	private Classroom classroom;
-	public int getSeatClsId() {
-		return seatClsId;
+	public int getSeatId() {
+		return seatId;
 	}
-	public void setSeatClsId(int seatClsId) {
-		this.seatClsId = seatClsId;
+	public void setSeatId(int seatId) {
+		this.seatId = seatId;
 	}
 	public int getSeatRow() {
 		return seatRow;
@@ -23,6 +23,12 @@ public class Seat {
 	}
 	public void setSeatCol(int seatCol) {
 		this.seatCol = seatCol;
+	}
+	public Classroom getClassroom() {
+		return classroom;
+	}
+	public void setClassroom(Classroom classroom) {
+		this.classroom = classroom;
 	}
 	public boolean isSeatProperty() {
 		return seatProperty;

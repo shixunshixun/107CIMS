@@ -126,7 +126,7 @@ public class PartitionSearchAction extends ActionSupport implements ModelDriven<
 		    		    				d.setClassrooms(null);
 		    		    				//System.out.println(JSONObject.fromObject(b).toString());
 		    		    				//System.out.println(b.getBuildingCompus());
-		    		    				return JSONObject.fromObject(e).toString();
+		    		    				return JSONObject.fromObject(e);
 		    		    			}
 		    		    			return value;
 		    		    		}
@@ -138,7 +138,7 @@ public class PartitionSearchAction extends ActionSupport implements ModelDriven<
 		    		            }  
 		    		    	});
 		    		    	
-		    				return JSONObject.fromObject(c, jc).toString();
+		    				return JSONObject.fromObject(c, jc);
 		    			}
 		    			return value;
 		    		}
