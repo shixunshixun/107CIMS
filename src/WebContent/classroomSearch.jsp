@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       		<div id="result"></div>
         		<button href="#clsnew" data-toggle="modal" class="btn btn-primary">新增</button>
         		<button id="del" data-toggle="modal" class="btn btn-primary">删除</button>
-
+				<button href="#importdiv" style="height:30px" data-toggle="modal" class="btn btn-primary">导入</button>
     		<div class="modal hide" id="clsnew">
     			<form name="createForm" id="createform">
       			<div class="modal-header">
@@ -385,8 +385,83 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			<button id="detail" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
       			</div>
     		</div> 	
+    		<div class="modal hide" id="clsseat">
+      			<div class="modal-header">
+        			<a href="#" class="close" data-dismiss="modal">×</a>
+        			<h4>座位信息表</h4>
+      			</div>
+				<div class="modal-body" style="text-align: left;">
+					<table id="getseat"></table>
+				</div>
+				<div class="modal-footer">
+        			<button id="seat" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+      			</div>
+			</div>
+    		<div class="modal hide" id="importdiv">
+      		<form name="importForm" id="importform" method="post" enctype="multipart/form-data">
+      			<div class="modal-header">
+        			<a href="#" class="close" data-dismiss="modal">×</a>
+        			<h4>导入教室信息</h4>
+      			</div>
+  				<input type="file" id="imp" name="excelFile"/>
+  				<button id="import" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+<!--   				<input type="button" value="确定" type="submit" onclick="importform.action='BuildingImport';importform.submit();" /> -->
+			</form>
+			</div>
     </div>
     <script type="text/javascript">
+	    function seatclassroom(i,maxrow,maxcol,vcorridorlocate,hcorridorlocate){
+			var str="<tbody>";
+			var k=0;
+			var l=maxrow;
+			var v=vcorridorlocate.replace(/,[0-9]+;/g," ");
+			v=v.replace(/,[0-9]+/g," ");
+			var h=hcorridorlocate.replace(/,[0-9]+;/g," ");
+			h=h.replace(/,[0-9]+/g," ");
+			for(var i=0;i<maxcol;i++){
+				var patt1=new RegExp(i);
+				if(patt1.exec(h)!=null){
+					l++;
+					str+="<tr bgcolor=\"gray\"><td colspan=\""+l+"\">&nbsp;</td></tr>";
+				}
+				str+="<tr>";
+				for(var j=0;j<maxrow;j++){
+					var patt2=new RegExp(j);
+					if(patt2.exec(v)!=null){
+						str+="<td bgcolor=\"gray\">&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+					}
+					k++;
+					str+="<td><button class=\"btn btn-primary\" style=\"width:80px;background:blue;\" id=\"seat"+k+"\" onclick=\"changecolor(this.id,i,k)\">座位"+k+"</button></td>";
+				}
+				str+="</tr>"
+			}
+			document.getElementById("getseat").innerHTML=str;
+		}
+		
+		function changecolor(bid,clsid,k){
+			if(document.getElementById(bid).style.background=="blue"){
+				document.getElementById(bid).style.background="black";
+				var state = "0";
+			}
+			else if(document.getElementById(bid).style.background=="black"){
+				document.getElementById(bid).style.background="blue";
+				var state = "1";
+			}
+			$.ajax({
+				url:"/cims107/SeatManage",
+				async:false,
+				data: "clsid=clsid&seatNum=k&state=state",
+				dataType:"json",
+				success: function(result) 
+    			{
+					if(result.success != null)
+						alert(result.success);
+					if(result.errormsg != null)
+						alert(result.errormsg);
+    			}}
+			);
+		}
+
 	    function detailclassroom(buildingname,serialnum,type,shape,classnum,examnum,seatnum,availableseatnum,maxrow,maxcol,vcorridorlocate,hcorridorlocate,floor,isamphi,usage,buildingdepartment,isused) {
 			document.getElementById("detailbuildingname").innerHTML=buildingname;
 			document.getElementById("detailserialnumber").innerHTML=serialnum;
@@ -469,10 +544,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#updateseatnum").val(seatnum);
 			$("#updateavailableseatnum").val(availableseatnum);
 			$("#updateclslocation").val(location);
-			$("#updateclsisamphi").val(isamphi);
-			$("#updateclshasmicrophone").val(hasmicrophone);
+			$("#updateclsisamphi option:selected").val(isamphi);
+			$("#updateclshasmicrophone option:selected").val(hasmicrophone);
 			$("#updateclsusage").val(usage);
-			$("#updateclsisused").val(isused);
+			$("#updateclsisused option:selected").val(isused);
     	}
 //     	function getchange() {
 //     		$("#updatebuildingname").change($(this).val());
@@ -503,25 +578,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					function(data){
 						if (data.length!=0)
 						{
-							var classroom = jQuery.parseJSON(data)
+						//	var classroom = jQuery.parseJSON(data);
 							
-							$.each(classroom,function(i,classroom){
-								if (classroom.clsIsAmphi==1)
+							$.each(data,function(i,data){
+								if (data.clsIsAmphi==1)
 									var isAmphi = "是";
-								if (classroom.clsIsAmphi==2)
+								if (data.clsIsAmphi==2)
 									var isAmphi = "否";
-								if (classroom.clsHasMicrophone==1)
+								if (data.clsHasMicrophone==1)
 									var hasMicrophone = "有话筒";
-								if (classroom.clsHasMicrophone==2)
+								if (data.clsHasMicrophone==2)
 									var hasMicrophone = "无话筒";
-								if (classroom.clsIsUsed==1)
+								if (data.clsIsUsed==1)
 									var isUsed = "启用";
-								if (classroom.clsIsUsed==2)
+								if (data.clsIsUsed==2)
 									var isUsed = "停用";
 								str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"clsid\" value="
-										+classroom.clsId+"></td><td>"+classroom.building.buildingName+"</td><td>"+classroom.clsSerialNumber+"</td><td>"+classroom.clsType+"</td><td>"+classroom.building.buildingDepartment+"</td><td>"+classroom.clsClassNum+"</td><td>"+classroom.clsSeatNum+"</td><td>"+classroom.clsAvailableSeatNum+"</td><td>"+classroom.clsFloor+"</td><td>"+isUsed+"</td><td><button href=\"#clsupdate\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updateclassroom("+classroom.clsId+",'"+classroom.clsSerialNumber+"','"+classroom.clsType+"','"+classroom.clsShape+"',"+classroom.clsClassNum+","+classroom.clsExamNum+","+classroom.clsSeatNum+","+classroom.clsAvailableSeatNum+","+classroom.clsMaxRow+","+classroom.clsMaxCol+",'"+classroom.clsVCorridorLocate+"','"+classroom.clsHCorridorLocate+"',"+classroom.clsFloor+",'"+isAmphi+"','"+classroom.clsUsage+"',"+classroom.clsArea+",'"+classroom.clsLocation+"','"+hasMicrophone+"','"+isUsed+"')\">修改</button></td><td><button href=\"#clsdetail\" id=\"detailid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"detailclassroom('"+classroom.building.buildingName+"','"+classroom.clsSerialNumber+"','"+classroom.clsType+"','"+classroom.clsShape+"',"+classroom.clsClassNum+","+classroom.clsExamNum+","+classroom.clsSeatNum+","+classroom.clsAvailableSeatNum+","+classroom.clsMaxRow+","+classroom.clsMaxCol+",'"+classroom.clsVCorridorLocate+"','"+classroom.clsHCorridorLocate+"',"+classroom.clsFloor+",'"+isAmphi+"','"+classroom.clsUsage+"','"+classroom.building.buildingDepartment+"','"+isUsed+"')\">详细信息</button></td></tr>");
+										+data.clsId+"></td><td>"+data.building.buildingName+"</td><td>"+data.clsSerialNumber+"</td><td>"+data.clsType+"</td><td>"+data.building.buildingDepartment+"</td><td>"+data.clsClassNum+"</td><td>"+data.clsSeatNum+"</td><td>"+data.clsAvailableSeatNum+"</td><td>"+data.clsFloor+"</td><td>"+isUsed+"</td><td><button href=\"#clsupdate\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updateclassroom("+data.clsId+",'"+data.clsSerialNumber+"','"+data.clsType+"','"+data.clsShape+"',"+data.clsClassNum+","+data.clsExamNum+","+data.clsSeatNum+","+data.clsAvailableSeatNum+","+data.clsMaxRow+","+data.clsMaxCol+",'"+data.clsVCorridorLocate+"','"+data.clsHCorridorLocate+"',"+data.clsFloor+",'"+isAmphi+"','"+data.clsUsage+"',"+data.clsArea+",'"+data.clsLocation+"','"+hasMicrophone+"','"+isUsed+"')\">修改</button></td><td><button href=\"#clsdetail\" id=\"detailid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"detailclassroom('"+data.building.buildingName+"','"+data.clsSerialNumber+"','"+data.clsType+"','"+data.clsShape+"',"+data.clsClassNum+","+data.clsExamNum+","+data.clsSeatNum+","+data.clsAvailableSeatNum+","+data.clsMaxRow+","+data.clsMaxCol+",'"+data.clsVCorridorLocate+"','"+data.clsHCorridorLocate+"',"+data.clsFloor+",'"+isAmphi+"','"+data.clsUsage+"','"+data.building.buildingDepartment+"','"+isUsed+"')\">详细信息</button></td><td><button href=\"#clsseat\" id=\"seatid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"seatclassroom("+data.clsId+","+data.clsMaxRow+","+data.clsMaxCol+",'"+data.clsVCorridorLocate+"','"+data.clsHCorridorLocate+"')\">座位信息</button></td></tr>");
 					        });
-							str+=("</table></form>");
+							str+=("</table><input type=\"button\" value=\"导出\" type=\"submit\" onclick=\"deleteform.action='ClassroomExport';deleteform.submit();\" /></form>");
 							document.getElementById('result').innerHTML=str;
 							displayli();
 							//document.getElementById('result').innerHTML=<button href="#del" data-toggle="modal" class="btn btn-primary">删除</button>;
@@ -649,7 +724,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						dataType:"json",
 						success: function(result) 
             			{
-							alert("添加成功！");
+							if(result.success != null)
+								alert(result.success);
+							if(result.errormsg != null)
+								alert(result.errormsg);
             			}}
 					);
 					
@@ -664,7 +742,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							dataType:"json",
 							success: function(result) 
             				{
-								alert("删除成功！");
+								if(result.success != null)
+									alert(result.success);
+								if(result.errormsg != null)
+									alert(result.errormsg);
             				}}
 						);
 					}
@@ -754,11 +835,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						dataType:"json",
 						success: function(result) 
             			{
-							alert("修改成功！");
+							if(result.success != null)
+								alert(result.success);
+							if(result.errormsg != null)
+								alert(result.errormsg);
             			}}
 					);
 					
 				});
+		$("#import").click(
+				function() {
+				//	console.log(document.getElementById("imp").val());
+				//console.log($("#importform").serialize());
+					$.ajaxFileUpload({
+						url:"/cims107/ClassroomImport",
+						secureuri: false,
+						fileElementId: 'imp',
+						dataType:"json",
+						success: function(data,status) 
+	            		{
+						//	var successmsg = jQuery.parseJSON(result)
+							if(result.success != null)
+								alert(result.success);
+							if(result.errormsg != null)
+								alert(result.errormsg);
+	            		}}
+					);		
+			});
 	</script>
 </body>
 </html>

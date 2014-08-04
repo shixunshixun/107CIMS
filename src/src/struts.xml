@@ -7,11 +7,38 @@
     <constant name="struts.objectFactory" value="spring"></constant>  
     <constant name="struts.devMode" value="true" /> 
     <constant name="struts.action.extension" value=","></constant>
+    
+    <package name="parent-package" extends="json-default">  
+    	<interceptors>  
+            <interceptor name="authority"  
+                class="cims107.interceptor.LoginInterceptor">  
+            </interceptor>  
+            
+            <interceptor name="isadministrator"  
+                class="cims107.interceptor.IsAdminInterceptor">  
+            </interceptor>  
+ 
+            <interceptor-stack name="mydefault">  
+            	<interceptor-ref name="isadministrator" /> 
+            	<interceptor-ref name="authority" />
+                <interceptor-ref name="defaultStack" />                  
+            </interceptor-stack>  
+            <interceptor-stack name="searchstack">  
+            	<interceptor-ref name="authority" />
+                <interceptor-ref name="defaultStack" />                  
+        	</interceptor-stack>  
+        </interceptors>  
+   
+        <global-results>  
+            <result name="login">/Login.jsp</result>  
+            <result name="notadmin">/notadmin.json</result>
+            <result name="sessionTimeout">/timeout.json</result>  
+        </global-results>  
+    </package>
       
     <include file="struts-building.xml"></include>   
     <include file="struts-classroom.xml"></include> 
     <include file="struts-partition.xml"></include>
     <include file="struts-user.xml"></include>
     <include file="struts-department.xml"></include>
-    
 </struts>  

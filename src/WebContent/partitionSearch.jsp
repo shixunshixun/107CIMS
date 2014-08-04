@@ -358,24 +358,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					function(data){
 						if (data.length!=0)
 						{
-							var partition = jQuery.parseJSON(data)
-						
-							$.each(partition,function(i,partition){
-								var building = jQuery.parseJSON(partition.classroom.building)
-								if (partition.partitionIsUsed == 1)
+							$.each(data,function(i,data){
+								var building = data.classroom.building
+								if (data.partitionIsUsed == 1)
 									var partitionIsUsed = "启用";
-								if (partition.partitionIsUsed == 2)
+								if (data.partitionIsUsed == 2)
 									var partitionIsUsed = "停用";
 								str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"partitionid\" value="
-										+partition.partitionId+"></td><td>"+partition.partitionYear+"</td><td>"
-										+partition.partitionTerm+"</td><td>"+building.buildingName+"</td><td>"
-										+partition.classroom.clsSerialNumber+"</td><td>"+partition.partitionDepartment+"</td><td>"
-										+partition.classroom.clsType+"</td><td>"+partition.classroom.clsAvailableSeatNum+"</td><td>"
-										+partition.partitionClassNum+"</td><td>"+partition.partitionExamNum+"</td><td>"
-										+partition.partitionBeginWeek+"</td><td>"+partition.partitionEndWeek+"</td><td>"
+										+data.partitionId+"></td><td>"+data.partitionYear+"</td><td>"
+										+data.partitionTerm+"</td><td>"+building.buildingName+"</td><td>"
+										+data.classroom.clsSerialNumber+"</td><td>"+data.partitionDepartment+"</td><td>"
+										+data.classroom.clsType+"</td><td>"+data.classroom.clsAvailableSeatNum+"</td><td>"
+										+data.partitionClassNum+"</td><td>"+data.partitionExamNum+"</td><td>"
+										+data.partitionBeginWeek+"</td><td>"+data.partitionEndWeek+"</td><td>"
 										+partitionIsUsed+
-										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatepartition("+partition.partitionId+",'"+partition.partitionYear+"','"
-										+partition.partitionTerm+"','"+partition.partitionDepartment+"','"+partition.partitionBeginWeek+"','"+partition.partitionEndWeek+"','"+partition.partitionBeginDate+"','"+partition.partitionEndDate+"')\">修改</button></td></tr>");						        
+										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatepartition("+data.partitionId+",'"+data.partitionYear+"','"
+										+data.partitionTerm+"','"+data.partitionDepartment+"','"+data.partitionBeginWeek+"','"+data.partitionEndWeek+"','"+data.partitionBeginDate+"','"+data.partitionEndDate+"')\">修改</button></td></tr>");						        
 					        });
 							str+=("</table></form>");
 							document.getElementById('result').innerHTML=str;
@@ -401,23 +399,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						{
 							if (data.length!=0)
 							{
-								var partition = jQuery.parseJSON(data);
-								$.each(partition,function(i,partition){
-									var building = jQuery.parseJSON(partition.classroom.building);
-									if (partition.partitionIsUsed == 1)
+								$.each(data,function(i,data){
+									var building = data.classroom.building;
+									if (data.partitionIsUsed == 1)
 										var partitionIsUsed = "启用";
-									if (partition.partitionIsUsed == 2)
+									if (data.partitionIsUsed == 2)
 										var partitionIsUsed = "停用";
 									str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"partitionid\" value="
-											+partition.partitionId+"></td><td>"+partition.partitionYear+"</td><td>"
-											+partition.partitionTerm+"</td><td>"+building.buildingName+"</td><td>"
-											+partition.classroom.clsSerialNumber+"</td><td>"+partition.partitionDepartment+"</td><td>"
-											+partition.classroom.clsType+"</td><td>"+partition.classroom.clsAvailableSeatNum+"</td><td>"
-											+partition.partitionClassNum+"</td><td>"+partition.partitionExamNum+"</td><td>"
-											+partition.partitionBeginWeek+"</td><td>"+partition.partitionEndWeek+"</td><td>"
+											+data.partitionId+"></td><td>"+data.partitionYear+"</td><td>"
+											+data.partitionTerm+"</td><td>"+building.buildingName+"</td><td>"
+											+data.classroom.clsSerialNumber+"</td><td>"+data.partitionDepartment+"</td><td>"
+											+data.classroom.clsType+"</td><td>"+data.classroom.clsAvailableSeatNum+"</td><td>"
+											+data.partitionClassNum+"</td><td>"+data.partitionExamNum+"</td><td>"
+											+data.partitionBeginWeek+"</td><td>"+data.partitionEndWeek+"</td><td>"
 											+partitionIsUsed+
-											"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatepartition("+partition.partitionId+",'"+partition.partitionYear+"','"
-													+partition.partitionTerm+"','"+partition.partitionDepartment+"','"+partition.partitionBeginWeek+"','"+partition.partitionEndWeek+"','"+partition.partitionBeginDate+"','"+partition.partitionEndDate+"')\">修改</button></td></tr>");					        
+											"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatepartition("+data.partitionId+",'"+data.partitionYear+"','"
+													+data.partitionTerm+"','"+data.partitionDepartment+"','"+data.partitionBeginWeek+"','"+data.partitionEndWeek+"','"+data.partitionBeginDate+"','"+data.partitionEndDate+"')\">修改</button></td></tr>");					        
 						        });
 								str+=("</table></form>");
 								document.getElementById('result').innerHTML=str;
@@ -510,7 +507,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						dataType:"json",
 						success: function(result) 
             			{
-							alert("添加成功！");
+							if(result.success != null)
+								alert(result.success);
+							if(result.errormsg != null)
+								alert(result.errormsg);
             			}}
 					);
 					
@@ -531,14 +531,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						function(data){
 							if (data.length!=0)
 							{
-								var partition = jQuery.parseJSON(data);
-								$.each(partition,function(i,partition){
+								$.each(data,function(i,data){
 								//	var building = jQuery.parseJSON(partition.building)
-									str+=("<tr><td>"+partition.building.buildingName+"</td><td>"
-											+partition.clsSerialNumber+"</td><td>"+partition.clsType+"</td><td>"+partition.clsAvailableSeatNum+"</td><td>"
-											+partition.clsClassNum+"</td><td>"+partition.clsExamNum+"</td><td>"+
-											"</td><td><button href=\"#create\" id=\"newid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"newpartition('"+partition.building.buildingName+"','"+partition.building.buildingCompus+"','"
-											+partition.clsSerialNumber+"')\">划分</button></td></tr>");						        
+									str+=("<tr><td>"+data.building.buildingName+"</td><td>"
+											+data.clsSerialNumber+"</td><td>"+data.clsType+"</td><td>"+data.clsAvailableSeatNum+"</td><td>"
+											+data.clsClassNum+"</td><td>"+data.clsExamNum+"</td><td>"+
+											"</td><td><button href=\"#create\" id=\"newid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"newpartition('"+data.building.buildingName+"','"+data.building.buildingCompus+"','"
+											+data.clsSerialNumber+"')\">划分</button></td></tr>");						        
 						        });
 								str+=("</table></form>");
 								document.getElementById('result').innerHTML=str;
@@ -562,9 +561,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						function(data){
 							if (data.length!=0)
 							{
-								var department = jQuery.parseJSON(data);
-								console.log(department.departmentName);
-								str+=("<tr><td id=\"departmentid\" onclick=\"department('"+department.departmentName+"')\">"+department.departmentName+"</td></tr>");						        
+								str+=("<tr><td id=\"departmentid\" onclick=\"department('"+data.departmentName+"')\">"+data.departmentName+"</td></tr>");						        
 								str+=("</tbody></table>");
 								document.getElementById('departmentresult').innerHTML=str;
 							}
@@ -583,7 +580,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						dataType:"json",
 						success: function(result) 
             			{
-							alert("删除成功！");
+							if(result.success != null)
+								alert(result.success);
+							if(result.errormsg != null)
+								alert(result.errormsg);
             			}}
 					);
 					
@@ -597,7 +597,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						dataType:"json",
 						success: function(result) 
             			{
-							alert("所选项已启用！");
+							if(result.success != null)
+								alert(result.success);
+							if(result.errormsg != null)
+								alert(result.errormsg);
             			}}
 					);
 					
@@ -611,7 +614,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						dataType:"json",
 						success: function(result) 
             			{
-							alert("所选项已停用！");
+							if(result.success != null)
+								alert(result.success);
+							if(result.errormsg != null)
+								alert(result.errormsg);
             			}}
 					);
 					
@@ -648,7 +654,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						dataType:"json",
 						success: function(result) 
             			{
-							alert("修改成功！");
+							if(result.success != null)
+								alert(result.success);
+							if(result.errormsg != null)
+								alert(result.errormsg);
             			}}
 					);
 					

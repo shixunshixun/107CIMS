@@ -3,93 +3,72 @@
      "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
      "http://struts.apache.org/dtds/struts-2.0.dtd">   
 <struts>   
-    <package name="ajax-classroom" extends="json-default">  
-    	<interceptors>  
-            <interceptor name="authority"  
-                class="cims107.interceptor.LoginInterceptor">  
-            </interceptor>  
-            
-            <interceptor name="isadministrator"  
-                class="cims107.interceptor.IsAdminInterceptor">  
-            </interceptor>  
-            <!-- 拦截器栈 -->  
-            <interceptor-stack name="mydefault">  
-            	<interceptor-ref name="isadministrator" /> 
-            	<interceptor-ref name="authority" />
-                <interceptor-ref name="defaultStack" />                  
-            </interceptor-stack>  
-        </interceptors>  
-  
-        <!-- 定义全局Result -->  
-        <global-results>  
-            <!-- 当返回login视图名时，转入/login.jsp页面 -->  
-            <result name="login">/Login.jsp</result>  
-            <!-- ajax与struts标签做对应转换 -->
-            <result name="buildingsearch">/error.json</result> 
-        </global-results>  
+    <package name="ajax-classroom" extends="parent-package">  
     	
-    	
-    	
-        <action name="ClassroomSearch" class="ClassroomSearchAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result name="success" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+        <action name="ClassroomSearch" class="ClassroomSearchAction"> 
+            <result name="success" type="json"> 
                 <param name="root">result</param>  
             </result>  
             
-            <result name="hint" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+            <result name="hint" type="json">
                 <param name="root">result</param>  
             </result> 
             <interceptor-ref name="mydefault" />
-        </action>  
-        <action name="ClassroomCreate" class="ClassroomCreateAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result name="success" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+        </action> 
+         
+        <action name="ClassroomCreate" class="ClassroomCreateAction">
+            <result name="success" type="json"> 
                 <param name="root">result</param>  
             </result>  
             
-            <result name="hint" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+            <result name="hint" type="json"> 
                 <param name="root">result</param>  
             </result>  
             <interceptor-ref name="mydefault" />
         </action> 
-        <action name="ClassroomDelete" class="ClassroomDeleteAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+        
+        <action name="ClassroomDelete" class="ClassroomDeleteAction"> 
+            <result type="json">
                 <param name="root">result</param>  
             </result>  
             <interceptor-ref name="mydefault" />
         </action> 
-        <action name="ClassroomUpdate" class="ClassroomUpdateAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result name="success" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+        
+        <action name="ClassroomUpdate" class="ClassroomUpdateAction"> 
+            <result name="success" type="json"> 
                 <param name="root">result</param>  
             </result>  
-            <result name="hint" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+            <result name="hint" type="json">   
+                <param name="root">result</param>  
+            </result>  
+            <interceptor-ref name="mydefault" />
+        </action>
+        
+        <action name="ClassroomImport" class="ClassroomImportAction"> 
+            <result name="success" type="json"> 
+                <param name="root">result</param>  
+            </result>  
+            <result name="hint" type="json">   
+                <param name="root">result</param>  
+            </result>  
+            <interceptor-ref name="mydefault" />
+        </action>
+        
+        <action name="ClassroomExport" class="ClassroomExportAction"> 
+            <result name="success" type="json"> 
+                <param name="root">result</param>  
+            </result>  
+            <result name="hint" type="json">   
+                <param name="root">result</param>  
+            </result>  
+            <interceptor-ref name="mydefault" />
+        </action>
+        
+        <action name="SeatManage" class="SeatManageAction"> 
+            <result name="success" type="json"> 
+                <param name="root">result</param>  
+            </result>  
+            <result name="hint" type="json">   
                 <param name="root">result</param>  
             </result>  
             <interceptor-ref name="mydefault" />

@@ -4,139 +4,70 @@
      "http://struts.apache.org/dtds/struts-2.0.dtd">   
 <struts> 
 
-<package name="ajax-partition" extends="json-default">  
-		<interceptors>  
-            <interceptor name="authority"  
-                class="cims107.interceptor.LoginInterceptor">  
-            </interceptor>  
-            
-            <interceptor name="isadministrator"  
-                class="cims107.interceptor.IsAdminInterceptor">  
-            </interceptor>  
-            <!-- 拦截器栈 -->  
-            <interceptor-stack name="mydefault">  
-            	<interceptor-ref name="isadministrator" /> 
-            	<interceptor-ref name="authority" />
-                <interceptor-ref name="defaultStack" />                  
-            </interceptor-stack>  
-        </interceptors>  
-  
-        <!-- 定义全局Result -->  
-        <global-results>  
-            <!-- 当返回login视图名时，转入/login.jsp页面 -->  
-            <result name="login">/Login.jsp</result>  
-            <!-- ajax与struts标签做对应转换 -->
-            <result name="buildingsearch">/error.json</result> 
-        </global-results> 
-
-        <action name="PartitionSearch" class="PartitionSearchAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result name="success" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+<package name="ajax-partition" extends="parent-package">  
+        <action name="PartitionSearch" class="PartitionSearchAction"> 
+            <result name="success" type="json">   
                 <param name="root">result</param>  
             </result>  
-            <result name="hint" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+            <result name="hint" type="json">    
                 <param name="root">result</param>  
             </result>  
             <interceptor-ref name="mydefault" />
-        </action>  
-        <action name="PartitionSearchDistributableCls" class="PartitionSearchDistributableClsAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
+        </action> 
+         
+        <action name="PartitionSearchDistributableCls" class="PartitionSearchDistributableClsAction">
             <result name="success" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
-            <result name="hint" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+            <result name="hint" type="json">
                 <param name="root">result</param>  
             </result>  
             <interceptor-ref name="mydefault" />
-        </action>  
+        </action> 
+         
         <action name="PartitionSearchAll" class="PartitionSearchAllAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
             <result type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
             <interceptor-ref name="mydefault" />
         </action>
-        <action name="PartitionCreate" class="PartitionCreateAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
+        
+        <action name="PartitionCreate" class="PartitionCreateAction"> 
             <result name="success" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
-            <result name="hint" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+            <result name="hint" type="json">   
                 <param name="root">result</param>  
             </result>  
             <interceptor-ref name="mydefault" />
         </action> 
+        
         <action name="PartitionDelete" class="PartitionDeleteAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+            <result type="json">   
                 <param name="root">result</param>  
             </result>  
             <interceptor-ref name="mydefault" />
         </action> 
+        
         <action name="PartitionEnbale" class="PartitionEnableAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
-            <result type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+            <result type="json">   
                 <param name="root">result</param>  
             </result>  
             <interceptor-ref name="mydefault" />
         </action>
+        
         <action name="PartitionDisable" class="PartitionDisableAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
             <result type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result>  
             <interceptor-ref name="mydefault" />
         </action>
-        <action name="PartitionUpdate" class="PartitionUpdateAction">  
-  
-            <!-- 返回类型为json 在sjon-default中定义 -->  
+        
+        <action name="PartitionUpdate" class="PartitionUpdateAction">
             <result name="success" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
                 <param name="root">result</param>  
             </result> 
-             <result name="hint" type="json">  
-  
-                <!-- root的值对应要返回的值的属性 -->  
-                <!-- 这里的result值即是 对应action中的 result -->  
+             <result name="hint" type="json">    
                 <param name="root">result</param>  
             </result> 
             <interceptor-ref name="mydefault" /> 

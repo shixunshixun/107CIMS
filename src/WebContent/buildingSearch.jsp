@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/bootstrap.css" rel="stylesheet"/>
   	<link href="css/bootstrap-responsive.css" rel="stylesheet"/>
   	<script src="js/jquery-1.11.1.min.js"></script>
-  
+  	<script src="js/ajaxfileupload.js"></script>
   	<script src="js/bootstrap.js"></script>
   	
 </head>
@@ -55,6 +55,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       	<div>
       		<button href="#create" style="height:30px" data-toggle="modal" class="btn btn-primary">新增</button>
       		<button id="del" style="height:30px" data-toggle="modal" class="btn btn-primary">删除</button>
+      		<button href="#importdiv" style="height:30px" data-toggle="modal" class="btn btn-primary">导入</button>
+      		<button id="export" style="height:30px" data-toggle="modal" class="btn btn-primary">导出</button>
       		<div class="modal hide" id="create">
     		<form name="createForm" id="createform">
       			<div class="modal-header">
@@ -153,6 +155,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       			</div>
       			</form>
       		</div>
+      		
+      		<div class="modal hide" id="importdiv">
+      		<form name="importForm" id="importform" method="post" enctype="multipart/form-data">
+      			<div class="modal-header">
+        			<a href="#" class="close" data-dismiss="modal">×</a>
+        			<h4>导入教学楼信息</h4>
+      			</div>
+  				<input type="file" id="imp" name="excelFile"/>
+  				<button id="import" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+<!--   				<input type="button" value="确定" type="submit" onclick="importform.action='BuildingImport';importform.submit();" /> -->
+			</form>
+			</div>
     	</div>
     </div>
     <script type="text/javascript">
@@ -171,10 +185,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		$("#updatebuildingdepartment").val(department);
     		$("#updatebuildingfloor").val(floor);
     	}
-//     	function getchange() {
-//     		$("#updatebuildingname").change($(this).val());
-//     		$("#updatebuildingsimplename").val(this.val);
-//     	}
+     	function exportcol(){
+     		 var checklist = document.getElementsByName ("buildingid");
+     		 if (checklist.length == 0){
+     			for(var i=0;i<checklist.length;i++)
+     		   	{
+     		      	checklist[i].checked = 1;
+     		   	} 
+     		 }
+     		 document.deleteform.action = 'BuildingExport';
+     		 document.deleteform.submit();
+     	}
 
 		$("#search").click(
 			function() {
@@ -186,25 +207,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					dataType:"json"
 						}).done(
 					function(data){
-						if (data.length!=0)
+						if (data!=null)
 						{
-							var building = jQuery.parseJSON(data)
-							$.each(building,function(i,building){
+//							var building = jQuery.parseJSON(data)
+							$.each(data,function(i,data){
 								str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"buildingid\" value="
-										+building.buildingId+"></td><td>"+building.buildingName+"</td><td>"
-										+building.buildingSimpleName+"</td><td>"+building.buildingDepartment+"</td><td>"
-										+building.buildingCompus+"</td><td>"+building.buildingFloorNum+
-										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatebuilding("+building.buildingId+",'"+building.buildingName+"','"+building.buildingSimpleName+"','"+building.buildingCompus+"','"+building.buildingDepartment+"',"+building.buildingFloorNum+")\">修改</button></td></tr>");					        
+										+data.buildingId+"></td><td>"+data.buildingName+"</td><td>"
+										+data.buildingSimpleName+"</td><td>"+data.buildingDepartment+"</td><td>"
+										+data.buildingCompus+"</td><td>"+data.buildingFloorNum+
+										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatebuilding("+data.buildingId+",'"+data.buildingName+"','"+data.buildingSimpleName+"','"+data.buildingCompus+"','"+data.buildingDepartment+"',"+data.buildingFloorNum+")\">修改</button></td></tr>");					        
 					        });
-							str+=("</table></form>");
+							str+=("</table><input type=\"button\" value=\"导出\" type=\"submit\" onclick=\"exportcol();\" /></form>");
 							document.getElementById('result').innerHTML=str;
 							//document.getElementById('result').innerHTML=<button href="#del" style="height:30px" data-toggle="modal" class="btn btn-primary">删除</button>;
 						}	
 						else
-							document.getElementById('result').innerHTML=null;
+							document.getElementById('result').innerHTML="对不起，没有匹配的结果……";
 					}	
 				);
-				
 			});
 		
 		$("#new").click(
@@ -241,14 +261,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					dataType:"json",
 					success: function(result) 
             		{
-						var successmsg = jQuery.parseJSON(result)
-						alert(successmsg.success);
+					//	var successmsg = jQuery.parseJSON(result)
+						if(result.success != null)
+							alert(result.success);
+						if(result.errormsg != null)
+							alert(result.errormsg);
             		}}
 				);		
 		});
 		$("#del").click(
 				function() {
-					if (confirm("您确认要删除所选信息吗？")){
+					var checked_num = $("input[name='buildingid']:checked").length;
+					console.log(checked_num);
+					if (checked_num == 0) {
+						alert("至少选择一项");
+						return false;
+					}						
+					else if (confirm("您确认要删除所选信息吗？")){
 						$.ajax({
 							url:"/cims107/BuildingDelete",
 							async:false,
@@ -256,7 +285,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							dataType:"json",
 							success: function(result) 
             				{
-								alert("删除成功！");
+								if(result.success != null)
+									alert(result.success);
+								if(result.errormsg != null)
+									alert(result.errormsg);
             				}}
 						);
 					}
@@ -300,10 +332,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					dataType:"json",
 					success: function(result) 
             		{
-						alert("修改成功！");
+						if(result.success != null)
+							alert(result.success);
+						if(result.errormsg != null)
+							alert(result.errormsg);
             		}}
 				);
 			});
+		
+		$("#import").click(
+				function() {
+				//	console.log(document.getElementById("imp").val());
+				//console.log($("#importform").serialize());
+					$.ajaxFileUpload({
+						url:"/cims107/BuildingImport",
+						secureuri: false,
+						fileElementId: 'imp',
+						dataType:"json",
+						success: function(data,status) 
+	            		{
+						//	var successmsg = jQuery.parseJSON(result)
+							if(result.success != null)
+								alert(result.success);
+							if(result.errormsg != null)
+								alert(result.errormsg);
+	            		}}
+					);		
+			});
+		
+// 		$("#export").click(
+// 				function() {
+// 					var checked_num = $("input[name='buildingid']:checked").length;
+// 					if (checked_num == 0) {
+// 						alert("至少选择一项");
+// 						return false;
+// 					}						
+// 					else if (confirm("您确认要导出所选信息吗？")){
+// 						$.ajax({
+// 							url:"/cims107/BuildingExport",
+// 							async:false,
+// 							data:$("#deleteform").serialize(),
+// 							dataType:"json",
+// 							success: function(result) 
+//             				{
+// 								if(result.success != null)
+// 									alert(result.success);
+// 								if(result.errormsg != null)
+// 									alert(result.errormsg);
+//             				}}
+// 						);
+// 					}
+// 				});
 	</script>
 </body>
 </html>
