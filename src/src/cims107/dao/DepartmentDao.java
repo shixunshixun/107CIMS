@@ -2,9 +2,11 @@ package cims107.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
 
 import cims107.model.Building;
 import cims107.model.Department;
@@ -20,18 +22,16 @@ public class DepartmentDao {
 		this.sessionFactory = sessionFactory;
 	}
 	
-	public Department find(String departmentid) {
+	public List<Department> find(DetachedCriteria dc) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Department AS d WHERE d.departmentId = :departmentid";
-		Query q = session.createQuery(hql);
-		
-		q.setString("departmentid", departmentid);
-		
-		List<Department> list = q.list();
+		   
+		Criteria c = dc.getExecutableCriteria(session);
+	
+		List<Department> list = c.list();
 		session.close();
-		
-		if (list == null)
+		if (list.size()==0)
 			return null;
-		return list.get(0);
+		else
+			return list;
 	}
 }

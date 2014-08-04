@@ -11,12 +11,12 @@
             <generator class="native" />
         </id>
         
-        <property name="seatMaxRow" type="java.lang.Integer">
-            <column name="seatMaxRow" length="8" />
+        <property name="seatRow" type="java.lang.Integer">
+            <column name="seatRow" length="8" />
         </property>
         
-        <property name="seatMaxCol" type="java.lang.Integer">
-            <column name="seatMaxCol" length="8" />
+        <property name="seatCol" type="java.lang.Integer">
+            <column name="seatCol" length="8" />
         </property>
         
         <property name="seatProperty" type="java.lang.Boolean">

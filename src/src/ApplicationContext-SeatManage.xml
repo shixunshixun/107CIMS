@@ -16,6 +16,10 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
         <property name="seatmanageService" ref="seatmanageService" /> 
         <property name="classroomService" ref="classroomService" /> 
     </bean>  
+    
+    <bean id="SeatSearchAction" class="cims107.action.SeatSearchAction" scope="prototype">  
+        <property name="seatmanageService" ref="seatmanageService" /> 
+    </bean>  
       
     <bean id="seatmanageDao" class="cims107.dao.SeatManageDao">  
         <property name="sessionFactory" ref="sessionFactory"></property>  

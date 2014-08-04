@@ -107,6 +107,7 @@ public class ClassroomSearchAction extends ActionSupport implements ModelDriven<
 		    	for(int i = 0; i < classroomlst.size(); i++) {
 		    		Classroom c = classroomlst.get(i);
 		    		c.setPartitions(null);
+		    		c.setSeats(null);
 		    		//c.setBuilding(null);
 		    		//c.getBuilding().setClassrooms(null);
 		    		ja.add(JSONObject.fromObject(c, jc));

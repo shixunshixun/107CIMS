@@ -25,21 +25,55 @@ public class SeatManageDao {
 
 	public Seat find(int row, int col, int clsid) {
 		Session session = sessionFactory.openSession();
-		String hql = "FROM Seat AS s WHERE s.seatRow = :row AND s.seatCol = :col AND s.seatClsId = :clsid";
+		String hql = "FROM Seat AS s WHERE s.seatRow = :row AND s.seatCol = :col";
 		Query q = session.createQuery(hql);
 		
 		q.setInteger("row", row);
 		q.setInteger("col", col);
-		q.setInteger("clsid", clsid);
+		List<Seat> list = q.list();
+		Iterator<Seat> iter = list.iterator();
+		
+		while (iter.hasNext()) {
+			Seat s = new Seat();
+			s = iter.next();
+			if (s.getClassroom().getClsId() != clsid) {
+				iter.remove();
+			}
+		}
+		session.close();
+		
+		// in case find nothing
+		if (list.size() == 0) 
+			return null;
+		return list.get(0);
+	}
+	
+	public List<Seat> find(int clsid) {
+		Session session = sessionFactory.openSession();
+		String hql = "FROM Seat";
+		Query q = session.createQuery(hql);
 		
 		List<Seat> list = q.list();
+		
+		Iterator<Seat> tempiter = list.iterator();
+		while (tempiter.hasNext()) {
+			Seat testc = tempiter.next();
+			String tempcompus = testc.getClassroom().getBuilding().getBuildingCompus();
+			String snumber = testc.getClassroom().getClsSerialNumber();
+		}
+		
+		Iterator<Seat> iter = list.iterator();
+		while (iter.hasNext()) {
+			Seat s = new Seat();
+			s = iter.next();
+			if (s.getClassroom().getClsId() != clsid) {
+				iter.remove();
+			}
+		}
 		session.close();
-		//��ȡbuildingId
-		// in case find nothing
-		if (list.size()==0)
+		if (list.size() == 0)
 			return null;
-		else
-			return list.get(0);
+		return list;
 	}
 	
 	public void updateSeatState(Seat s, Boolean state) {

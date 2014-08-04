@@ -26,6 +26,10 @@ public class SeatManageService {
 		return seatmanageDao.find(row, col, clsid);
 	}
 	
+	public List<Seat> find(int clsid) {
+		return seatmanageDao.find(clsid);
+	}
+	
 	public void updateSeatState(Seat s, Boolean state) {
 		seatmanageDao.updateSeatState(s, state);
 	}

@@ -81,7 +81,7 @@ public class PartitionUpdateAction extends ActionSupport implements ModelDriven<
 	    		if (!partition.getPartitionBeginDate().isEmpty() || !partition.getPartitionEndDate().isEmpty())
 	    			return false;
 	    		if (partition.getPartitionBeginWeek() > partition.getPartitionEndWeek() || 
-	    				partition.getPartitionBeginWeek() < 1 || partition.getPartitionEndWeek() > 18)
+	    				partition.getPartitionBeginWeek() < 1)
 	    			return false;
 	    		return true;
 	    	}

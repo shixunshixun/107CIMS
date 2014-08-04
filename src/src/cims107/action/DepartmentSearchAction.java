@@ -1,5 +1,7 @@
 package cims107.action;
 
+import java.util.*;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -40,10 +42,10 @@ public class DepartmentSearchAction extends ActionSupport implements ModelDriven
     }
     
     public String execute() {
-    	Department d = new Department();
+    	List<Department> d = new ArrayList<Department>();
     	JSONArray ja = new JSONArray();
     	
-    	d = departmentService.find(department.getDepartmentId());
+    	d = departmentService.find(department.getDepartmentId(), department.getDepartmentName());
     	if (d != null) {
     		ja.add(JSONObject.fromObject(d));
     		result = ja;
