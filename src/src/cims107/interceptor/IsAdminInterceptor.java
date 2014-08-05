@@ -16,7 +16,7 @@ public class IsAdminInterceptor extends AbstractInterceptor {
         Map session = ctx.getSession();  
         Boolean isadmin = (Boolean) session.get("isadmin");
   
-        if (isadmin) {  
+        if (isadmin && isadmin != null) {  
             //System.out.println("test2");  
             return invocation.invoke();  
         }  

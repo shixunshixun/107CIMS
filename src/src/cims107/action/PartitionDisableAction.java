@@ -47,7 +47,7 @@ public class PartitionDisableAction extends ActionSupport{
     	}
     	
     	partitionService.disableUpdate(partitionidlst);
-    	result = JSONObject.fromObject("{\"success\":1}");
+    	result = JSONObject.fromObject("{\"success\":\"“—Õ£”√\"}");
 		
 		return SUCCESS;
 	}

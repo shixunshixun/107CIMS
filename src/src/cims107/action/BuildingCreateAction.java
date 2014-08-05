@@ -43,7 +43,7 @@ public class BuildingCreateAction extends ActionSupport implements ModelDriven<B
     	if (isValidate()) {
     		try {
 		    	if(buildingService.add(building)){
-		    		result = JSONObject.fromObject("{\"success\":1}");
+		    		result = JSONObject.fromObject("{\"success\":\"新增成功\"}");
 		    	   	return SUCCESS;
 		    	}
 		    	else{

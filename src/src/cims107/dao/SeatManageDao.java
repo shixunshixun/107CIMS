@@ -111,7 +111,7 @@ public class SeatManageDao {
 				for (int j = 1; j <= maxcol; j ++) {
 					Seat s = new Seat();
 					s.setSeatRow(i);
-					s.setSeatCol(i);
+					s.setSeatCol(j);
 					s.setClassroom(cls);
 					s.setSeatProperty(true);
 					

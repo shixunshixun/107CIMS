@@ -53,7 +53,7 @@ public class PartitionUpdateAction extends ActionSupport implements ModelDriven<
 		if (isValidate()) {
 			try {
 				if(partitionService.update(partition)) {	
-					result = JSONObject.fromObject("{\"success\":1}");
+					result = JSONObject.fromObject("{\"success\":\"更新成功\"}");
 		    		return SUCCESS;
 		    	}
 		    	else {

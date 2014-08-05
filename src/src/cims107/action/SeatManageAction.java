@@ -75,11 +75,7 @@ public class SeatManageAction extends ActionSupport{
 		else
 			row = seatNum / c.getClsMaxCol() + 1;
 		
-		if (seatNum % c.getClsMaxRow() == 0) {
-			col = seatNum / c.getClsMaxRow();
-		}
-		else
-			col = seatNum / c.getClsMaxCol() + 1;
+		col = seatNum - (row-1) * c.getClsMaxCol();
 		
 		Seat s = new Seat();
 		

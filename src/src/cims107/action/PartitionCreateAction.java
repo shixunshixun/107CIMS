@@ -119,7 +119,7 @@ public class PartitionCreateAction extends ActionSupport implements ModelDriven<
 		    	partition.getClassroom().setBuilding(building);
 		    	
 		    	partitionService.add(partition);
-		    	result = JSONObject.fromObject("{\"success\":1}");
+		    	result = JSONObject.fromObject("{\"success\":\"新增成功\"}");
 		    	
 		    	return SUCCESS;
 	    	}

@@ -32,20 +32,11 @@ import cims107.model.Building;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class BuildingImportAction extends ActionSupport{
-
-	/* 估计暂时用不到
-	 * public String buildingname;  
-	public String departmentname;  
-	public String simplename;
-	public String compus;
-	public int floor;*/
 	
 	private File excelFile;
 	private JSONObject result;
     private String excelFileFileName;
     
-    //暂且删掉这个变量，因为似乎没有多大作用
-    //private ExcelWorkSheet<Building> excelWorkSheet;
     
     private BuildingService buildingService;  
       
@@ -97,16 +88,21 @@ public class BuildingImportAction extends ActionSupport{
     public String execute() throws FileNotFoundException,IOException 
     {
     	try {
-	    	Workbook book = createWorkBook(new FileInputStream(excelFileFileName));  
+	    	Workbook book = createWorkBook(new FileInputStream(excelFile));  
 	        //book.getNumberOfSheets();  判断Excel文件有多少个sheet  
 	        
-	    	List<Building> buildinglst = LoadDataFromExcel(book);
-	        //插入数据库
-	        for (int i = 0; i < buildinglst.size(); i++) {
-	        	Building b = buildinglst.get(i);
-	        	buildingService.add(b);
-	        }
-	        result = JSONObject.fromObject("{\"success\":1}");
+	    	if (isValidate(book)) {
+		    	List<Building> buildinglst = LoadDataFromExcel(book);
+		        //插入数据库
+		        for (int i = 0; i < buildinglst.size(); i++) {
+		        	Building b = buildinglst.get(i);
+		        	buildingService.add(b);
+		        }
+		        result = JSONObject.fromObject("{\"success\":\"导入成功\"}");
+	    	}
+	    	else
+	    		result = JSONObject.fromObject("{\"error\":\"教学楼导入失败,信息不能重复\"}");
+	    	return SUCCESS;
         
     	}catch (FileNotFoundException e) {
         	// TODO Auto-generated catch block
@@ -114,8 +110,6 @@ public class BuildingImportAction extends ActionSupport{
         	result = JSONObject.fromObject("{\"error\":\"教学楼导入失败\"}");
         	return SUCCESS;
         }
-        
-        return SUCCESS;
     	
     }
     
@@ -138,10 +132,22 @@ public class BuildingImportAction extends ActionSupport{
             building.setBuildingSimpleName(ros.getCell(2).getStringCellValue());  
             building.setBuildingCompus(ros.getCell(3).getStringCellValue());  
             building.setBuildingFloorNum((int)ros.getCell(4).getNumericCellValue());
-            blst.add(building); 
+            blst.add(building);  
         }
     	
     	return blst;
     }
     
+    public Boolean isValidate(Workbook book) {
+    	List<Building> buildinglst = LoadDataFromExcel(book);
+    	
+    	for (int i = 0; i < buildinglst.size(); i ++) {
+    		for (int j = i+1; j < buildinglst.size(); j ++) {
+    			if (buildinglst.get(i).getBuildingCompus() == buildinglst.get(j).getBuildingCompus() && i != j && 
+    					buildinglst.get(i).getBuildingName() == buildinglst.get(j).getBuildingName())
+    				return false;
+    		}
+    	}
+    	return true;
+    }
 }

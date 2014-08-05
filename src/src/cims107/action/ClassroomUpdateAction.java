@@ -68,7 +68,7 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 		if (isValidate()) {
 			try {
 				classroomService.update(classroom);
-				result = JSONObject.fromObject("{\"success\":1}");
+				result = JSONObject.fromObject("{\"success\":\"更新成功\"}");
 				return SUCCESS;
 			}
 			catch(Exception e) {
@@ -83,7 +83,7 @@ public class ClassroomUpdateAction extends ActionSupport implements ModelDriven<
 	public Boolean isValidate() {
 		
 		if (classroom.getClsType().isEmpty() || classroom.getClsSerialNumber().isEmpty() || classroom.getClsClassNum() == 0 || 
-				classroom.getClsUsage().isEmpty() || classroom.getClsSeatNum() == 0 || 
+				classroom.getClsIsUsed() == 0 || classroom.getClsSeatNum() == 0 || 
 				classroom.getClsAvailableSeatNum() == 0) {
 			return false;
 		}

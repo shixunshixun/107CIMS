@@ -73,6 +73,8 @@ public class ClassroomDao {
 		
 		Classroom c = (Classroom) session.get(Classroom.class, clsid);
 		
+		String tempcompus = c.getBuilding().getBuildingCompus();
+		
 		session.close();
 		
 		return c;

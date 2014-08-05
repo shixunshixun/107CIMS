@@ -92,9 +92,11 @@ public class ClassroomExportAction extends ActionSupport{
     	searchResult = classroomService.find(clsidlst);
     	//buildingService.find(searchResult.get(0).getClsBuildingId());
     	try {
-	    	response.setContentType("application/octet-stream;charset=iso-8859-1");  
+	    	response.setContentType("application/octet-stream;charset=iso-8859-1"); 
+	    	//自己添加的
+	    	//response.setHeader("Content-Type", "application/octet-stream;charset=iso-8859-1");
 	        response.setHeader("Content-Disposition", "attachment;filename="  
-	                +java.net.URLEncoder.encode(this.filename, "UTF-8"));
+	                +java.net.URLEncoder.encode("教室导出.xls", "UTF-8"));
 	        response.addHeader("Pargam", "no-cache");  
 	        response.addHeader("Cache-Control", "no-cache");  
 		} catch (IOException e) {

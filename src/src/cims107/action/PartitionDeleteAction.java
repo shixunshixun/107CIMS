@@ -49,7 +49,7 @@ public class PartitionDeleteAction extends ActionSupport{
     	
     	try {
 	    	if(partitionService.delete(partitionidlst)){
-	    		result = JSONObject.fromObject("{\"success\":1}");
+	    		result = JSONObject.fromObject("{\"success\":\"É¾³ý³É¹¦\"}");
 	    		return SUCCESS;
 	    	}
 	    	else {

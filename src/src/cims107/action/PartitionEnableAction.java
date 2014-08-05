@@ -47,7 +47,7 @@ public class PartitionEnableAction extends ActionSupport{
     	}
     	
     	partitionService.enabeUpdate(partitionidlst);
-    	result = JSONObject.fromObject("{\"success\":1}");
+    	result = JSONObject.fromObject("{\"success\":\"“—∆Ù”√\"}");
 		
 		return SUCCESS;
 	}

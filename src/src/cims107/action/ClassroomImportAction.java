@@ -88,69 +88,89 @@ public class ClassroomImportAction extends ActionSupport{
     public String execute() throws FileNotFoundException,IOException 
     {
     	try {
-	    	Workbook book = createWorkBook(new FileInputStream(excelFileFileName));  
-	        //book.getNumberOfSheets();  判断Excel文件有多少个sheet  
-	        Sheet sheet =  book.getSheetAt(0);  
-	        List<Classroom> classroomlst = new ArrayList<Classroom>();
-	        //excelWorkSheet = new ExcelWorkSheet<Building>();  
-	        //保存工作单名称  
-	        Row firstRow = sheet.getRow(0);  
-	        Iterator<Cell> iterator = firstRow.iterator();  
-	          
-	        //保存列名  
-	        List<String> cellNames = new ArrayList<String>();  
-	        while (iterator.hasNext()) {  
-	            cellNames.add(iterator.next().getStringCellValue());  
-	        }  
-	        //excelWorkSheet.setColumns(cellNames);  
-	        for (int i = 1; i <= sheet.getLastRowNum(); i++) {  
-	            Row ros = sheet.getRow(i);  
-	            
-	            Classroom classroom = new Classroom();
-	            Building building = new Building();
-	    		
-	    		
-	    		building = buildingService.find(ros.getCell(0).getStringCellValue(), ros.getCell(1).getStringCellValue());
-	            
-	            classroom.setClsSerialNumber(ros.getCell(2).getStringCellValue());
-	            classroom.setClsFloor((int)ros.getCell(3).getNumericCellValue());
-	            classroom.setClsType(ros.getCell(4).getStringCellValue());
-	            classroom.setClsShape(ros.getCell(5).getStringCellValue());
-	            classroom.setClsClassNum((int)ros.getCell(6).getNumericCellValue());
-	            classroom.setClsExamNum((int)ros.getCell(7).getNumericCellValue());
-	            classroom.setClsMaxRow((int)ros.getCell(8).getNumericCellValue());
-	            classroom.setClsMaxCol((int)ros.getCell(9).getNumericCellValue());
-	            classroom.setClsVCorridorLocate(ros.getCell(10).getStringCellValue());
-	            classroom.setClsHCorridorLocate(ros.getCell(11).getStringCellValue());
-	            classroom.setClsArea((int)ros.getCell(12).getNumericCellValue());
-	            classroom.setClsLocation(ros.getCell(13).getStringCellValue());
-	            classroom.setClsIsAmphi((int)ros.getCell(14).getNumericCellValue());
-	            classroom.setClsHasMicrophone((int)ros.getCell(15).getNumericCellValue());
-	            classroom.setClsIsUsed((int)ros.getCell(16).getNumericCellValue());
-	            classroom.setClsUsage(ros.getCell(17).getStringCellValue());
-	            classroom.setClsSeatNum((int)ros.getCell(18).getNumericCellValue());
-	            classroom.setClsAvailableSeatNum((int)ros.getCell(19).getNumericCellValue());
-	            classroom.setBuilding(building);
-	            
-	            classroomlst.add(classroom);
-	            //excelWorkSheet.getData().add(building);  
-	        }
-	        
-	        //插入数据库
-	        for (int i = 0; i < classroomlst.size(); i++) {
-	        	Classroom c = classroomlst.get(i);
-	        	classroomService.add(c);
-	        }
-	        result = JSONObject.fromObject("{\"success\":1}");
+    		if (excelFile == null) {
+    			result = JSONObject.fromObject("{\"error\":\"清选择文件\"}");
+            	return ERROR;
+    		}
+    		
+		    Workbook book = createWorkBook(new FileInputStream(excelFile));  
+		    if (isValidate(book)) {
+		    	List<Classroom> classroomlst = LoadDataFromExcel(book);
+		        //插入数据库
+		        for (int i = 0; i < classroomlst.size(); i++) {
+		        	Classroom c = classroomlst.get(i);
+		        	classroomService.add(c);
+		        }
+		        result = JSONObject.fromObject("{\"success\":\"导入成功\"}");
+    		}
+    		else
+    			result = JSONObject.fromObject("{\"error\":\"教室导入失败\"}"); 
+    		return SUCCESS;
         
     	}catch (FileNotFoundException e) {
         	// TODO Auto-generated catch block
         	e.printStackTrace();
-        	result = JSONObject.fromObject("{\"error\":\"教室导入失败\"}");
+        	result = JSONObject.fromObject("{\"error\":\"教室导入失败,信息不能重复\"}");
         	return SUCCESS;
         }
-        
-        return SUCCESS;
+    }
+    
+    public List<Classroom> LoadDataFromExcel(Workbook book) {
+    	Sheet sheet =  book.getSheetAt(0);  
+        List<Classroom> classroomlst = new ArrayList<Classroom>();
+        Row firstRow = sheet.getRow(0);  
+        Iterator<Cell> iterator = firstRow.iterator();  
+          
+        //保存列名  
+        List<String> cellNames = new ArrayList<String>();  
+        while (iterator.hasNext()) {  
+            cellNames.add(iterator.next().getStringCellValue());  
+        }  
+        //excelWorkSheet.setColumns(cellNames);  
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {  
+            Row ros = sheet.getRow(i);  
+            
+            Classroom classroom = new Classroom();
+            Building building = new Building();	    		
+    		
+    		building = buildingService.find(ros.getCell(0).getStringCellValue(), ros.getCell(1).getStringCellValue());
+            
+            classroom.setClsSerialNumber(ros.getCell(2).getStringCellValue());
+            classroom.setClsFloor((int)ros.getCell(3).getNumericCellValue());
+            classroom.setClsType(ros.getCell(4).getStringCellValue());
+            classroom.setClsShape(ros.getCell(5).getStringCellValue());
+            classroom.setClsClassNum((int)ros.getCell(6).getNumericCellValue());
+            classroom.setClsExamNum((int)ros.getCell(7).getNumericCellValue());
+            classroom.setClsMaxRow((int)ros.getCell(8).getNumericCellValue());
+            classroom.setClsMaxCol((int)ros.getCell(9).getNumericCellValue());
+            classroom.setClsVCorridorLocate(ros.getCell(10).getStringCellValue());
+            classroom.setClsHCorridorLocate(ros.getCell(11).getStringCellValue());
+            classroom.setClsArea((int)ros.getCell(12).getNumericCellValue());
+            classroom.setClsLocation(ros.getCell(13).getStringCellValue());
+            classroom.setClsIsAmphi((int)ros.getCell(14).getNumericCellValue());
+            classroom.setClsHasMicrophone((int)ros.getCell(15).getNumericCellValue());
+            classroom.setClsIsUsed((int)ros.getCell(16).getNumericCellValue());
+            classroom.setClsUsage(ros.getCell(17).getStringCellValue());
+            classroom.setClsSeatNum((int)ros.getCell(18).getNumericCellValue());
+            classroom.setClsAvailableSeatNum((int)ros.getCell(19).getNumericCellValue());
+            classroom.setBuilding(building);
+            
+            classroomlst.add(classroom);
+        }
+        return classroomlst;
+    }
+    
+    public Boolean isValidate(Workbook book) {
+    	List<Classroom> clslst = LoadDataFromExcel(book);
     	
+    	for (int i = 0; i < clslst.size(); i ++) {
+    		for (int j = i+1; j < clslst.size(); j ++) {
+    			if (clslst.get(i).getBuilding().getBuildingCompus() == clslst.get(j).getBuilding().getBuildingCompus() && 
+    					clslst.get(i).getBuilding().getBuildingName() == clslst.get(j).getBuilding().getBuildingName() && 
+    					i != j)
+    				return false;
+    		}
+    	}
+    	return true;
     }
 }

@@ -85,7 +85,7 @@ public class BuildingExportAction extends ActionSupport implements ServletRespon
     	try {
 	    	response.setContentType("application/octet-stream;charset=iso-8859-1");  
 	        response.setHeader("Content-Disposition", "attachment;filename="  
-	                +java.net.URLEncoder.encode(this.filename, "UTF-8"));
+	                +java.net.URLEncoder.encode("教学楼导出.xls", "UTF-8"));
 	        response.addHeader("Pargam", "no-cache");  
 	        response.addHeader("Cache-Control", "no-cache"); 
     	} catch (IOException e) {

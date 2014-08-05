@@ -56,7 +56,7 @@ public class BuildingUpdateAction extends ActionSupport implements ModelDriven<B
 		if (isValidate()) {
 			try {
 		    	if(buildingService.update(building)) {
-		    		result = JSONObject.fromObject("{\"success\":1}");
+		    		result = JSONObject.fromObject("{\"success\":\"更新成功\"}");
 		    		return SUCCESS;
 		    	}
 		    	else {

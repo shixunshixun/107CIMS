@@ -52,7 +52,7 @@ public class ClassroomDeleteAction extends ActionSupport{
     	
     	try {
 	    	if(classroomService.delete(clsidlst)){
-	    		result = JSONObject.fromObject("{\"success\":1}");
+	    		result = JSONObject.fromObject("{\"success\":\"É¾³ý³É¹¦\"}");
 	    		return SUCCESS;
 	    	}
 	    	else {
