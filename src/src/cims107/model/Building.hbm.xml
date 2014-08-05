@@ -31,7 +31,7 @@
             <column name="buildingFloorNum" length="8" />
         </property>
         
-        <set name="classrooms" cascade="all">
+        <set name="classrooms" cascade="all"  inverse="true">
 			<key>
 			<column name="clsBuildingId" length="8"/>
 			</key>

@@ -20,6 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link href="css/bootstrap.css" rel="stylesheet"/>
   	<link href="css/bootstrap-responsive.css" rel="stylesheet"/>
   	<script src="js/jquery-1.11.1.min.js"></script>
+  	<script src="js/ajaxfileupload.js"></script>
   	<script src="js/bootstrap.js"></script>
 </head>
 
@@ -31,11 +32,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<input type="text" name="buildingname">
 				<label><font class="fourword">教室编</font>号</label>
 				<input type="text" name="clsSerialNumber">
+				<label><font class="twoword">校</font>区</label>
+				<select name="compus" id="compus">
+					<option></option>
+					<option>东校区</option>
+					<option>南校区</option>
+					<option>北校区</option>
+				</select>
+				<label><font class="twoword">单</font>位</label>
+				<select name="departmentname">
+					<option></option>
+					<option>教务处</option>
+					<option>教务处</option>
+					<option>教务处</option>
+				</select>
 				<label><font class="fourword">教室楼</font>层</label>
 				<input type="text" name="clsFloor">
-				<label><font class="sixword">最少上课人</font>数</label>
-				<input type="text" name="minClassNum">
+				<label><font class="fourword">教室类</font>型</label>
+				<select name="clsType">
+					<option></option>
+					<option>语音室</option>
+					<option>多媒体教室</option>
+				</select>
+				<label><font class="fourword">教室形</font>状</label>
+				<select name="clsShape">
+					<option></option>
+					<option>扇形</option>
+					<option>矩形</option>
+				</select>
+				<label><font class="fourword">教室用</font>途</label>
+				<select name="clsUsage">
+					<option></option>
+					<option>上课</option>
+					<option>语音</option>
+				</select>
 				<div id="displaylist">
+					<label><font class="sixword">最少上课人</font>数</label>
+					<input type="text" name="minClassNum">
 					<label><font class="sixword">最多上课人</font>数</label>
 					<input type="text" name="maxClassNum">
 					<label><font class="sixword">最少考试人</font>数</label>
@@ -44,26 +77,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<input type="text" name="maxExamNum">
 					<label><font class="twoword">面</font>积</label>
 					<input type="text" name="area">
-					<label><font class="twoword">校</font>区</label>
-					<select name="compus" id="compus">
-						<option></option>
-						<option>东校区</option>
-						<option>南校区</option>
-						<option>北校区</option>
-					</select>
-					<label><font class="twoword">单</font>位</label>
-					<select name="departmentname">
-						<option></option>
-						<option>教务处</option>
-						<option>教务处</option>
-						<option>教务处</option>
-					</select>
-					<label><font class="fourword">教室类</font>型</label>
-					<select name="clsType">
-						<option></option>
-						<option>语音室</option>
-						<option>多媒体教室</option>
-					</select>
+					
 					<label><font class="twoword">方</font>位</label>
 					<select name="clsLocation">
 						<option></option>
@@ -76,24 +90,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<option>是</option>
 						<option>否</option>
 					</select>
-					<label><font class="fourword">教室形</font>状</label>
-					<select name="clsShape">
-						<option></option>
-						<option>扇形</option>
-						<option>矩形</option>
-					</select>
+					
 					<label><font class="twoword">话</font>筒</label>
 					<select name="clsHasMicrophone" id="searchhasmicrophone">
 						<option></option>
 						<option>有话筒</option>
 						<option>无话筒</option>
 					</select>
-					<label><font class="fourword">教室用</font>途</label>
-					<select name="clsUsage">
-						<option></option>
-						<option>上课</option>
-						<option>语音</option>
-					</select>
+					
 					<label><font class="fourword">启用状</font>态</label>
 					<select name="clsIsUsed" id="searchisused">
 						<option></option>
@@ -106,9 +110,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       		</form>
 			<button style="height:30px;margin-bottom:10px;float:right" id="search" class="btn btn-primary">查询</button>
       		<div id="result"></div>
+      		<div id="buttonsets" style="display:inline-block">
         		<button href="#clsnew" data-toggle="modal" class="btn btn-primary">新增</button>
         		<button id="del" data-toggle="modal" class="btn btn-primary">删除</button>
 				<button href="#importdiv" style="height:30px" data-toggle="modal" class="btn btn-primary">导入</button>
+			</div>
+			<div id="buttonset" style="display:inline-block"></div>
     		<div class="modal hide" id="clsnew">
     			<form name="createForm" id="createform">
       			<div class="modal-header">
@@ -241,14 +248,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<label><font class="fourword">教室类</font>型</label>
 						<font color="red">*</font>
 						<select name="clsType" id="updateclstype">
-							<option></option>
 							<option>语音室</option>
 							<option>多媒体教室</option>
 						</select>
 						<label><font class="fourword">启用状</font>态</label>
 						<font color="red">*</font>
 						<select name="clsIsUsed" id="updateclsisused">
-							<option></option>
 							<option>启用</option>
 							<option>停用</option>
 						</select>
@@ -410,54 +415,99 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
     </div>
     <script type="text/javascript">
-	    function seatclassroom(i,maxrow,maxcol,vcorridorlocate,hcorridorlocate){
-			var str="<tbody>";
-			var k=0;
-			var l=maxrow;
-			var v=vcorridorlocate.replace(/,[0-9]+;/g," ");
-			v=v.replace(/,[0-9]+/g," ");
-			var h=hcorridorlocate.replace(/,[0-9]+;/g," ");
-			h=h.replace(/,[0-9]+/g," ");
-			for(var i=0;i<maxcol;i++){
-				var patt1=new RegExp(i);
-				if(patt1.exec(h)!=null){
-					l++;
-					str+="<tr bgcolor=\"gray\"><td colspan=\""+l+"\">&nbsp;</td></tr>";
+    	var searching=0;
+	    function seatclassroom(clsid){
+	    	$.ajax({
+				url:"/cims107/SeatSearch",
+				async:false,
+				data: {clsid:clsid},
+				dataType:"json"
+	    	}).done(
+	    			function(data){
+	    				if (data.length!=0)
+						{
+	    					var str="<tbody>";
+							console.log(data[0].classroom.clsMaxRow);
+							console.log(data[1].seatProperty);
+	    						var k=0;
+	    						var l=data[0].classroom.clsMaxRow;
+	    						var v=data[0].classroom.clsVCorridorLocate.replace(/,[0-9]+;/g," ");
+	    						v=v.replace(/,[0-9]+/g," ");
+	    						var h=data[0].classroom.clsHCorridorLocate.replace(/,[0-9]+;/g," ");
+	    						h=h.replace(/,[0-9]+/g," ");
+	    						for(var i=0;i<data[0].classroom.clsMaxCol;i++){
+	    							var patt1=new RegExp(i);
+	    							if(patt1.exec(h)!=null){
+	    								l++;
+	    								str+="<tr bgcolor=\"gray\"><td colspan=\""+l+"\">&nbsp;</td></tr>";
+	    							}
+			    					str+="<tr>";
+			    					for(var j=0;j<data[0].classroom.clsMaxRow;j++){
+			    						var patt2=new RegExp(j);
+			    						if(patt2.exec(v)!=null){
+			    							str+="<td bgcolor=\"gray\">&nbsp;&nbsp;&nbsp;&nbsp;</td>";
+			    						}
+			    						k++;
+			    						console.log(k);
+			    						if(data[k-1].seatProperty == 1){
+			    							str+="<td><button class=\"btn btn-primary\" style=\"width:80px;background:blue\" id=\"seat"+k+"\" onclick=\"changecolor(this.id,"+data[k-1].classroom.clsId+","+k+")\">座位"+k+"</button></td>";
+			    						}
+			    						if(data[k-1].seatProperty == 0){
+			    							str+="<td><button class=\"btn btn-primary\" style=\"width:80px;background:black\" id=\"seat"+k+"\" onclick=\"changecolor(this.id,"+data[k-1].classroom.clsId+","+k+")\">座位"+k+"</button></td>";
+			    						}
+			    					}
+			    					str+="</tr>"
+			    				}
+	    					document.getElementById("getseat").innerHTML=str;
+	    				}
+	    			}
+	    		)
+	    }
+	    function changepage(k,j){
+			var i;
+			for(i=1;i<=j;i++){
+				if(i==k){
+					document.getElementById("page"+i).style.display="table";
 				}
-				str+="<tr>";
-				for(var j=0;j<maxrow;j++){
-					var patt2=new RegExp(j);
-					if(patt2.exec(v)!=null){
-						str+="<td bgcolor=\"gray\">&nbsp;&nbsp;&nbsp;&nbsp;</td>";
-					}
-					k++;
-					str+="<td><button class=\"btn btn-primary\" style=\"width:80px;background:blue;\" id=\"seat"+k+"\" onclick=\"changecolor(this.id,i,k)\">座位"+k+"</button></td>";
+				else{
+					document.getElementById("page"+i).style.display="none";
 				}
-				str+="</tr>"
 			}
-			document.getElementById("getseat").innerHTML=str;
 		}
-		
+	
+	    function exportcol(){
+     		var checked_num = $("input[name='clsid']:checked").length;
+     		var checklist = $("input[name='clsid']");
+     		if (checked_num == 0){
+     			for(var i=0;i<checklist.length;i++)
+     		   	{
+     		      	checklist[i].checked = 1;
+     		   	} 
+     		 }
+     		 deleteform.action = 'ClassroomExport';
+     		 deleteform.submit();
+     	}
+	    
 		function changecolor(bid,clsid,k){
 			if(document.getElementById(bid).style.background=="blue"){
 				document.getElementById(bid).style.background="black";
-				var state = "0";
+				var state = false;
 			}
 			else if(document.getElementById(bid).style.background=="black"){
 				document.getElementById(bid).style.background="blue";
-				var state = "1";
+				var state = true;
 			}
 			$.ajax({
 				url:"/cims107/SeatManage",
 				async:false,
-				data: "clsid=clsid&seatNum=k&state=state",
+				data: {clsid:clsid,seatNum:k,state:state},
 				dataType:"json",
 				success: function(result) 
     			{
 					if(result.success != null)
 						alert(result.success);
-					if(result.errormsg != null)
-						alert(result.errormsg);
+					if(result.error != null)
+						alert(result.error);
     			}}
 			);
 		}
@@ -544,10 +594,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#updateseatnum").val(seatnum);
 			$("#updateavailableseatnum").val(availableseatnum);
 			$("#updateclslocation").val(location);
-			$("#updateclsisamphi option:selected").val(isamphi);
-			$("#updateclshasmicrophone option:selected").val(hasmicrophone);
+			$("#updateclsisamphi").val(isamphi);
+			$("#updateclshasmicrophone").val(hasmicrophone);
 			$("#updateclsusage").val(usage);
-			$("#updateclsisused option:selected").val(isused);
+			$("#updateclsisused").val(isused);
     	}
 //     	function getchange() {
 //     		$("#updatebuildingname").change($(this).val());
@@ -568,19 +618,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$("#searchisused option:selected").val(1);
 				if ($("#searchisused option:selected").val() == "停用")
 					$("#searchisused option:selected").val(2);
-				var str="<form id=\"deleteform\"><table class=\"table\"><thead><tr><th>&nbsp;</th><th>教学楼名称</th><th>教室编号</th><th>教室类型</th><th>所属单位</th><th>上课人数</th><th>总座位数</th><th>有效座位数</th><th>楼层</th><th>启用状态</th></thead><tbody>";
+				var str="<form id=\"deleteform\" method=\"post\">";
+				var sqr=document.getElementById("buttonset").innerHTML;
 				$.ajax({
 					url:"/cims107/ClassroomSearch",
 					async:false,
 					data: $("#searchform").serialize(),
 					dataType:"json",
-						}).done(
-					function(data){
+					success: function(data){
+						if (data.error == null){
+						var k=0;
+						var j=1;
 						if (data.length!=0)
 						{
 						//	var classroom = jQuery.parseJSON(data);
 							
 							$.each(data,function(i,data){
+								if(k==10){
+									k=0;
+									str+="</table>";
+									j++;
+								}
+								if(k==0){
+									if(j==1){
+										str+=("<table id=\"page"+j+"\" class=\"table\"><thead><tr><th>&nbsp;</th><th>教学楼名称</th><th>教室编号</th><th>教室类型</th><th>所属单位</th><th>上课人数</th><th>总座位数</th><th>有效座位数</th><th>楼层</th><th>启用状态</th></thead><tbody>");
+									}
+									else{
+										str+=("<table id=\"page"+j+"\" class=\"table\" style=\"display:none;\"><thead><tr><th>&nbsp;</th><th>教学楼名称</th><th>教室编号</th><th>教室类型</th><th>所属单位</th><th>上课人数</th><th>总座位数</th><th>有效座位数</th><th>楼层</th><th>启用状态</th></thead><tbody>");
+									}
+								}
+
 								if (data.clsIsAmphi==1)
 									var isAmphi = "是";
 								if (data.clsIsAmphi==2)
@@ -594,19 +661,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								if (data.clsIsUsed==2)
 									var isUsed = "停用";
 								str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"clsid\" value="
-										+data.clsId+"></td><td>"+data.building.buildingName+"</td><td>"+data.clsSerialNumber+"</td><td>"+data.clsType+"</td><td>"+data.building.buildingDepartment+"</td><td>"+data.clsClassNum+"</td><td>"+data.clsSeatNum+"</td><td>"+data.clsAvailableSeatNum+"</td><td>"+data.clsFloor+"</td><td>"+isUsed+"</td><td><button href=\"#clsupdate\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updateclassroom("+data.clsId+",'"+data.clsSerialNumber+"','"+data.clsType+"','"+data.clsShape+"',"+data.clsClassNum+","+data.clsExamNum+","+data.clsSeatNum+","+data.clsAvailableSeatNum+","+data.clsMaxRow+","+data.clsMaxCol+",'"+data.clsVCorridorLocate+"','"+data.clsHCorridorLocate+"',"+data.clsFloor+",'"+isAmphi+"','"+data.clsUsage+"',"+data.clsArea+",'"+data.clsLocation+"','"+hasMicrophone+"','"+isUsed+"')\">修改</button></td><td><button href=\"#clsdetail\" id=\"detailid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"detailclassroom('"+data.building.buildingName+"','"+data.clsSerialNumber+"','"+data.clsType+"','"+data.clsShape+"',"+data.clsClassNum+","+data.clsExamNum+","+data.clsSeatNum+","+data.clsAvailableSeatNum+","+data.clsMaxRow+","+data.clsMaxCol+",'"+data.clsVCorridorLocate+"','"+data.clsHCorridorLocate+"',"+data.clsFloor+",'"+isAmphi+"','"+data.clsUsage+"','"+data.building.buildingDepartment+"','"+isUsed+"')\">详细信息</button></td><td><button href=\"#clsseat\" id=\"seatid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"seatclassroom("+data.clsId+","+data.clsMaxRow+","+data.clsMaxCol+",'"+data.clsVCorridorLocate+"','"+data.clsHCorridorLocate+"')\">座位信息</button></td></tr>");
+										+data.clsId+"></td><td>"+data.building.buildingName+"</td><td>"+data.clsSerialNumber+"</td><td>"+data.clsType+"</td><td>"+data.building.buildingDepartment+"</td><td>"+data.clsClassNum+"</td><td>"+data.clsSeatNum+"</td><td>"+data.clsAvailableSeatNum+"</td><td>"+data.clsFloor+"</td><td>"+isUsed+"</td><td><button href=\"#clsupdate\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updateclassroom("+data.clsId+",'"+data.clsSerialNumber+"','"+data.clsType+"','"+data.clsShape+"',"+data.clsClassNum+","+data.clsExamNum+","+data.clsSeatNum+","+data.clsAvailableSeatNum+","+data.clsMaxRow+","+data.clsMaxCol+",'"+data.clsVCorridorLocate+"','"+data.clsHCorridorLocate+"',"+data.clsFloor+",'"+isAmphi+"','"+data.clsUsage+"',"+data.clsArea+",'"+data.clsLocation+"','"+hasMicrophone+"','"+isUsed+"')\">修改</button></td><td><button href=\"#clsdetail\" id=\"detailid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"detailclassroom('"+data.building.buildingName+"','"+data.clsSerialNumber+"','"+data.clsType+"','"+data.clsShape+"',"+data.clsClassNum+","+data.clsExamNum+","+data.clsSeatNum+","+data.clsAvailableSeatNum+","+data.clsMaxRow+","+data.clsMaxCol+",'"+data.clsVCorridorLocate+"','"+data.clsHCorridorLocate+"',"+data.clsFloor+",'"+isAmphi+"','"+data.clsUsage+"','"+data.building.buildingDepartment+"','"+isUsed+"')\">详细信息</button></td><td><button href=\"#clsseat\" id=\"seatid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"seatclassroom("+data.clsId+")\">座位信息</button></td></tr>");
+								k++;
 					        });
-							str+=("</table><input type=\"button\" value=\"导出\" type=\"submit\" onclick=\"deleteform.action='ClassroomExport';deleteform.submit();\" /></form>");
+							str+=("</table>");
+							if(window.searching==0){
+								sqr+=("<input type=\"button\" value=\"导出\" class=\"btn btn-primary\" type=\"submit\" onclick=\"exportcol();\" /></form>");
+								document.getElementById("buttonset").innerHTML=sqr;
+								window.searching++;
+					        }
+							str+=("<div>")
+							for(k=1;k<=j;k++){
+								str+=("<a class=\"button button-primary\"onclick=\"changepage("+k+","+j+")\">第"+k+"页</a>");
+							}
+							str+=("</div>")
 							document.getElementById('result').innerHTML=str;
 							displayli();
 							//document.getElementById('result').innerHTML=<button href="#del" data-toggle="modal" class="btn btn-primary">删除</button>;
 						}
-						else
+						else{
 							document.getElementById('result').innerHTML=null;
-					}	
-				);
-				
+							alert("没有结果！");
+						}
+					}
+						else
+							alert(data.error);
+					}
+						})
 			});
+
 		
 		$("#new").click(
 				function() {
@@ -726,15 +809,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             			{
 							if(result.success != null)
 								alert(result.success);
-							if(result.errormsg != null)
-								alert(result.errormsg);
+							if(result.error != null)
+								alert(result.error);
+							if(result.hint != null)
+								alert(result.hint);
+							document.getElementById('search').click();
             			}}
 					);
 					
 				});
 		$("#del").click(
 				function() {
-					if (confirm("您确认要删除所选信息吗？")){
+					var checked_num = $("input[name='clsid']:checked").length;
+					console.log(checked_num);
+					if (checked_num == 0) {
+						alert("至少选择一项");
+						return false;
+					}						
+					else if (confirm("您确认要删除所选信息吗？")){
 						$.ajax({
 							url:"/cims107/ClassroomDelete",
 							async:false,
@@ -744,8 +836,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             				{
 								if(result.success != null)
 									alert(result.success);
-								if(result.errormsg != null)
-									alert(result.errormsg);
+								if(result.error != null)
+									alert(result.error);
+								document.getElementById('search').click();
             				}}
 						);
 					}
@@ -837,14 +930,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             			{
 							if(result.success != null)
 								alert(result.success);
-							if(result.errormsg != null)
-								alert(result.errormsg);
+							if(result.error != null)
+								alert(result.error);
+							document.getElementById('search').click();
             			}}
 					);
 					
 				});
 		$("#import").click(
 				function() {
+					if ($('input[name="excelFile"]').val()==''){
+						alert("请选择文件！");
+						return false;
+					}
 				//	console.log(document.getElementById("imp").val());
 				//console.log($("#importform").serialize());
 					$.ajaxFileUpload({
@@ -852,13 +950,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						secureuri: false,
 						fileElementId: 'imp',
 						dataType:"json",
-						success: function(data,status) 
+						success: function(data, status) 
 	            		{
 						//	var successmsg = jQuery.parseJSON(result)
-							if(result.success != null)
-								alert(result.success);
-							if(result.errormsg != null)
-								alert(result.errormsg);
+							if(typeof (data.success) != 'undefined'){
+								alert(data.success);
+							}
+							if(typeof (data.error) != 'undefined')
+								alert(data.error);
+							document.getElementById('search').click();
+	            		},
+	            		error: function(data, status, e)
+	            		{
+							alert(data.error);
 	            		}}
 					);		
 			});

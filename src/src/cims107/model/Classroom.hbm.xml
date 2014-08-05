@@ -86,15 +86,15 @@
         <many-to-one name="building" class="cims107.model.Building">
 			<column name="clsBuildingId" length="8" />
 		</many-to-one>
-		
-		<set name="partitions" cascade="all">
+		 
+		<set name="partitions" cascade="all" inverse="true">
 			<key>
 			<column name="pClsId" length="8"/>
 			</key>
 			<one-to-many class="cims107.model.Partition"/>
 		</set>
 		
-		<set name="seats" cascade="all">
+		<set name="seats" cascade="all" inverse="true">
 			<key>
 			<column name="seatClsId" length="8"/>
 			</key>

@@ -182,6 +182,18 @@ jQuery.extend({
 
     },
 
+    handleError: function( s, xml, status, e ) 		{
+    	// If a local callback was specified, fire it
+    			if ( s.error ) {
+    				s.error.call( s.context || s, xml, status, e );
+    			}
+
+    			// Fire the global callback
+    			if ( s.global ) {
+    				(s.context ? jQuery(s.context) : jQuery.event).trigger( "ajaxError", [xml, s, e] );
+    			}
+    },
+    		
     uploadHttpData: function( r, type ) {
         var data = !type;
         data = type == "xml" || data ? r.responseXML : r.responseText;

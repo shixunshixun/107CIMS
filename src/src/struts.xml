@@ -19,8 +19,8 @@
             </interceptor>  
  
             <interceptor-stack name="mydefault">  
-            	<interceptor-ref name="isadministrator" /> 
-            	<interceptor-ref name="authority" />
+            	<interceptor-ref name="authority" /> 
+            	<interceptor-ref name="isadministrator" />
                 <interceptor-ref name="defaultStack" />                  
             </interceptor-stack>  
             <interceptor-stack name="searchstack">  
@@ -30,9 +30,9 @@
         </interceptors>  
    
         <global-results>  
-            <result name="login">/Login.jsp</result>  
+        	<result name="login" >/Login.jsp</result> 
+            <result name="notlogin">/notlogin.json</result>  
             <result name="notadmin">/notadmin.json</result>
-            <result name="sessionTimeout">/timeout.json</result>  
         </global-results>  
     </package>
       
@@ -41,4 +41,5 @@
     <include file="struts-partition.xml"></include>
     <include file="struts-user.xml"></include>
     <include file="struts-department.xml"></include>
+    <include file="struts-seatmanage.xml"></include>
 </struts>  

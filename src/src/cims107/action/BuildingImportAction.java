@@ -109,6 +109,9 @@ public class BuildingImportAction extends ActionSupport{
         	e.printStackTrace();
         	result = JSONObject.fromObject("{\"error\":\"教学楼导入失败\"}");
         	return SUCCESS;
+        }catch (Exception e) {
+        	result = JSONObject.fromObject("{\"error\":\"教学楼导入失败\"}");
+        	return SUCCESS;
         }
     	
     }

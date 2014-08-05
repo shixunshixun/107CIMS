@@ -50,13 +50,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	
       	</div>
       	</form>
-      	<button style="height:30px;margin-bottom:10px;float:right" id="search" class="btn btn-primary">查询</button>
+      	<button style="height:30px;margin-bottom:10px;position:relative;left:90%" id="search" class="btn btn-primary">查询</button>
       	<div id="result"></div>
-      	<div>
+      	<div id="buttonsets" style="display:inline-block">
       		<button href="#create" style="height:30px" data-toggle="modal" class="btn btn-primary">新增</button>
       		<button id="del" style="height:30px" data-toggle="modal" class="btn btn-primary">删除</button>
       		<button href="#importdiv" style="height:30px" data-toggle="modal" class="btn btn-primary">导入</button>
-      		<button id="export" style="height:30px" data-toggle="modal" class="btn btn-primary">导出</button>
+		</div>
+		<div id="buttonset" style="display:inline-block"></div>
       		<div class="modal hide" id="create">
     		<form name="createForm" id="createform">
       			<div class="modal-header">
@@ -167,9 +168,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!--   				<input type="button" value="确定" type="submit" onclick="importform.action='BuildingImport';importform.submit();" /> -->
 			</form>
 			</div>
-    	</div>
     </div>
     <script type="text/javascript">
+    	var searching=0;
 	    function setletter(){
 			$("font").filter('.twoword').css("letter-spacing",document.body.scrollWidth/25); 
 			$("font").filter('.threeword').css("letter-spacing",document.body.scrollWidth/40); 
@@ -186,45 +187,88 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		$("#updatebuildingfloor").val(floor);
     	}
      	function exportcol(){
-     		 var checklist = document.getElementsByName ("buildingid");
-     		 if (checklist.length == 0){
+     		var checked_num = $("input[name='buildingid']:checked").length;
+     		var checklist = $("input[name='buildingid']");
+     		if (checked_num == 0){
      			for(var i=0;i<checklist.length;i++)
      		   	{
      		      	checklist[i].checked = 1;
      		   	} 
      		 }
-     		 document.deleteform.action = 'BuildingExport';
-     		 document.deleteform.submit();
+     		 deleteform.action = 'BuildingExport';
+     		 deleteform.submit();
      	}
+		function changepage(k,j){
+			var i;
+			for(i=1;i<=j;i++){
+				if(i==k){
+					document.getElementById("page"+i).style.display="table";
+				}
+				else{
+					document.getElementById("page"+i).style.display="none";
+				}
+			}
+		}
 
 		$("#search").click(
 			function() {
-				var str="<form id=\"deleteform\"><table class=\"table\"><thead><tr><th>&nbsp;</th><th>名称</th><th>简称</th><th>所属校区</th><th>所属单位</th><th>总楼层数</th></tr></thead><tbody>";
+				var str="<form id=\"deleteform\">";
+				var sqr=document.getElementById("buttonset").innerHTML;
 				$.ajax({
 					url:"/cims107/BuildingSearch",
 					async:false,
 					data: $("#searchform").serialize(),
-					dataType:"json"
-						}).done(
-					function(data){
+					dataType:"json",
+					success: function(data){
+						if (data.error == null){
+						var k=0;
+						var j=1;
 						if (data!=null)
 						{
 //							var building = jQuery.parseJSON(data)
 							$.each(data,function(i,data){
+								if(k==10){
+									k=0;
+									str+="</table>";
+									j++;
+								}	
+								if(k==0){
+									if(j==1){
+										str+=("<table id=\"page"+j+"\"class=\"table\"><thead><tr><th>&nbsp;</th><th>名称</th><th>简称</th><th>所属校区</th><th>所属单位</th><th>总楼层数</th></tr></thead><tbody>");
+									}
+									else{
+										str+=("<table id=\"page"+j+"\" class=\"table\" style=\"display:none;\"><thead><tr><th>&nbsp;</th><th>名称</th><th>简称</th><th>所属校区</th><th>所属单位</th><th>总楼层数</th></tr></thead><tbody>");
+									}
+								}
 								str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"buildingid\" value="
 										+data.buildingId+"></td><td>"+data.buildingName+"</td><td>"
 										+data.buildingSimpleName+"</td><td>"+data.buildingDepartment+"</td><td>"
 										+data.buildingCompus+"</td><td>"+data.buildingFloorNum+
-										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatebuilding("+data.buildingId+",'"+data.buildingName+"','"+data.buildingSimpleName+"','"+data.buildingCompus+"','"+data.buildingDepartment+"',"+data.buildingFloorNum+")\">修改</button></td></tr>");					        
+										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatebuilding("+data.buildingId+",'"+data.buildingName+"','"+data.buildingSimpleName+"','"+data.buildingCompus+"','"+data.buildingDepartment+"',"+data.buildingFloorNum+")\">修改</button></td></tr>");
+								k++;							
 					        });
-							str+=("</table><input type=\"button\" value=\"导出\" type=\"submit\" onclick=\"exportcol();\" /></form>");
+					        str+=("</table>");
+					        if(window.searching==0){
+								sqr+=("<input type=\"button\" value=\"导出\" class=\"btn btn-primary\" type=\"submit\" onclick=\"exportcol();\" /></form>");
+								document.getElementById("buttonset").innerHTML=sqr;
+								window.searching++;
+					        }
+							str+=("<div>")
+							for(k=1;k<=j;k++){
+								str+=("<a class=\"button button-primary\"onclick=\"changepage("+k+","+j+")\">第"+k+"页</a>");
+							}
+							str+=("</div>")
 							document.getElementById('result').innerHTML=str;
-							//document.getElementById('result').innerHTML=<button href="#del" style="height:30px" data-toggle="modal" class="btn btn-primary">删除</button>;
-						}	
+						}
+						else{
+							document.getElementById('result').innerHTML=null;
+							alert("没有结果！");
+						}
+						}
 						else
-							document.getElementById('result').innerHTML="对不起，没有匹配的结果……";
-					}	
-				);
+							alert(data.error);
+					}
+						})
 			});
 		
 		$("#new").click(
@@ -264,8 +308,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					//	var successmsg = jQuery.parseJSON(result)
 						if(result.success != null)
 							alert(result.success);
-						if(result.errormsg != null)
-							alert(result.errormsg);
+						if(result.error != null)
+							alert(result.error);
+						document.getElementById('search').click();
             		}}
 				);		
 		});
@@ -287,8 +332,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             				{
 								if(result.success != null)
 									alert(result.success);
-								if(result.errormsg != null)
-									alert(result.errormsg);
+								if(result.error != null)
+									alert(result.error);
+								document.getElementById('search').click();
             				}}
 						);
 					}
@@ -334,14 +380,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             		{
 						if(result.success != null)
 							alert(result.success);
-						if(result.errormsg != null)
-							alert(result.errormsg);
+						if(result.error != null)
+							alert(result.error);
+						document.getElementById('search').click();
             		}}
 				);
 			});
 		
 		$("#import").click(
 				function() {
+					if ($('input[name="excelFile"]').val()==''){
+						alert("请选择文件！");
+						return false;
+					}
 				//	console.log(document.getElementById("imp").val());
 				//console.log($("#importform").serialize());
 					$.ajaxFileUpload({
@@ -352,10 +403,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						success: function(data,status) 
 	            		{
 						//	var successmsg = jQuery.parseJSON(result)
-							if(result.success != null)
-								alert(result.success);
-							if(result.errormsg != null)
-								alert(result.errormsg);
+							if(data.success != null)
+								alert(data.success);
+							if(data.error != null)
+								alert(data.error);
+							document.getElementById('search').click();
 	            		}}
 					);		
 			});

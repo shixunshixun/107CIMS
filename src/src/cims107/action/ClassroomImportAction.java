@@ -112,6 +112,9 @@ public class ClassroomImportAction extends ActionSupport{
         	e.printStackTrace();
         	result = JSONObject.fromObject("{\"error\":\"教室导入失败,信息不能重复\"}");
         	return SUCCESS;
+        } catch (Exception e) {
+        	result = JSONObject.fromObject("{\"error\":\"导入失败\"}");
+        	return SUCCESS;
         }
     }
     

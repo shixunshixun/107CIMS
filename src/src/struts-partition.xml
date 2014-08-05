@@ -49,7 +49,7 @@
             <interceptor-ref name="mydefault" />
         </action> 
         
-        <action name="PartitionEnbale" class="PartitionEnableAction">  
+        <action name="PartitionEnable" class="PartitionEnableAction">  
             <result type="json">   
                 <param name="root">result</param>  
             </result>  

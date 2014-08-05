@@ -63,7 +63,7 @@
             <column name="pIsUsed" length="8" />
         </property>
         
-        <many-to-one name="classroom" class="cims107.model.Classroom">
+        <many-to-one name="classroom" class="cims107.model.Classroom" >
 			<column name="pClsId" length="8" />
 		</many-to-one>
         

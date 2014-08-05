@@ -80,6 +80,7 @@ public class PartitionSearchAllAction extends ActionSupport{
 	    				c.setClsVCorridorLocate(b.getClsVCorridorLocate());
 	    				c.setBuilding(b.getBuilding());
 	    				c.setPartitions(null);
+	    				c.setSeats(null);
 	    				b.setPartitions(null);
 	    				//System.out.println(JSONObject.fromObject(b).toString());
 	    				//System.out.println(b.getBuildingCompus());

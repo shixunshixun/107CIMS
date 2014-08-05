@@ -24,7 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script src="js/bootstrap.js"></script>
 </head>
 
-<body onload="setletter()">
+<body onload="setletter();searchAll();">
 	<div style="height:700px;">
 		<form id="searchform" name="partitionForm">
         <div style="margin-left:2%">
@@ -92,8 +92,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	</div>
       	</div>
       	</form>
-      	<button style="height:30px;margin-bottom:10px" id="search" class="btn btn-primary">查询</button>      	
-      	<button style="height:30px;margin-bottom:10px" id="searchAll" class="btn btn-primary">查询全部</button>
+      	<button style="height:30px;margin-bottom:10px" id="search" class="btn btn-primary">查询</button>
       	<button style="height:30px;margin-bottom:10px;display:none" id="searchdistribute" class="btn btn-primary">查询可分配资源</button> 
       	<button style="height:30px;margin-bottom:10px;display:none" id="goback" class="btn btn-primary">返回</button>
       	<div id="result"></div>
@@ -114,20 +113,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 					<td>&nbsp;</td>
         			<td><input type="hidden" id="newbuildingname" name="buildingname">
-        			<input type="hidden" id="newcompus" name="compus">
-        			<input type="hidden" id="newclsserialnum" name="serialnumber">上课人数：</td>
-        			<td><input type="text" value="上课人数" id="newclsnum" name="partitionClassNum" onclick="this.value='';focus()"></td>
-					</tr>
-					<tr>
+        			<input type="hidden" id="newcompus" name="compus">教室名称：</td>
+        			<td><input type="text" id="newclsserialnum" name="serialnumber" readonly="readonly"></td>
+        			</tr>
+        			<tr>
+        			<td>&nbsp;</td>
+					<td>上课人数：</td>
+        			<td><input type="text" id="newclsnum" name="partitionClassNum" readonly="readonly" onclick="focus()"></td>
 					<td>&nbsp;</td>
 					<td>考试人数：</td>
-        			<td><input type="text" value="考试人数" id="newexamnum" name="partitionExamNum" onclick="this.value='';focus()"></td>
+        			<td><input type="text" id="newexamnum" name="partitionExamNum" readonly="readonly" onclick="focus()"></td>
 					</tr>
 					<tr>
         			<td><input type="radio" id="newweek" name="weekanddate" value="week" checked="true" onclick="radioclick();"></td>
 					<td>教学周：</td>
-        			<td><input type="number" id="newbeginweek" name="partitionBeginWeek" min="1" max="18" onclick="beginweek();focus()">
-        			<input type="number" id="newendweek" name="partitionEndWeek" min="1" max="18" onclick="endweek();focus()"></td>
+        			<td><input type="number" id="newbeginweek" name="partitionBeginWeek" min="1" onclick="beginweek();focus()">
+        			<input type="number" id="newendweek" name="partitionEndWeek" min="1" onclick="endweek();focus()"></td>
 					</tr>
 					<tr>
         			<td><input type="radio" id="newdate" name="weekanddate" value="date" onclick="radioclick();"></td>
@@ -145,10 +146,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>&nbsp;</td>
 					<td>单位：</td>
         			<td><input type="text" id="newpartitionDepartment" name="partitionDepartment">
-              <a id="spsh" onclick="spreadorshrink();" style="display:inline-block;">按单位号查询</a>
+              <a id="spsh" onclick="spreadorshrink();" style="display:inline-block;">单位查询</a>
               <div style="display:none;" id="departmentsearch" class="week">
-                <label>请输入单位号</label>
+                <label>单位号</label>
             	<input type="text" name="departmentId" id="departmentid">
+            	<label>单位名称</label>
+            	<input type="text" name="departmentName" id="departmentname">
                 <button id="department" type="button" class="btn btn-primary">确定</button>
               </div>
               <div id="departmentresult"></div>
@@ -209,8 +212,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       			</div>
       			<div class="modal-body">
       				<input type="radio" id="updateweek" name="upweekanddate" value="week" onclick="upradioclick();">
-        			<input type="number" id="updatepartitionBeginWeek" name="partitionBeginWeek" min="1" max="18" onclick="beginweek();focus()">
-        			<input type="number" id="updatepartitionEndWeek" name="partitionEndWeek" min="1" max="18" onclick="endweek();focus()">
+        			<input type="number" id="updatepartitionBeginWeek" name="partitionBeginWeek" min="1" onclick="beginweek();focus()">
+        			<input type="number" id="updatepartitionEndWeek" name="partitionEndWeek" min="1" onclick="endweek();focus()">
         			<input type="radio" id="updatedate" name="upweekanddate" value="date" onclick="upradioclick();">
         			<input type="date" id="updatebegindate" name="partitionBeginDate" style="width:130px;" onclick="begindate();focus()">
 					<input type="date" id="updateenddate" name="partitionEndDate" style="width:130px;" onclick="enddate();focus()">
@@ -271,10 +274,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		}    		
  //   		$("#updatepartitionwichday").listKey(whichday);
     	}
-		function newpartition(name,compus,serialnum){
+		function newpartition(name,compus,serialnum,clsnum,examnum){
 			$("#newbuildingname").val(name);
 			$("#newcompus").val(compus);
 			$("#newclsserialnum").val(serialnum);
+			$("#newclsnum").val(clsnum);
+			$("#newexamnum").val(examnum);
 			document.getElementById("newbeginweek").disabled = false;
 			document.getElementById("newendweek").disabled = false;
 			document.getElementById("newbegindate").disabled = true;
@@ -348,59 +353,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$("#searchIsUsed option:selected").val(1);
 				if ($("#searchIsUsed option:selected").val() == "停用")
 					$("#searchIsUsed option:selected").val(2);
-				var str="<form id=\"deleteform\"><table class=\"table\"><thead><tr><th>&nbsp;</th><th>学年</th><th>学期</th><th>教学楼</th><th>教室</th><th>划归部门</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th><th>开始周</th><th>结束周</th><th>是否启用</th></tr></thead><tbody>";
+				var str="<form id=\"deleteform\"><table class=\"table\"><thead><tr><th>&nbsp;</th><th>学年</th><th>学期</th><th>教学楼</th><th>教室</th><th>划归部门</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th><th>开始周</th><th>结束周</th><th>划分是否启用</th></tr></thead><tbody>";
 				$.ajax({
 					url:"/cims107/PartitionSearch",
 					async:false,
 					data: $("#searchform").serialize(),
 					dataType:"json",
-						}).done(
-					function(data){
-						if (data.length!=0)
-						{
-							$.each(data,function(i,data){
-								var building = data.classroom.building
-								if (data.partitionIsUsed == 1)
-									var partitionIsUsed = "启用";
-								if (data.partitionIsUsed == 2)
-									var partitionIsUsed = "停用";
-								str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"partitionid\" value="
-										+data.partitionId+"></td><td>"+data.partitionYear+"</td><td>"
-										+data.partitionTerm+"</td><td>"+building.buildingName+"</td><td>"
-										+data.classroom.clsSerialNumber+"</td><td>"+data.partitionDepartment+"</td><td>"
-										+data.classroom.clsType+"</td><td>"+data.classroom.clsAvailableSeatNum+"</td><td>"
-										+data.partitionClassNum+"</td><td>"+data.partitionExamNum+"</td><td>"
-										+data.partitionBeginWeek+"</td><td>"+data.partitionEndWeek+"</td><td>"
-										+partitionIsUsed+
-										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatepartition("+data.partitionId+",'"+data.partitionYear+"','"
-										+data.partitionTerm+"','"+data.partitionDepartment+"','"+data.partitionBeginWeek+"','"+data.partitionEndWeek+"','"+data.partitionBeginDate+"','"+data.partitionEndDate+"')\">修改</button></td></tr>");						        
-					        });
-							str+=("</table></form>");
-							document.getElementById('result').innerHTML=str;
-							//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
-						}
-						else
-							document.getElementById('result').innerHTML=null;
-					}	
-				);
-				
-			});
-		
-		$("#searchAll").click(
-				function() {
-					var str="<form id=\"multiform\"><table class=\"table\"><thead><tr><th>&nbsp;</th><th>学年</th><th>学期</th><th>教学楼</th><th>教室</th><th>划归部门</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th><th>开始周</th><th>结束周</th><th>是否启用</th></tr></thead><tbody>";
-					$.ajax({
-						url:"/cims107/PartitionSearchAll",
-						async:false,
-						data:null,
-						dataType:"json",
-							}).done(
-						function(data)
-						{
+					success: function(data){
+						if (data.error == null){
 							if (data.length!=0)
 							{
 								$.each(data,function(i,data){
-									var building = data.classroom.building;
+									var building = data.classroom.building
 									if (data.partitionIsUsed == 1)
 										var partitionIsUsed = "启用";
 									if (data.partitionIsUsed == 2)
@@ -414,16 +378,66 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 											+data.partitionBeginWeek+"</td><td>"+data.partitionEndWeek+"</td><td>"
 											+partitionIsUsed+
 											"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatepartition("+data.partitionId+",'"+data.partitionYear+"','"
-													+data.partitionTerm+"','"+data.partitionDepartment+"','"+data.partitionBeginWeek+"','"+data.partitionEndWeek+"','"+data.partitionBeginDate+"','"+data.partitionEndDate+"')\">修改</button></td></tr>");					        
+											+data.partitionTerm+"','"+data.partitionDepartment+"','"+data.partitionBeginWeek+"','"+data.partitionEndWeek+"','"+data.partitionBeginDate+"','"+data.partitionEndDate+"')\">修改</button></td></tr>");						        
 						        });
 								str+=("</table></form>");
 								document.getElementById('result').innerHTML=str;
 								//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
 							}
-						else
-							document.getElementById('result').innerHTML=null;
+							else{
+								document.getElementById('result').innerHTML=null;
+								alert("没有结果！");
+							}
 						}
-					);	
+						else
+							alert(data.error);
+					}	
+				});
+				}
+			);
+		
+			function searchAll() {
+				var str="<form id=\"multiform\"><table class=\"table\"><thead><tr><th>&nbsp;</th><th>学年</th><th>学期</th><th>教学楼</th><th>教室</th><th>划归部门</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th><th>开始周</th><th>结束周</th><th>划分是否启用</th></tr></thead><tbody>";
+				$.ajax({
+					url:"/cims107/PartitionSearchAll",
+					async:false,
+					data:null,
+					dataType:"json",
+					success: function(data){
+						if (data.error == null){
+							if (data.length!=0)
+							{
+								$.each(data,function(i,data){
+									var building = data.classroom.building;
+									if (data.partitionIsUsed == 1)
+										var partitionIsUsed = "启用";
+									if (data.partitionIsUsed == 2)
+										var partitionIsUsed = "停用";
+									str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"partitionid\" value="
+										+data.partitionId+"></td><td>"+data.partitionYear+"</td><td>"
+										+data.partitionTerm+"</td><td>"+building.buildingName+"</td><td>"
+										+data.classroom.clsSerialNumber+"</td><td>"+data.partitionDepartment+"</td><td>"
+										+data.classroom.clsType+"</td><td>"+data.classroom.clsAvailableSeatNum+"</td><td>"
+										+data.partitionClassNum+"</td><td>"+data.partitionExamNum+"</td><td>"
+										+data.partitionBeginWeek+"</td><td>"+data.partitionEndWeek+"</td><td>"
+										+partitionIsUsed+
+										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatepartition("+data.partitionId+",'"+data.partitionYear+"','"
+											+data.partitionTerm+"','"+data.partitionDepartment+"','"+data.partitionBeginWeek+"','"+data.partitionEndWeek+"','"+data.partitionBeginDate+"','"+data.partitionEndDate+"')\">修改</button></td></tr>");					        
+							    });
+								str+=("</table></form>");
+								document.getElementById('result').innerHTML=str;
+									//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
+							}
+							else{
+								document.getElementById('result').innerHTML=null;
+								alert("没有结果！");
+							}
+						}
+						else
+							alert(data.error);
+					}
+				});	
+			}
 // 					$("#result").load("/cims107/PartitionSearchAll",function(result){
 // 						if (result.length!=0)
 // 							{
@@ -448,11 +462,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 // 								document.getElementById('result').innerHTML=str;
 // 					    };
 //					});
-					});
+				
 		$("#gotonew").click(
 				function() {
 					document.getElementById("search").style.display="none";
-					document.getElementById("searchAll").style.display="none";
 					document.getElementById("gotonew").style.display="none";
 					document.getElementById("del").style.display="none";
 					document.getElementById("enable").style.display="none";
@@ -463,7 +476,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$("#goback").click(
 				function() {
 					document.getElementById("search").style.display="inline-block";
-					document.getElementById("searchAll").style.display="inline-block";
 					document.getElementById("gotonew").style.display="inline-block";
 					document.getElementById("del").style.display="inline-block";
 					document.getElementById("enable").style.display="inline-block";
@@ -492,7 +504,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    }
 					}
 					var reg = new RegExp("^[0-9]*$");
-					if(!reg.test($("#newclsnum").val()) && $("#newclsnum").val() != "" || !reg.test($("#newexamnum").val()) && $("#newexamnum").val() != "" || !reg.test($("#newbeginweek").val()) && $("#newbeginweek").val() != "" || !reg.test($("#newendweek").val()) && $("#newendweek").val() != ""){
+					if(!reg.test($("#newbeginweek").val()) && $("#newbeginweek").val() != "" || !reg.test($("#newendweek").val()) && $("#newendweek").val() != ""){
 	 			    	alert("数字输入错误！");
 	 			    	return false;
 	 			    }
@@ -509,8 +521,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             			{
 							if(result.success != null)
 								alert(result.success);
-							if(result.errormsg != null)
-								alert(result.errormsg);
+							if(result.error != null)
+								alert(result.error);
             			}}
 					);
 					
@@ -527,26 +539,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						async:false,
 						data: $("#searchform").serialize(),
 						dataType:"json",
-							}).done(
-						function(data){
-							if (data.length!=0)
-							{
-								$.each(data,function(i,data){
-								//	var building = jQuery.parseJSON(partition.building)
-									str+=("<tr><td>"+data.building.buildingName+"</td><td>"
-											+data.clsSerialNumber+"</td><td>"+data.clsType+"</td><td>"+data.clsAvailableSeatNum+"</td><td>"
-											+data.clsClassNum+"</td><td>"+data.clsExamNum+"</td><td>"+
-											"</td><td><button href=\"#create\" id=\"newid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"newpartition('"+data.building.buildingName+"','"+data.building.buildingCompus+"','"
-											+data.clsSerialNumber+"')\">划分</button></td></tr>");						        
-						        });
-								str+=("</table></form>");
-								document.getElementById('result').innerHTML=str;
-								//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
+						success: function(data){
+							if (data.error == null){
+								if (data.length!=0)
+								{
+									$.each(data,function(i,data){
+									//	var building = jQuery.parseJSON(partition.building)
+										str+=("<tr><td>"+data.building.buildingName+"</td><td>"
+												+data.clsSerialNumber+"</td><td>"+data.clsType+"</td><td>"+data.clsAvailableSeatNum+"</td><td>"
+												+data.clsClassNum+"</td><td>"+data.clsExamNum+"</td><td>"+
+												"</td><td><button href=\"#create\" id=\"newid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"newpartition('"+data.building.buildingName+"','"+data.building.buildingCompus+"','"
+												+data.clsSerialNumber+"',"+data.clsClassNum+","+data.clsExamNum+")\">划分</button></td></tr>");						        
+							        });
+									str+=("</table></form>");
+									document.getElementById('result').innerHTML=str;
+									if(data.error!=null)
+										alert(data.error);
+									//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
+								}
+								else{
+									document.getElementById('result').innerHTML=null;
+									alert("没有结果！");
+								}
 							}
 							else
-								document.getElementById('result').innerHTML=null;
+								alert(data.error);
 						}	
-					);
+					});
 					
 				});
 		$("#department").click(
@@ -557,19 +576,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						async:false,
 						data:$("#departmentid").serialize(),
 						dataType:"json",
-							}).done(
-						function(data){
-							if (data.length!=0)
-							{
-								str+=("<tr><td id=\"departmentid\" onclick=\"department('"+data.departmentName+"')\">"+data.departmentName+"</td></tr>");						        
-								str+=("</tbody></table>");
-								document.getElementById('departmentresult').innerHTML=str;
+						success: function(data){
+							if (data.error == null){
+								if (data.length!=0)
+								{
+									$.each(data,function(i,data){
+										str+=("<tr><td onclick=\"department('"+data.departmentName+"')\">"+data.departmentName+"</td></tr>");						        
+										str+=("</tbody></table>");
+									 });
+									document.getElementById('departmentresult').innerHTML=str;
+								}
+								else{
+									document.getElementById('departmentresult').innerHTML=null;
+									alert("没有结果！");
+								}
 							}
 							else
-								document.getElementById('departmentresult').innerHTML=null;
+								alert(data.error);
 						}	
-					);
-					
+					});
 				});
 		$("#del").click(
 				function() {
@@ -582,8 +607,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             			{
 							if(result.success != null)
 								alert(result.success);
-							if(result.errormsg != null)
-								alert(result.errormsg);
+							if(result.error != null)
+								alert(result.error);
+							document.getElementById('search').click();
             			}}
 					);
 					
@@ -599,8 +625,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             			{
 							if(result.success != null)
 								alert(result.success);
-							if(result.errormsg != null)
-								alert(result.errormsg);
+							if(result.error != null)
+								alert(result.error);
+							document.getElementById('search').click();
             			}}
 					);
 					
@@ -616,8 +643,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             			{
 							if(result.success != null)
 								alert(result.success);
-							if(result.errormsg != null)
-								alert(result.errormsg);
+							if(result.error != null)
+								alert(result.error);
+							document.getElementById('search').click();
             			}}
 					);
 					
@@ -656,8 +684,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             			{
 							if(result.success != null)
 								alert(result.success);
-							if(result.errormsg != null)
-								alert(result.errormsg);
+							if(result.error != null)
+								alert(result.error);
+							document.getElementById('search').click();
             			}}
 					);
 					
