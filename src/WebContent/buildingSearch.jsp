@@ -44,8 +44,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<select name="buildingDepartment">
         		<option></option>
           		<option>教务处</option>
-          		<option>教务处</option>
-          		<option>教务处</option>
+          		<option>医教处</option>
+          		<option>软件学院</option>
         	</select>
         	
       	</div>
@@ -95,8 +95,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<font color="red">*</font>
 						<select name="buildingDepartment" id="departmentname">
 							<option>教务处</option>
-							<option>教务处</option>
-							<option>教务处</option>
+							<option>医教处</option>
+							<option>软件学院</option>
 						</select>
 						</li>
         			</ul>
@@ -145,8 +145,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<font color="red">*</font>
 						<select name="buildingDepartment" id="updatebuildingdepartmentn">
 							<option>教务处</option>
-							<option>教务处</option>
-							<option>教务处</option>
+							<option>医教处</option>
+							<option>软件学院</option>
 						</select>
 						</li>
         			</ul>
@@ -163,7 +163,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			<a href="#" class="close" data-dismiss="modal">×</a>
         			<h4>导入教学楼信息</h4>
       			</div>
-  				<input type="file" id="imp" name="excelFile"/>
+  				<input type="file" id="imp" name="excelFile" style="width:auto" accept="*.xls"/>
   				<button id="import" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
 <!--   				<input type="button" value="确定" type="submit" onclick="importform.action='BuildingImport';importform.submit();" /> -->
 			</form>
@@ -217,15 +217,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					url:"/cims107/BuildingSearch",
 					async:false,
+					cache:false,
 					data: $("#searchform").serialize(),
 					dataType:"json",
 					success: function(data){
-						if (data.error == null){
 						var k=0;
 						var j=1;
 						if (data!=null)
 						{
-//							var building = jQuery.parseJSON(data)
+	//						var building = jQuery.parseJSON(data)
 							$.each(data,function(i,data){
 								if(k==10){
 									k=0;
@@ -246,29 +246,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										+data.buildingCompus+"</td><td>"+data.buildingFloorNum+
 										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatebuilding("+data.buildingId+",'"+data.buildingName+"','"+data.buildingSimpleName+"','"+data.buildingCompus+"','"+data.buildingDepartment+"',"+data.buildingFloorNum+")\">修改</button></td></tr>");
 								k++;							
-					        });
-					        str+=("</table>");
-					        if(window.searching==0){
+					       });
+					       str+=("</table>");
+						   if(window.searching==0){
 								sqr+=("<input type=\"button\" value=\"导出\" class=\"btn btn-primary\" type=\"submit\" onclick=\"exportcol();\" /></form>");
 								document.getElementById("buttonset").innerHTML=sqr;
 								window.searching++;
-					        }
+						   }
 							str+=("<div>")
 							for(k=1;k<=j;k++){
 								str+=("<a class=\"button button-primary\"onclick=\"changepage("+k+","+j+")\">第"+k+"页</a>");
 							}
 							str+=("</div>")
 							document.getElementById('result').innerHTML=str;
+							if (data.error != null)
+								alert(data.error);
 						}
 						else{
 							document.getElementById('result').innerHTML=null;
 							alert("没有结果！");
-						}
-						}
-						else
-							alert(data.error);
+						}	
 					}
-						})
+				})
 			});
 		
 		$("#new").click(
@@ -301,6 +300,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					url:"/cims107/BuildingCreate",
 					async:false,
+					cache:false,
 					data: $("#createform").serialize(),
 					dataType:"json",
 					success: function(result) 
@@ -317,7 +317,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$("#del").click(
 				function() {
 					var checked_num = $("input[name='buildingid']:checked").length;
-					console.log(checked_num);
 					if (checked_num == 0) {
 						alert("至少选择一项");
 						return false;
@@ -326,6 +325,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						$.ajax({
 							url:"/cims107/BuildingDelete",
 							async:false,
+							cache:false,
 							data:$("#deleteform").serialize(),
 							dataType:"json",
 							success: function(result) 
@@ -374,6 +374,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					url:"/cims107/BuildingUpdate",
 					async:false,
+					cache:false,
 					data: $("#updateform").serialize(),
 					dataType:"json",
 					success: function(result) 

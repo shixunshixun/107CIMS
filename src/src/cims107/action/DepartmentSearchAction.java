@@ -47,7 +47,9 @@ public class DepartmentSearchAction extends ActionSupport implements ModelDriven
     	
     	d = departmentService.find(department.getDepartmentId(), department.getDepartmentName());
     	if (d != null) {
-    		ja.add(JSONObject.fromObject(d));
+    		for (int i = 0; i < d.size(); i ++) {
+	    		ja.add(JSONObject.fromObject(d.get(i)));
+    		}
     		result = ja;
     	}
     	else

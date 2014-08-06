@@ -53,8 +53,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	<select name="partitionDepartment">
         		<option></option>
           		<option>教务处</option>
-          		<option>学生会</option>
-          		<option>教务处</option>
+          		<option>医教处</option>
+          		<option>软件学院</option>
         	</select>
         	<label><font class="twoword">校</font>区</label>
         	<select name="compus">
@@ -92,7 +92,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	</div>
       	</div>
       	</form>
-      	<button style="height:30px;margin-bottom:10px" id="search" class="btn btn-primary">查询</button>
+      	<button style="height:30px;margin-bottom:10px;position:relative;left:90%" id="search" class="btn btn-primary">查询</button>
       	<button style="height:30px;margin-bottom:10px;display:none" id="searchdistribute" class="btn btn-primary">查询可分配资源</button> 
       	<button style="height:30px;margin-bottom:10px;display:none" id="goback" class="btn btn-primary">返回</button>
       	<div id="result"></div>
@@ -111,7 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       			<div class="modal-body">
 				<table>
 					<tr>
-					<td>&nbsp;</td>
+					<td style="width:18px;">&nbsp;</td>
         			<td><input type="hidden" id="newbuildingname" name="buildingname">
         			<input type="hidden" id="newcompus" name="compus">教室名称：</td>
         			<td><input type="text" id="newclsserialnum" name="serialnumber" readonly="readonly"></td>
@@ -124,6 +124,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<td>考试人数：</td>
         			<td><input type="text" id="newexamnum" name="partitionExamNum" readonly="readonly" onclick="focus()"></td>
 					</tr>
+				</table>
+				<table>
 					<tr>
         			<td><input type="radio" id="newweek" name="weekanddate" value="week" checked="true" onclick="radioclick();"></td>
 					<td>教学周：</td>
@@ -211,28 +213,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			<h4>修改教室划分</h4>
       			</div>
       			<div class="modal-body">
-      				<input type="radio" id="updateweek" name="upweekanddate" value="week" onclick="upradioclick();">
-        			<input type="number" id="updatepartitionBeginWeek" name="partitionBeginWeek" min="1" onclick="beginweek();focus()">
+				<table>
+					<tr>
+      				<td><input type="radio" id="updateweek" name="upweekanddate" value="week" class="radio" onclick="upradioclick();"></td>
+					<td>教学周：</td>
+        			<td><input type="number" id="updatepartitionBeginWeek" name="partitionBeginWeek" min="1" onclick="beginweek();focus()">
         			<input type="number" id="updatepartitionEndWeek" name="partitionEndWeek" min="1" onclick="endweek();focus()">
-        			<input type="radio" id="updatedate" name="upweekanddate" value="date" onclick="upradioclick();">
-        			<input type="date" id="updatebegindate" name="partitionBeginDate" style="width:130px;" onclick="begindate();focus()">
-					<input type="date" id="updateenddate" name="partitionEndDate" style="width:130px;" onclick="enddate();focus()">
-        			<input type="hidden" id="updatepartitionid" name="partitionId">  
-        			<select name="partitionDepartment" id="updatepartitionDepartment">
+					</td>
+					</tr>
+					<tr>
+        			<td><input type="radio" id="updatedate" name="upweekanddate" value="date" class="radio" onclick="upradioclick();"></td>
+					<td>日期：</td>
+        			<td><input type="date" id="updatebegindate" name="partitionBeginDate" style="width:130px;" onclick="begindate();focus()">
+					<input type="date" id="updateenddate" name="partitionEndDate" style="width:130px;" onclick="enddate();focus()"></td>
+        			<input type="hidden" id="updatepartitionid" name="partitionId">
+					</tr>
+					<tr>
+					<td>&nbsp;</td>
+					<td>单位：</td>
+        			<td><select name="partitionDepartment" id="updatepartitionDepartment">
           				<option>教务处</option>
-          				<option>学生会</option>
-          				<option>教务处</option>
-        			</select>      			
-        			<select name="partitionYear" id="updatepartitionYear">
+          				<option>医教处</option>
+          				<option>软件学院</option>
+        			</select></td>
+					</tr>
+					<tr>
+					<td>&nbsp;</td>
+					<td>年份：</td>
+        			<td><select name="partitionYear" id="updatepartitionYear">
           				<option>2012-2013</option>
           				<option>2013-2014</option>
           				<option>2014-2015</option>
-        			</select>
-        			<select name="partitionTerm" id="updatepartitionTerm">
+        			</select></td>
+					</tr>
+					<tr>
+					<td>&nbsp;</td>
+					<td>学期：</td>
+        			<td><select name="partitionTerm" id="updatepartitionTerm">
           				<option>第一学期</option>
           				<option>第二学期</option>
           				<option>第三学期</option>
-        			</select>      			  
+        			</select> </td> 
+					</tr>
+				</table>
 <!--         			<br/> -->
 <%--         			<s:checkboxlist theme="simple" id="updatepartitionwhichday" name="partitionWhichDay" list="#{'星期一':'1','星期二':'2','星期三':'3','星期四':'4','星期五':'5','星期六':'6','星期日':'7'}"  --%>
 <%--          				label="每周使用星期" labelposition="top" listKey="value" listValue="key"> --%>
@@ -243,6 +266,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       			</div>
       			</form>
       		</div>
+
     	</div>
     </div>
     <script type="text/javascript">
@@ -252,6 +276,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("font").filter('.fourword').css("letter-spacing",document.body.scrollWidth/80); 
 			$("font").filter('.fiveword').css("letter-spacing",document.body.scrollWidth/130); 
 			$("font").filter('.sixword').css("letter-spacing",document.body.scrollWidth/300); 
+		}
+	    function changepage(k,j){
+			var i;
+			for(i=1;i<=j;i++){
+				if(i==k){
+					document.getElementById("page"+i).style.display="table";
+				}
+				else{
+					document.getElementById("page"+i).style.display="none";
+				}
+			}
 		}
     	function updatepartition(i,year,term,department,beginweek,endweek,begindate,enddate) {
     		$("#updatepartitionid").val(i);
@@ -353,67 +388,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$("#searchIsUsed option:selected").val(1);
 				if ($("#searchIsUsed option:selected").val() == "停用")
 					$("#searchIsUsed option:selected").val(2);
-				var str="<form id=\"deleteform\"><table class=\"table\"><thead><tr><th>&nbsp;</th><th>学年</th><th>学期</th><th>教学楼</th><th>教室</th><th>划归部门</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th><th>开始周</th><th>结束周</th><th>划分是否启用</th></tr></thead><tbody>";
+				var str="<form id=\"multiform\">";
 				$.ajax({
 					url:"/cims107/PartitionSearch",
 					async:false,
+					cache:false,
 					data: $("#searchform").serialize(),
 					dataType:"json",
 					success: function(data){
-						if (data.error == null){
-							if (data.length!=0)
-							{
-								$.each(data,function(i,data){
-									var building = data.classroom.building
-									if (data.partitionIsUsed == 1)
-										var partitionIsUsed = "启用";
-									if (data.partitionIsUsed == 2)
-										var partitionIsUsed = "停用";
-									str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"partitionid\" value="
-											+data.partitionId+"></td><td>"+data.partitionYear+"</td><td>"
-											+data.partitionTerm+"</td><td>"+building.buildingName+"</td><td>"
-											+data.classroom.clsSerialNumber+"</td><td>"+data.partitionDepartment+"</td><td>"
-											+data.classroom.clsType+"</td><td>"+data.classroom.clsAvailableSeatNum+"</td><td>"
-											+data.partitionClassNum+"</td><td>"+data.partitionExamNum+"</td><td>"
-											+data.partitionBeginWeek+"</td><td>"+data.partitionEndWeek+"</td><td>"
-											+partitionIsUsed+
-											"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatepartition("+data.partitionId+",'"+data.partitionYear+"','"
-											+data.partitionTerm+"','"+data.partitionDepartment+"','"+data.partitionBeginWeek+"','"+data.partitionEndWeek+"','"+data.partitionBeginDate+"','"+data.partitionEndDate+"')\">修改</button></td></tr>");						        
-						        });
-								str+=("</table></form>");
-								document.getElementById('result').innerHTML=str;
-								//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
-							}
-							else{
-								document.getElementById('result').innerHTML=null;
-								alert("没有结果！");
-							}
-						}
-						else
-							alert(data.error);
-					}	
-				});
-				}
-			);
-		
-			function searchAll() {
-				var str="<form id=\"multiform\"><table class=\"table\"><thead><tr><th>&nbsp;</th><th>学年</th><th>学期</th><th>教学楼</th><th>教室</th><th>划归部门</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th><th>开始周</th><th>结束周</th><th>划分是否启用</th></tr></thead><tbody>";
-				$.ajax({
-					url:"/cims107/PartitionSearchAll",
-					async:false,
-					data:null,
-					dataType:"json",
-					success: function(data){
-						if (data.error == null){
-							if (data.length!=0)
-							{
-								$.each(data,function(i,data){
-									var building = data.classroom.building;
-									if (data.partitionIsUsed == 1)
-										var partitionIsUsed = "启用";
-									if (data.partitionIsUsed == 2)
-										var partitionIsUsed = "停用";
-									str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"partitionid\" value="
+						var k=0;
+						var j=1;
+						if (data.length!=0)
+						{
+							$.each(data,function(i,data){
+								if(k==10){
+									k=0;
+									str+="</table>";
+									j++;
+									}
+									if(k==0){
+										if(j==1){
+											str+=("<table id=\"page"+j+"\"class=\"table\"><thead><tr><th>&nbsp;</th><th>学年</th><th>学期</th><th>教学楼</th><th>教室</th><th>划归部门</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th><th>开始周</th><th>结束周</th><th>划分是否启用</th></tr></thead><tbody>");
+										}
+										else{
+											str+=("<table id=\"page"+j+"\" class=\"table\" style=\"display:none;\"><thead><tr><th>&nbsp;</th><th>学年</th><th>学期</th><th>教学楼</th><th>教室</th><th>划归部门</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th><th>开始周</th><th>结束周</th><th>划分是否启用</th></tr></thead><tbody>");
+										}
+									}
+								var building = data.classroom.building
+								if (data.partitionIsUsed == 1)
+									var partitionIsUsed = "启用";
+								if (data.partitionIsUsed == 2)
+									var partitionIsUsed = "停用";
+								str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"partitionid\" value="
 										+data.partitionId+"></td><td>"+data.partitionYear+"</td><td>"
 										+data.partitionTerm+"</td><td>"+building.buildingName+"</td><td>"
 										+data.classroom.clsSerialNumber+"</td><td>"+data.partitionDepartment+"</td><td>"
@@ -422,22 +428,91 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 										+data.partitionBeginWeek+"</td><td>"+data.partitionEndWeek+"</td><td>"
 										+partitionIsUsed+
 										"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatepartition("+data.partitionId+",'"+data.partitionYear+"','"
-											+data.partitionTerm+"','"+data.partitionDepartment+"','"+data.partitionBeginWeek+"','"+data.partitionEndWeek+"','"+data.partitionBeginDate+"','"+data.partitionEndDate+"')\">修改</button></td></tr>");					        
-							    });
-								str+=("</table></form>");
-								document.getElementById('result').innerHTML=str;
-									//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
+										+data.partitionTerm+"','"+data.partitionDepartment+"','"+data.partitionBeginWeek+"','"+data.partitionEndWeek+"','"+data.partitionBeginDate+"','"+data.partitionEndDate+"')\">修改</button></td></tr>");						        
+								k++;
+							});
+							str+=("</table></form>");
+							str+=("<div>");
+							for(k=1;k<=j;k++){
+								str+=("<a class=\"button button-primary\"onclick=\"changepage("+k+","+j+")\">第"+k+"页</a>");
 							}
-							else{
-								document.getElementById('result').innerHTML=null;
-								alert("没有结果！");
-							}
+							str+=("</div>");
+							document.getElementById('result').innerHTML=str;
+							if (data.error != null)
+								alert(data.error);
+							//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
 						}
-						else
-							alert(data.error);
-					}
-				});	
+						else{
+							document.getElementById('result').innerHTML=null;
+							alert("没有结果！");
+						}
+				}	
+			});
 			}
+		);
+		
+			function searchAll() {
+				var str="<form id=\"multiform\">";
+				$.ajax({
+					url:"/cims107/PartitionSearchAll",
+					async:false,
+					cache:false,
+					data:null,
+					dataType:"json",
+					success: function(data){
+						var k=0;
+						var j=1;
+						if (data.length!=0)
+						{
+							$.each(data,function(i,data){
+								if(k==10){
+								k=0;
+								str+="</table>";
+								j++;
+								}
+								if(k==0){
+									if(j==1){
+										str+=("<table id=\"page"+j+"\"class=\"table\"><thead><tr><th>&nbsp;</th><th>学年</th><th>学期</th><th>教学楼</th><th>教室</th><th>划归部门</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th><th>开始周</th><th>结束周</th><th>划分是否启用</th></tr></thead><tbody>");
+									}
+									else{
+										str+=("<table id=\"page"+j+"\" class=\"table\" style=\"display:none;\"><thead><tr><th>&nbsp;</th><th>学年</th><th>学期</th><th>教学楼</th><th>教室</th><th>划归部门</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th><th>开始周</th><th>结束周</th><th>划分是否启用</th></tr></thead><tbody>");
+									}
+								}
+								var building = data.classroom.building;
+								if (data.partitionIsUsed == 1)
+									var partitionIsUsed = "启用";
+								if (data.partitionIsUsed == 2)
+									var partitionIsUsed = "停用";
+								str+=("<tr><td><input id=\"check\" type=\"checkbox\" name=\"partitionid\" value="
+									+data.partitionId+"></td><td>"+data.partitionYear+"</td><td>"
+									+data.partitionTerm+"</td><td>"+building.buildingName+"</td><td>"
+									+data.classroom.clsSerialNumber+"</td><td>"+data.partitionDepartment+"</td><td>"
+									+data.classroom.clsType+"</td><td>"+data.classroom.clsAvailableSeatNum+"</td><td>"
+									+data.partitionClassNum+"</td><td>"+data.partitionExamNum+"</td><td>"
+									+data.partitionBeginWeek+"</td><td>"+data.partitionEndWeek+"</td><td>"
+									+partitionIsUsed+
+									"</td><td><button href=\"#updatediv\" id=\"updateid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"updatepartition("+data.partitionId+",'"+data.partitionYear+"','"
+										+data.partitionTerm+"','"+data.partitionDepartment+"','"+data.partitionBeginWeek+"','"+data.partitionEndWeek+"','"+data.partitionBeginDate+"','"+data.partitionEndDate+"')\">修改</button></td></tr>");
+								k++;
+						    });
+							str+=("</table></form>");
+							str+=("<div>");
+							for(k=1;k<=j;k++){
+								str+=("<a class=\"button button-primary\"onclick=\"changepage("+k+","+j+")\">第"+k+"页</a>");
+							}
+							str+=("</div>");
+							document.getElementById('result').innerHTML=str;
+							if (data.error != null)
+								alert(data.error);
+								//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
+						}
+						else{
+							document.getElementById('result').innerHTML=null;
+							alert("没有结果！");
+						}
+				}
+			});	
+		}
 // 					$("#result").load("/cims107/PartitionSearchAll",function(result){
 // 						if (result.length!=0)
 // 							{
@@ -515,6 +590,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$.ajax({
 						url:"/cims107/PartitionCreate",
 						async:false,
+						cache:false,
 						data: $("#createform").serialize(),
 						dataType:"json",
 						success: function(result) 
@@ -533,57 +609,76 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						$("#searchIsUsed option:selected").val(1);
 					if ($("#searchIsUsed option:selected").val() == "停用")
 						$("#searchIsUsed option:selected").val(2);
-					var str="<form id=\"deleteform\"><table class=\"table\"><thead><tr><th>教学楼</th><th>教室</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th></tr></thead><tbody>";
+					var str="<form id=\"deleteform\">";
 					$.ajax({
 						url:"/cims107/PartitionSearchDistributableCls",
 						async:false,
+						cache:false,
 						data: $("#searchform").serialize(),
 						dataType:"json",
 						success: function(data){
-							if (data.error == null){
-								if (data.length!=0)
-								{
-									$.each(data,function(i,data){
-									//	var building = jQuery.parseJSON(partition.building)
-										str+=("<tr><td>"+data.building.buildingName+"</td><td>"
-												+data.clsSerialNumber+"</td><td>"+data.clsType+"</td><td>"+data.clsAvailableSeatNum+"</td><td>"
-												+data.clsClassNum+"</td><td>"+data.clsExamNum+"</td><td>"+
-												"</td><td><button href=\"#create\" id=\"newid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"newpartition('"+data.building.buildingName+"','"+data.building.buildingCompus+"','"
-												+data.clsSerialNumber+"',"+data.clsClassNum+","+data.clsExamNum+")\">划分</button></td></tr>");						        
-							        });
-									str+=("</table></form>");
-									document.getElementById('result').innerHTML=str;
-									if(data.error!=null)
-										alert(data.error);
-									//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
+							var k=0;
+							var j=1;
+							if (data.length!=0)
+							{
+								$.each(data,function(i,data){
+									if(k==10){
+										k=0;
+										str+="</table>";
+										j++;
+										}
+										if(k==0){
+											if(j==1){
+												str+=("<table id=\"page"+j+"\"class=\"table\"><thead><tr><th>教学楼</th><th>教室</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th></tr></thead><tbody>");
+											}
+											else{
+												str+=("<table id=\"page"+j+"\" class=\"table\" style=\"display:none;\"><thead><tr><th>教学楼</th><th>教室</th><th>教室类型</th><th>有效座位</th><th>上课人数</th><th>考试人数</th></tr></thead><tbody>");
+											}
+										}
+								//	var building = jQuery.parseJSON(partition.building)
+									str+=("<tr><td>"+data.building.buildingName+"</td><td>"
+											+data.clsSerialNumber+"</td><td>"+data.clsType+"</td><td>"+data.clsAvailableSeatNum+"</td><td>"
+											+data.clsClassNum+"</td><td>"+data.clsExamNum+"</td><td>"+
+											"</td><td><button href=\"#create\" id=\"newid\" style=\"height:30px\" data-toggle=\"modal\" class=\"btn btn-primary\" onclick=\"newpartition('"+data.building.buildingName+"','"+data.building.buildingCompus+"','"
+											+data.clsSerialNumber+"',"+data.clsClassNum+","+data.clsExamNum+")\">划分</button></td></tr>");						        
+						        	k++;
+								});
+								str+=("</table></form>");
+								str+=("<div>");
+								for(k=1;k<=j;k++){
+									str+=("<a class=\"button button-primary\"onclick=\"changepage("+k+","+j+")\">第"+k+"页</a>");
 								}
-								else{
-									document.getElementById('result').innerHTML=null;
-									alert("没有结果！");
-								}
+								str+=("</div>");
+								document.getElementById('result').innerHTML=str;
+								if(data.error!=null)
+									alert(data.error);
+								//document.getElementById('result').innerHTML=<button href="#del"  data-toggle="modal" class="btn btn-primary">删除</button>;
 							}
-							else
-								alert(data.error);
-						}	
-					});
-					
+							else{
+								document.getElementById('result').innerHTML=null;
+								alert("没有结果！");
+							}
+					}	
 				});
+				
+			});
 		$("#department").click(
 				function() {
 					var str="<table class=\"table\"><thead><th>单位名称</th></thead><tbody>";
 					$.ajax({
 						url:"/cims107/DepartmentSearch",
 						async:false,
-						data:$("#departmentid").serialize(),
+						cache:false,
+						data:{departmentId:$("#departmentid").val(),departmentName:$("#departmentname").val()},
 						dataType:"json",
 						success: function(data){
 							if (data.error == null){
 								if (data.length!=0)
 								{
 									$.each(data,function(i,data){
-										str+=("<tr><td onclick=\"department('"+data.departmentName+"')\">"+data.departmentName+"</td></tr>");						        
-										str+=("</tbody></table>");
-									 });
+										str+=("<tr><td onclick=\"department('"+data.departmentName+"')\">"+data.departmentName+"</td></tr>");
+									 });						        
+									str+=("</tbody></table>");
 									document.getElementById('departmentresult').innerHTML=str;
 								}
 								else{
@@ -598,57 +693,78 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				});
 		$("#del").click(
 				function() {
-					$.ajax({
-						url:"/cims107/PartitionDelete",
-						async:false,
-						data:$("#multiform").serialize(),
-						dataType:"json",
-						success: function(result) 
-            			{
-							if(result.success != null)
-								alert(result.success);
-							if(result.error != null)
-								alert(result.error);
-							document.getElementById('search').click();
-            			}}
-					);
-					
+					var checked_num = $("input[name='partitionid']:checked").length;
+					if (checked_num == 0) {
+						alert("至少选择一项");
+						return false;
+					}						
+					else if (confirm("您确认要删除所选信息吗？")){
+						$.ajax({
+							url:"/cims107/PartitionDelete",
+							async:false,
+							cache:false,
+							data:$("#multiform").serialize(),
+							dataType:"json",
+							success: function(result) 
+	            			{
+								if(result.success != null)
+									alert(result.success);
+								if(result.error != null)
+									alert(result.error);
+								document.getElementById('search').click();
+	            			}}
+						);
+					}
 				});
 		$("#enable").click(
 				function() {
-					$.ajax({
-						url:"/cims107/PartitionEnable",
-						async:false,
-						data:$("#multiform").serialize(),
-						dataType:"json",
-						success: function(result) 
-            			{
-							if(result.success != null)
-								alert(result.success);
-							if(result.error != null)
-								alert(result.error);
-							document.getElementById('search').click();
-            			}}
-					);
-					
+					var checked_num = $("input[name='partitionid']:checked").length;
+					if (checked_num == 0) {
+						alert("至少选择一项");
+						return false;
+					}						
+					else {
+						$.ajax({
+							url:"/cims107/PartitionEnable",
+							async:false,
+							cache:false,
+							data:$("#multiform").serialize(),
+							dataType:"json",
+							success: function(result) 
+	            			{
+								if(result.success != null)
+									alert(result.success);
+								if(result.error != null)
+									alert(result.error);
+								document.getElementById('search').click();
+	            			}}
+						);
+					}
 				});
 		$("#disable").click(
 				function() {
-					$.ajax({
-						url:"/cims107/PartitionDisable",
-						async:false,
-						data:$("#multiform").serialize(),
-						dataType:"json",
-						success: function(result) 
-            			{
-							if(result.success != null)
-								alert(result.success);
-							if(result.error != null)
-								alert(result.error);
-							document.getElementById('search').click();
-            			}}
-					);
-					
+					var checked_num = $("input[name='partitionid']:checked").length;
+					if (checked_num == 0) {
+						alert("至少选择一项");
+						return false;
+					}						
+					else {
+						$.ajax({
+							url:"/cims107/PartitionDisable",
+							async:false,
+							cache:false,
+							data:$("#multiform").serialize(),
+							dataType:"json",
+							success: function(result) 
+	            			{
+								if(result.success != null)
+									alert(result.success);
+								if(result.error != null)
+									alert(result.error);
+								document.getElementById('search').click();
+	            			}}
+						);
+					}
 				});
 		$("#update").click(
 			function() {
@@ -670,7 +786,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						($("#updatepartitionBeginWeek")).val('');
 						($("#updatepartitionEndWeek")).val('');
 					}
-					console.log($("#updateform").serialize());
 					if ($("#updatepartitionIsUsed option:selected").val() == "启用")
 						$("#updatepartitionIsUsed option:selected").val(1);
 					if ($("#updatepartitionIsUsed option:selected").val() == "停用")
@@ -678,6 +793,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$.ajax({
 						url:"/cims107/PartitionUpdate",
 						async:false,
+						cache:false,
 						data: $("#updateform").serialize(),
 						dataType:"json",
 						success: function(result) 

@@ -22,6 +22,7 @@ import cims107.model.Building;
 import cims107.model.Classroom;
 import cims107.service.BuildingService;
 import cims107.service.ClassroomService;
+import cims107.service.SeatManageService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -30,8 +31,17 @@ public class ClassroomImportAction extends ActionSupport{
     private String excelFileFileName;
     private JSONObject result;
     
-    private ClassroomService classroomService;  
-    BuildingService buildingService;
+    private ClassroomService classroomService; 
+    private SeatManageService seatmanageService;
+    public SeatManageService getSeatmanageService() {
+		return seatmanageService;
+	}
+
+	public void setSeatmanageService(SeatManageService seatmanageService) {
+		this.seatmanageService = seatmanageService;
+	}
+
+	BuildingService buildingService;
     
     public BuildingService getBuildingService() {
 		return buildingService;
@@ -100,6 +110,7 @@ public class ClassroomImportAction extends ActionSupport{
 		        for (int i = 0; i < classroomlst.size(); i++) {
 		        	Classroom c = classroomlst.get(i);
 		        	classroomService.add(c);
+		        	seatmanageService.add(c, c.getClsMaxRow(), c.getClsMaxCol());
 		        }
 		        result = JSONObject.fromObject("{\"success\":\"导入成功\"}");
     		}

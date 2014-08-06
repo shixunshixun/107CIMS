@@ -23,6 +23,7 @@
             	<interceptor-ref name="isadministrator" />
                 <interceptor-ref name="defaultStack" />                  
             </interceptor-stack>  
+            
             <interceptor-stack name="searchstack">  
             	<interceptor-ref name="authority" />
                 <interceptor-ref name="defaultStack" />                  

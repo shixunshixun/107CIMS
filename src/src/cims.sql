@@ -87,20 +87,36 @@ unique key (departmentName)
 CREATE TABLE cims_record(
 recordId int(8) not null  primary key auto_increment,
 recordTimestamp TIMESTAMP,
-recordMessage varchar(100)
-) DEFAULT CHARSET=gbk;
+recordMessage varchar(255)
+)  DEFAULT CHARSET=gbk;
 
 insert into cims_user values('', 'sysu1', 'sysu1', '0');
 insert into cims_user values('', 'sysu2', 'sysu2', '');	
+insert into cims_user values('', 'cims', 'cims', '0');
+insert into cims_user values('', 'cims_admin', 'cims_admin', '1');
 insert into cims_user values('', 'admin', 'admin', '1');
 
 insert into cims_building values('', '公共教学楼A栋', '教务处', '公教楼A', '东校区', '5');
-insert into cims_building values('', '公共教学楼B栋', '教务处', '公教楼B', '东校区', '5');
+insert into cims_building values('', '南实验楼B栋', '教务处', '南实验楼B栋', '东校区', '5');
+insert into cims_building values('', '公共教学楼D栋', '医教处', '公教楼D', '南校区', '5');
+insert into cims_building values('', '公共教学楼B栋', '医教处', '公教楼B', '珠海校区', '5');
 insert into cims_building values('', '第一教学楼', '教务处', '一教', '南校区', '5');
+insert into cims_building values('', '第二教学楼', '教务处', '二教', '南校区', '5');
 
-insert into cims_cls values('', '多媒体教室', '1', '1', '20140709001', '45', '43', '140', '东南', '1', '矩形', '2', '上课', '1', '50', '45', '9', '6', '1,2', '3,4'); 
-insert into cims_cls values('', '语音室', '1', '1', '20140709002', '45', '43', '140', '东南', '1', '扇形', '2', '语音', '0', '50', '45', '9', '6', '1,2', '3,4');
-insert into cims_cls values('', '多媒体教室', '1', '2', '20140709003', '45', '43', '140', '东南', '1', '矩形', '2', '上课', '1', '50', '45', '9', '6', '1,2', '3,4'); 
+insert into cims_cls values('', '多媒体教室', '1', '1', 'ggjxlad001', '45', '43', '140', '东南', '1', '矩形', '1', '上课', '1', '50', '45', '9', '6', '1,2;5,6', '3,4;5,6'); 
+insert into cims_cls values('', '语音室', '2', '1', 'ggjxlad002', '45', '43', '140', '东北', '1', '扇形', '1', '语音', '1', '50', '45', '9', '6', '2,3;5,6', '3,4');
+insert into cims_cls values('', '实验室', '3', '2', 'nsyl001', '45', '43', '140', '西南', '0', '矩形', '1', '做实验', '1', '50', '45', '9', '6', '1,2', '3,4'); 
+insert into cims_cls values('', '多媒体教室', '2', '3', 'ggjxldd001', '45', '43', '140', '西北', '0', '矩形', '1', '上课', '1', '50', '45', '9', '6', '1,2;2,3', '3,4;4,5'); 
+insert into cims_cls values('', '语音室', '1', '5', 'dyjxl001', '45', '43', '140', '西北', '1', '扇形', '1', '语音', '1', '50', '45', '9', '6', '1,2', '3,4');
+insert into cims_cls values('', '多媒体教室', '4', '5', 'dejxl001', '45', '43', '140', '西南', '1', '矩形', '1', '上课', '1', '50', '45', '9', '6', '1,2', '3,4'); 
 
-insert into cims_partition values('', '2014-2015', '第二学期', '2', '教务处', '45', '43', '1', '3', '1', '3', '1,2,3', '2', '', '');
-insert into cims_partition values('', '2013-2014', '第一学期', '1', '学生会', '45', '43', '', '', '4', '6', '1,2,3,4', '1', '2014-07-01', '2014-07-04');
+insert into cims_partition values('', '2014-2015', '第二学期', '1', '教务处', '45', '43', '1', '3', '6', '8', '1,2,3', '2', '', '');
+insert into cims_partition values('', '2013-2014', '第一学期', '2', '学生会', '45', '43', '', '', '4', '6', '1,2,3,4', '1', '2014-07-01', '2014-07-04');
+insert into cims_partition values('', '2011-2012', '第二学期', '3', '教务处', '45', '43', '1', '3', '2', '4', '2,3', '2', '', '');
+insert into cims_partition values('', '2013-2014', '第二学期', '4', '学生会', '45', '43', '', '', '4', '6', '4', '1', '2014-05-11', '2014-05-13');
+
+insert into cims_department values('jwc', '教务处');
+insert into cims_department values('ruanjianxueyuan', '软件学院');
+insert into cims_department values('yjc', '医教处');
+insert into cims_department values('xinke', '信息科学技术学院');
+insert into cims_department values('xsh', '学生会');

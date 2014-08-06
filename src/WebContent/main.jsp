@@ -22,37 +22,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<script src="js/jquery-1.11.1.min.js"></script>
   	<script src="js/bootstrap.js"></script>
   	
-  	<script>
-  		function iFrameHeight() { 
-  			var ifm= document.getElementById("ifm"); 
-  			var subWeb = document.frames ? document.frames["ifm"].document : ifm.contentDocument; 
-  			if(ifm != null && subWeb != null) { 
-  				ifm.height = subWeb.body.scrollHeight; 
-  			}
-  		}
-  		setInterval(iFrameHeight,100);
-  		function building(){
-  			document.getElementById('ifm').src='buildingSearch.jsp';
-  			document.getElementById('title').innerHTML="教学楼管理<form action=\"logout\" method=\"post\" style=\"float:right\"><button type=\"submit\" class=\"btn btn-mini\" style=\"margin-top:10px;\">退出</button></form>";
-  		}
-  		function classroom(){
-  			document.getElementById('ifm').src='classroomSearch.jsp';
-  			document.getElementById('title').innerHTML="教室管理<form action=\"logout\" method=\"post\" style=\"float:right\"><button type=\"submit\" class=\"btn btn-mini\" style=\"margin-top:10px;\">退出</button></form>";
-  		}
-  		function partition(){
-  			document.getElementById('ifm').src='partitionSearch.jsp';
-  			document.getElementById('title').innerHTML="教室划分<form action=\"logout\" method=\"post\" style=\"float:right\"><button type=\"submit\" class=\"btn btn-mini\" style=\"margin-top:10px;\">退出</button></form>";
-  		}
-  	</script>
+  	
 </head>
 
 <body>
 	<div class="container">
-  		<div style="background: -webkit-gradient(linear, left top, left bottom, from(#0A284B), to(#135887));">
+  		<div class="bgchange">
     		<h1 align="center" id="title" style="margin:0;color:white">欢迎进入教室管理系统
-    		<form action="logout" method="post" style="float:right">
+    		<form id="logoutform" action="logout" method="post" style="float:right">
     			<button type="submit" class="btn btn-mini" style="margin-top:10px;">退出</button>
     		</form>
+    		
     		</h1>
   		</div>
   		<div class="row">
@@ -63,10 +43,33 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			<li><a onclick="partition();">教室划分</a></li>
      	 		</ul>
     		</div>
-    		<div class="span12" id=manage" style="margin-top:30px">
+    		<div class="span12" id="manage" style="margin-top:30px">
     			<IFRAME id="ifm" frameborder="no" scrolling="no" width="100%" height="100%" name="ifmbuilding"></IFRAME>
     		</div>
     	</div>
 	</div>
+	
+	<script>
+  		function iFrameHeight() { 
+  			var ifm= document.getElementById("ifm"); 
+  			var subWeb = document.frames ? document.frames["ifm"].document : ifm.contentDocument; 
+  			if(ifm != null && subWeb != null) { 
+  				ifm.height = subWeb.body.scrollHeight; 
+  			}
+  		}
+  		setInterval(iFrameHeight,100);
+  		function building(){
+  			document.getElementById('ifm').src='buildingSearch.jsp';
+  			document.getElementById('title').innerHTML="教学楼管理<form id=\"logoutform\" action=\"logout\" method=\"post\" style=\"float:right\"><button type=\"submit\" class=\"btn btn-mini\" style=\"margin-top:10px;\">退出</button></form>";
+  		}
+  		function classroom(){
+  			document.getElementById('ifm').src='classroomSearch.jsp';
+  			document.getElementById('title').innerHTML="教室管理<form id=\"logoutform\" action=\"logout\" method=\"post\" style=\"float:right\"><button type=\"submit\" class=\"btn btn-mini\" style=\"margin-top:10px;\">退出</button></form>";
+  		}
+  		function partition(){
+  			document.getElementById('ifm').src='partitionSearch.jsp';
+  			document.getElementById('title').innerHTML="教室划分<form id=\"logoutform\" action=\"logout\" method=\"post\" style=\"float:right\"><button type=\"submit\" class=\"btn btn-mini\" style=\"margin-top:10px;\">退出</button></form>";
+  		} 
+  	</script>
 </body>
 </html>

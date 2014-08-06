@@ -38,7 +38,8 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     
     <bean id="ClassroomImportAction" class="cims107.action.ClassroomImportAction" scope="prototype">  
         <property name="classroomService" ref="classroomService" />  
-        <property name="buildingService" ref="buildingService" />  
+        <property name="buildingService" ref="buildingService" /> 
+        <property name="seatmanageService" ref="seatmanageService" /> 
     </bean> 
       
     <bean id="classroomDao" class="cims107.dao.ClassroomDao">  

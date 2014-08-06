@@ -43,8 +43,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<select name="departmentname">
 					<option></option>
 					<option>教务处</option>
-					<option>教务处</option>
-					<option>教务处</option>
+					<option>医教处</option>
+					<option>软件学院</option>
 				</select>
 				<label><font class="fourword">教室楼</font>层</label>
 				<input type="text" name="clsFloor">
@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		<a id="spsh" onclick="spreadorshrink()">展开</a>
       		</div>
       		</form>
-			<button style="height:30px;margin-bottom:10px;float:right" id="search" class="btn btn-primary">查询</button>
+			<button style="height:30px;margin-bottom:10px;position:relative;left:90%" id="search" class="btn btn-primary">查询</button>
       		<div id="result"></div>
       		<div id="buttonsets" style="display:inline-block">
         		<button href="#clsnew" data-toggle="modal" class="btn btn-primary">新增</button>
@@ -146,8 +146,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<font color="red">*</font>
 						<select name="buildingDepartment" id="newdepartment">
 							<option>教务处</option>
-							<option>教务处</option>
-							<option>教务处</option>
+							<option>医教处</option>
+							<option>软件学院</option>
 						</select>
 						<label><font class="fourword">教室类</font>型</label>
 						<font color="red">*</font>
@@ -399,7 +399,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<table id="getseat"></table>
 				</div>
 				<div class="modal-footer">
-        			<button id="seat" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+        			<button id="seat" type="button" class="btn btn-primary" data-dismiss="modal" onclick="seat();">确定</button>
       			</div>
 			</div>
     		<div class="modal hide" id="importdiv">
@@ -408,7 +408,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         			<a href="#" class="close" data-dismiss="modal">×</a>
         			<h4>导入教室信息</h4>
       			</div>
-  				<input type="file" id="imp" name="excelFile"/>
+  				<input type="file" id="imp" name="excelFile" style="width:auto"/>
   				<button id="import" type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
 <!--   				<input type="button" value="确定" type="submit" onclick="importform.action='BuildingImport';importform.submit();" /> -->
 			</form>
@@ -416,33 +416,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <script type="text/javascript">
     	var searching=0;
+    	var seattag=0;
 	    function seatclassroom(clsid){
 	    	$.ajax({
 				url:"/cims107/SeatSearch",
 				async:false,
+				cache:false,
 				data: {clsid:clsid},
 				dataType:"json"
 	    	}).done(
 	    			function(data){
-	    				if (data.length!=0)
+	    				if (data!=null)
 						{
 	    					var str="<tbody>";
-							console.log(data[0].classroom.clsMaxRow);
-							console.log(data[1].seatProperty);
 	    						var k=0;
-	    						var l=data[0].classroom.clsMaxRow;
+	    						if(data[0].classroom.clsMaxRow!=0){
+	    							var l=data[0].classroom.clsMaxRow;
+	    							var r=data[0].classroom.clsMaxRow;
+	    						}
+	    						else{
+	    							var l=8;
+	    							var r=8;
+	    						}
+	    						if(data[0].classroom.clsMaxCol!=0)
+	    							var c=data[0].classroom.clsMaxCol;
+	    						else
+	    							var c=8;
 	    						var v=data[0].classroom.clsVCorridorLocate.replace(/,[0-9]+;/g," ");
 	    						v=v.replace(/,[0-9]+/g," ");
 	    						var h=data[0].classroom.clsHCorridorLocate.replace(/,[0-9]+;/g," ");
 	    						h=h.replace(/,[0-9]+/g," ");
-	    						for(var i=0;i<data[0].classroom.clsMaxCol;i++){
+	    						for(var i=0;i<c;i++){
 	    							var patt1=new RegExp(i);
 	    							if(patt1.exec(h)!=null){
 	    								l++;
 	    								str+="<tr bgcolor=\"gray\"><td colspan=\""+l+"\">&nbsp;</td></tr>";
 	    							}
 			    					str+="<tr>";
-			    					for(var j=0;j<data[0].classroom.clsMaxRow;j++){
+			    					for(var j=0;j<r;j++){
 			    						var patt2=new RegExp(j);
 			    						if(patt2.exec(v)!=null){
 			    							str+="<td bgcolor=\"gray\">&nbsp;&nbsp;&nbsp;&nbsp;</td>";
@@ -502,14 +513,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				async:false,
 				data: {clsid:clsid,seatNum:k,state:state},
 				dataType:"json",
+				cache:false,
 				success: function(result) 
     			{
 					if(result.success != null)
-						alert(result.success);
+						window.seattag=1;
 					if(result.error != null)
-						alert(result.error);
+						window.seattag=0;
     			}}
 			);
+		}
+		
+		function seat(){
+			if(window.seattag == 1)
+				alert("座位信息修改成功");
+			else
+				alert("座位信息修改失败");
 		}
 
 	    function detailclassroom(buildingname,serialnum,type,shape,classnum,examnum,seatnum,availableseatnum,maxrow,maxcol,vcorridorlocate,hcorridorlocate,floor,isamphi,usage,buildingdepartment,isused) {
@@ -623,16 +642,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$.ajax({
 					url:"/cims107/ClassroomSearch",
 					async:false,
+					cache:false,
 					data: $("#searchform").serialize(),
 					dataType:"json",
 					success: function(data){
-						if (data.error == null){
 						var k=0;
 						var j=1;
-						if (data.length!=0)
+						if (data!=null)
 						{
 						//	var classroom = jQuery.parseJSON(data);
-							
+							if (data.error != null)
+								alert(data.error);
 							$.each(data,function(i,data){
 								if(k==10){
 									k=0;
@@ -684,10 +704,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							alert("没有结果！");
 						}
 					}
-						else
-							alert(data.error);
-					}
-						})
+				})
 			});
 
 		
@@ -761,15 +778,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    	alert("考试人数应小于有效座位数！");
 				    	return false;
 				    }
-				    console.log($("#newhlocation").val());
 				    var hlocation = $("#newhlocation").val().split(";");
 				    for (var i=0,h; h=hlocation[i++];){
+				    	var ha = parseInt(h.split(",")[0]);
+				    	var hb = parseInt(h.split(",")[1]);
+				    	console.log(hb);
+				    	console.log(ha);
 				    	if(!reg.test(h.split(",")[0])){
 				    		alert("不存在的横走廊位置！");
 				    		return false;
 				    	}
 				    	if($("#newmaxrow").val() != ""){
-				    		if(parseInt(h.split(",")[1]) > parseInt($("#newmaxrow").val())){
+				    		if(parseInt(h.split(",")[1]) > parseInt($("#newmaxrow").val()) || hb-ha != 1){
 				    			alert("不存在的横走廊位置！");
 				    			return false;
 				    		}
@@ -782,7 +802,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				    		return false;
 				    	}
 				    	if($("#newmaxcol").val() != ""){
-				    		if(parseInt(v.split(",")[1]) > parseInt($("#newmaxcol").val())){
+				    		var va = parseInt(v.split(",")[0]);
+					    	var vb = parseInt(v.split(",")[1]);
+				    		if(parseInt(v.split(",")[1]) > parseInt($("#newmaxcol").val()) || vb-va != 1){
 				    			alert("不存在的竖走廊位置！");
 				    			return false;
 				    		}
@@ -803,6 +825,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$.ajax({
 						url:"/cims107/ClassroomCreate",
 						async:false,
+						cache:false,
 						data: $("#createform").serialize(),
 						dataType:"json",
 						success: function(result) 
@@ -821,15 +844,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$("#del").click(
 				function() {
 					var checked_num = $("input[name='clsid']:checked").length;
-					console.log(checked_num);
 					if (checked_num == 0) {
 						alert("至少选择一项");
 						return false;
 					}						
-					else if (confirm("您确认要删除所选信息吗？")){
+					else if (confirm("您确认要删除所选信息吗？该教室有可能已被划分，建议查看……")){
 						$.ajax({
 							url:"/cims107/ClassroomDelete",
 							async:false,
+							cache:false,
 							data:$("#deleteform").serialize(),
 							dataType:"json",
 							success: function(result) 
@@ -885,12 +908,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    }
 			    var hlocation = $("#updatehcorridorlocate").val().split(";");
 			    for (var i=0,h; h=hlocation[i++];){
+			    	var ha = parseInt(h.split(",")[0]);
+			    	var hb = parseInt(h.split(",")[1]);
 			    	if(!reg.test(h.split(",")[0])){
 			    		alert("不存在的横走廊位置！");
 			    		return false;
 			    	}
 			    	if($("#updatemaxrow").val() != ""){
-			    		if(parseInt(h.split(",")[1]) > parseInt($("#updatemaxrow").val())){
+			    		if(parseInt(h.split(",")[1]) > parseInt($("#updatemaxrow").val()) || hb-ha != 1){
 			    			alert("不存在的横走廊位置！");
 			    			return false;
 			    		}
@@ -898,12 +923,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    }
 			    var vlocation = $("#updatevcorridorlocate").val().split(";");
 			    for (var i=0,v; v=vlocation[i++];){
+			    	var va = parseInt(v.split(",")[0]);
+			    	var vb = parseInt(v.split(",")[1]);
 			    	if(!reg.test(v.split(",")[0])){
 			    		alert(v.split(","));
 			    		return false;
 			    	}
 			    	if($("#updatemaxcol").val() != ""){
-			    		if(parseInt(v.split(",")[1]) > parseInt($("#updatemaxcol").val())){
+			    		if(parseInt(v.split(",")[1]) > parseInt($("#updatemaxcol").val()) || vb-va != 1){
 			    			alert("不存在的竖走廊位置！");
 			    			return false;
 			    		}
@@ -924,6 +951,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$.ajax({
 						url:"/cims107/ClassroomUpdate",
 						async:false,
+						cache:false,
 						data: $("#updateform").serialize(),
 						dataType:"json",
 						success: function(result) 
@@ -932,6 +960,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								alert(result.success);
 							if(result.error != null)
 								alert(result.error);
+							if(result.hint != null)
+								alert(result.hint);
 							document.getElementById('search').click();
             			}}
 					);

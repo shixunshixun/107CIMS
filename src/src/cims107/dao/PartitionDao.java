@@ -206,7 +206,7 @@ public class PartitionDao {
 	
 	public Boolean delete(List<Integer> partitionlst) {
 		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		Transaction tx = null;
 		
 		try {
 			tx = session.beginTransaction();

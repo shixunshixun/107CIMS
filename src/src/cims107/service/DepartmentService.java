@@ -24,12 +24,12 @@ public class DepartmentService {
 		
 		DetachedCriteria dc = DetachedCriteria.forClass(Department.class);
 		
-		if (!departmentid.isEmpty()) {
+		if (!departmentid.isEmpty() && departmentid != null) {
 			dc.add(Restrictions.eq("departmentId",departmentid));
 		}
 		
-		if (!departmentname.isEmpty()) {
-			dc.add(Restrictions.like("departmentName", departmentname));	
+		if (!departmentname.isEmpty() && departmentname != null) {
+			dc.add(Restrictions.like("departmentName", "%"+departmentname+"%"));	
 		}
 		return departmentDao.find(dc);
 	}
